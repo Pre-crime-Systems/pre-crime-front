@@ -1,0 +1,5 @@
+@mixin text($size, $color, $weight: regular) {
+  color: map-get($colors, $color);
+  font-size: map-get($fontSizes, $size);
+  font-weight: map-get($fontWeights, #{$weight});
+}

@@ -1,0 +1,32 @@
+$colors: (
+  primary: #024481,
+  secondary: #46ce95,
+  accent: #f26dc4,
+  white: #ffffff,
+  grey-10: #e5e8ec,
+  grey-30: #c5c8cd,
+  grey-50: #98999c,
+  grey-70: #575d62,
+  grey-90: #343a40,
+  black: black,
+);
+
+$fontFamily: 'Inter', sans-serif, Arial;
+
+$fontSizes: (
+  28: 1.75rem,
+  22: 1.375rem,
+  16: 1rem,
+  14: 0.875rem,
+  12: 0.75rem,
+  10: 0.625rem,
+);
+
+$fontWeights: (
+  thin: 100,
+  light: 300,
+  regular: 400,
+  medium: 500,
+  bold: 700,
+  black: 900,
+);

@@ -1,0 +1,20 @@
+@import './_variables.scss';
+
+* {
+  box-sizing: border-box;
+  outline: none;
+  font-family: $fontFamily;
+}
+html {
+  line-height: 1.15; /* 1 */
+  -ms-text-size-adjust: 100%; /* 2 */
+  -webkit-text-size-adjust: 100%; /* 2 */
+  font-size: 16px;
+}
+body {
+  margin: 0;
+  padding: 0;
+  background-color: map-get($colors, grey-10);
+  background-size: cover;
+  background-repeat: no-repeat;
+}
