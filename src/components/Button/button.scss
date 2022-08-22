@@ -1,0 +1,24 @@
+@import '../../assets/scss/mixins';
+@import '../../assets/scss/variables';
+
+.button {
+  @include text(14, white, bold);
+  align-items: center;
+  border-radius: 0.5rem;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  justify-content: center;
+  min-height: 36px;
+  outline: none;
+  padding: 0.5rem 1.5rem;
+  &--primary {
+    background-color: map-get($colors, primary);
+    &:hover {
+      background: darken(map-get($colors, primary), 10%);
+    }
+    &:active {
+      background: darken(map-get($colors, primary), 20%);
+    }
+  }
+}

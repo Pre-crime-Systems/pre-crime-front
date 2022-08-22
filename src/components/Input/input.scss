@@ -1,0 +1,25 @@
+@import '../../assets/scss/mixins';
+@import '../../assets/scss/variables';
+
+.input {
+  &__label {
+    @include text(12, grey-90, bold);
+    margin: 0 0 0.25rem;
+  }
+  &__field {
+    @include text(14, grey-90);
+    border-radius: 0.5rem;
+    border: 1px solid map-get($colors, grey-30);
+    height: 36px;
+    outline: none;
+    padding: 0.5rem 0.625rem;
+    width: 100%;
+    &::placeholder {
+      color: map-get($colors, grey-30);
+    }
+  }
+  &__errorMessage {
+    @include text(10, negative-50, bold);
+    padding: 0.25rem 0 0;
+  }
+}
