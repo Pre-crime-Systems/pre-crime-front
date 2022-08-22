@@ -1,0 +1,26 @@
+@import '../../../../assets/scss/mixins';
+@import '../../../../assets/scss/variables';
+
+.authLayout {
+  align-items: stretch;
+  display: flex;
+  height: 100vh;
+  &__aside {
+    align-items: center;
+    background-color: map-get($colors, primary);
+    display: flex;
+    justify-content: center;
+    width: 40%;
+    .asideLogo {
+      &__name {
+        @include text(28, white, bold);
+      }
+    }
+  }
+  &__content {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    justify-content: center;
+  }
+}

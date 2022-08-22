@@ -1,0 +1,25 @@
+@import '../../../../assets/scss/mixins';
+@import '../../../../assets/scss/variables';
+
+.loginCard {
+  width: 70%;
+  margin: auto;
+  &__header {
+    margin: 0 0 1rem;
+    .loginTitle {
+      @include text(18, grey-90, bold);
+      margin: 0 0 0.25rem;
+    }
+    .loginDescription {
+      @include text(16, grey-70);
+    }
+  }
+  &__content {
+    .loginInput {
+      margin: 0 0 0.5rem;
+    }
+    .loginButton {
+      margin: 1rem 0 0;
+    }
+  }
+}
