@@ -21,4 +21,13 @@
       background: darken(map-get($colors, primary), 20%);
     }
   }
+  &--secondary {
+    background-color: map-get($colors, secondary);
+    &:hover {
+      background: darken(map-get($colors, secondary), 10%);
+    }
+    &:active {
+      background: darken(map-get($colors, secondary), 20%);
+    }
+  }
 }
