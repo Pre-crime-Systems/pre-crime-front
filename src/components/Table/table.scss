@@ -1,0 +1,25 @@
+@import '../../assets/scss/mixins';
+@import '../../assets/scss/variables';
+
+.table {
+  &__header {
+    display: flex;
+    margin: 0 0 1rem;
+    .item {
+      @include text(16, black, medium);
+      flex: 1;
+    }
+  }
+  &__row {
+    border-bottom: 1px solid map-get($colors, grey-10);
+    display: flex;
+    padding: 1rem 0;
+    &:last-of-type {
+      border: none;
+    }
+    .item {
+      @include text(14, grey-70);
+      flex: 1;
+    }
+  }
+}

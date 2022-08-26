@@ -46,6 +46,9 @@ $topHeight: 80px;
                 background-color: darken(map-get($colors, primary), 10%);
               }
             }
+            .itemIcon {
+              margin: 0 0.25rem 0 0;
+            }
           }
         }
       }

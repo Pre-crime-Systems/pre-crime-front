@@ -1,0 +1,23 @@
+@import '../../../../assets/scss/mixins';
+@import '../../../../assets/scss/variables';
+
+.dashboardPage {
+  &__cards {
+    display: flex;
+    .chartCard {
+      flex: 2;
+      margin: 0 1rem 0 0;
+      &__title {
+        display: flex;
+        .titleText {
+          @include text(16, black, bold);
+          align-self: flex-start;
+        }
+      }
+      &:last-of-type {
+        margin: 0;
+        flex: 1;
+      }
+    }
+  }
+}

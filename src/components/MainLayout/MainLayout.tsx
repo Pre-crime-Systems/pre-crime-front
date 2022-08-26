@@ -1,19 +1,21 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import { RoutePaths } from '../../routes/routePaths';
+import Icon from '../Icon/Icon';
 import './mainLayout.scss';
 
 interface MainLayoutProps {
   children: React.ReactElement;
+  className?: string;
 }
 
 const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
-  const { children } = props;
+  const { children, className } = props;
   const navigate = useNavigate();
   const activeUrl = window.location.pathname;
 
   return (
-    <section className="mainLayout">
+    <section className={`mainLayout ${className && className}`}>
       <aside className="mainLayout__aside">
         <section className="asideLogo">
           <label className="asideLogo__name">Pre Crime</label>
@@ -31,11 +33,15 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
                   navigate(RoutePaths.Dashboard);
                 }}
               >
-                Dashboard
+                <Icon className="itemIcon" type="dashboard" />
+                <span>Dashboard</span>
               </a>
             </li>
             <li className="menuItem">
-              <a className="menuItem__content">Mapa</a>
+              <a className="menuItem__content">
+                <Icon className="itemIcon" type="maps" />
+                <span>Mapa</span>
+              </a>
             </li>
             <li className="menuItem">
               <a
@@ -47,7 +53,8 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
                   navigate(RoutePaths.Reports);
                 }}
               >
-                Reportes
+                <Icon className="itemIcon" type="reports" />
+                <span>Reportes</span>
               </a>
             </li>
           </ul>
@@ -65,11 +72,15 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
                   navigate(RoutePaths.Users);
                 }}
               >
-                Usuarios
+                <Icon className="itemIcon" type="users" />
+                <span>Usuarios</span>
               </a>
             </li>
             <li className="menuItem">
-              <a className="menuItem__content">Cerrar sesión</a>
+              <a className="menuItem__content">
+                <Icon className="itemIcon" type="logOut" />
+                <span>Cerrar sesión</span>
+              </a>
             </li>
           </ul>
         </nav>
