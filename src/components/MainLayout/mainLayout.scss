@@ -1,0 +1,66 @@
+@import '../../assets/scss/mixins';
+@import '../../assets/scss/variables';
+
+$asideWidth: 270px;
+$topHeight: 80px;
+
+.mainLayout {
+  align-items: stretch;
+  display: flex;
+  height: 100vh;
+  &__aside {
+    background-color: map-get($colors, white);
+    width: $asideWidth;
+    .asideLogo {
+      align-items: center;
+      display: flex;
+      height: $topHeight;
+      justify-content: center;
+      &__name {
+        @include text(28, black, bold);
+      }
+    }
+    .asideMenu {
+      padding: 2rem 1rem;
+      &__title {
+        @include text(16, grey-90, medium);
+      }
+      &__list {
+        list-style: none;
+        margin: 1rem 0 0;
+        padding: 0;
+        .menuItem {
+          &__content {
+            @include text(16, grey-50, medium);
+            border-radius: 0.5rem;
+            cursor: pointer;
+            display: block;
+            padding: 0.5rem 1rem;
+            &:hover {
+              background-color: map-get($colors, grey-10);
+            }
+          }
+        }
+      }
+      &:last-of-type {
+        border: none;
+      }
+    }
+    .menuBorder {
+      background-color: map-get($colors, grey-10);
+      height: 1px;
+      margin: auto;
+      width: 90%;
+    }
+  }
+  &__right {
+    flex: 1;
+    .rightHeader {
+      background-color: map-get($colors, white);
+      height: $topHeight;
+    }
+    .rightContent {
+      padding: 1rem;
+    }
+  }
+}
