@@ -39,6 +39,13 @@ $topHeight: 80px;
             &:hover {
               background-color: map-get($colors, grey-10);
             }
+            &--active {
+              background-color: map-get($colors, primary);
+              color: map-get($colors, white);
+              &:hover {
+                background-color: darken(map-get($colors, primary), 10%);
+              }
+            }
           }
         }
       }
