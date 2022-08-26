@@ -28,3 +28,9 @@
     }
   }
 }
+
+@media (max-width: map-get($breakpoints, md )) {
+  .loginCard {
+    width: 90%;
+  }
+}

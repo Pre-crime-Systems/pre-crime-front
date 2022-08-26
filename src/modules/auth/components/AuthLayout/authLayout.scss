@@ -24,3 +24,13 @@
     justify-content: center;
   }
 }
+
+@media (max-width: map-get($breakpoints, md )) {
+  .authLayout {
+    flex-direction: column;
+    &__aside {
+      width: 100%;
+      padding: 2rem 0;
+    }
+  }
+}

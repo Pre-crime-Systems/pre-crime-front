@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
 import Input from '../../../../components/Input/Input';
+import { RoutePaths } from '../../../../routes/routePaths';
 import AuthLayout from '../../components/AuthLayout/AuthLayout';
 import './resetPassword.scss';
 
@@ -29,7 +30,7 @@ const ResetPassword: React.FC<any> = (props: any) => {
             className="resetPasswordButton"
             buttonType="secondary"
             onClick={() => {
-              navigate('/auth/new-password');
+              navigate(RoutePaths.NewPassword);
             }}
           >
             Enviar

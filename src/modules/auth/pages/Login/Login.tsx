@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
 import Input from '../../../../components/Input/Input';
+import { RoutePaths } from '../../../../routes/routePaths';
 import AuthLayout from '../../components/AuthLayout/AuthLayout';
 import './login.scss';
 
@@ -28,12 +29,18 @@ const Login: React.FC<any> = (props: any) => {
           <a
             className="loginLink"
             onClick={() => {
-              navigate('/auth/reset-password');
+              navigate(RoutePaths.ResetPassword);
             }}
           >
             ¿Olvidate tu contraseña?
           </a>
-          <Button className="loginButton" buttonType="secondary">
+          <Button
+            className="loginButton"
+            buttonType="secondary"
+            onClick={() => {
+              navigate(RoutePaths.Dashboard);
+            }}
+          >
             Iniciar Sesión
           </Button>
         </section>
