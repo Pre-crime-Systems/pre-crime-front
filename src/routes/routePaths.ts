@@ -4,5 +4,6 @@ export enum RoutePaths {
   NewPassword = '/auth/new-password',
   Dashboard = '/app/dashboard',
   Reports = '/app/reports',
+  Crimes = '/app/crimes',
   Users = '/app/users',
 }
