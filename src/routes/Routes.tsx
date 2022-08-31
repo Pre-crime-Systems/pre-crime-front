@@ -1,9 +1,9 @@
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Dashboard from '../modules/dashboard/pages/Dashboard/Dashboard';
 import Login from '../modules/auth/pages/Login/Login';
 import NewPassword from '../modules/auth/pages/NewPassword/NewPassword';
-import ResetPassword from '../modules/auth/pages/ResetPassword/ResetPassword';
-import Dashboard from '../modules/dashboard/pages/Dashboard/Dashboard';
 import Reports from '../modules/reports/pages/Reports/Reports';
+import ResetPassword from '../modules/auth/pages/ResetPassword/ResetPassword';
 import Users from '../modules/users/pages/Users/Users';
 import { RoutePaths } from './routePaths';
 
