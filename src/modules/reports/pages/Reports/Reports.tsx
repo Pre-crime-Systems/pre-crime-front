@@ -8,16 +8,37 @@ import './reports.scss';
 const Reports: React.FC = () => {
   const columns = [
     {
-      name: 'Nombre',
+      Header: 'Nombre',
+      accessor: 'name',
+      minWidth: 100,
     },
     {
-      name: 'Fecha',
+      Header: 'Fecha',
+      accessor: 'date',
+      minWidth: 100,
     },
     {
-      name: '',
+      Header: '',
+      id: 'detailButton',
+      Cell: () => <Button buttonType="secondary">Ver detalle</Button>,
+      maxWidth: 140,
+      minWidth: 140,
     },
-    { name: '' },
+    {
+      Header: '',
+      id: 'downloadButton',
+      Cell: () => <Button buttonType="secondary">Descargar</Button>,
+      maxWidth: 140,
+    },
   ];
+  const data = [
+    { name: 'Nombre 1', date: '25/08/2022' },
+    { name: 'Nombre 2', date: '25/08/2022' },
+    { name: 'Nombre 3', date: '25/08/2022' },
+    { name: 'Nombre 4', date: '25/08/2022' },
+    { name: 'Nombre 5', date: '25/08/2022' },
+  ];
+
   return (
     <MainLayout className="reportsPage">
       <>
@@ -26,7 +47,7 @@ const Reports: React.FC = () => {
           <Button buttonType="secondary">Subir reporte</Button>
         </Card>
         <Card className="reportsPage__content">
-          <Table columns={columns} data={[1, 2, 3, 4, 5, 6]}></Table>
+          <Table columns={columns} data={data}></Table>
         </Card>
       </>
     </MainLayout>
