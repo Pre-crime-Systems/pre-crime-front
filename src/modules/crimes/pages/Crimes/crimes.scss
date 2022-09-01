@@ -2,9 +2,7 @@
 @import '../../../../assets/scss/variables';
 
 .crimesPage {
-    & .hidden{
-        display: none;
-    }
+    display: static;
     &__header {
       margin: 0 0 1rem;
       display: flex;
@@ -12,11 +10,15 @@
       align-items: center;
     }
     &__content {
+        &--hidden{
+            display: none;
+        }
     }
 }
 
 .addcrimePage{
-    & .hidden{
+    display: static;
+    &--hidden{
         display: none;
     }
     &__header{
@@ -25,7 +27,7 @@
         justify-content: space-between;
         align-items: center;
         font-size: 1.2rem;
-        & Button{
+        &__button{
             width: 2rem;
         }
     }
@@ -35,17 +37,8 @@
         flex-direction: column;
         justify-content: space-between;
         gap: 0.7rem;
-        & p{
+        &__text{
             font-size: 0.8rem;
-        }
-        &__aux{
-            display: flex;
-            gap: 1.2rem;
-            justify-content: space-between;
-            align-items: center;
-            & Input{
-                width: auto;
-            }
         }
         &__textarea{
             @include text(14, grey-90);
