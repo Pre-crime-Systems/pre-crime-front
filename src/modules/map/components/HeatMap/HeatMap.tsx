@@ -6,8 +6,8 @@ const HeatMap: React.FC = () => {
   const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
   const [zoom, setZoom] = React.useState(12);
   const [center, setCenter] = React.useState<google.maps.LatLngLiteral>({
-    lat: 0,
-    lng: 0,
+    lat: -12.0879652,
+    lng: -77.0510096,
   });
 
   const onClick = (e: google.maps.MapMouseEvent) => {
