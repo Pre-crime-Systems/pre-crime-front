@@ -11,6 +11,11 @@ $topHeight: 80px;
   &__aside {
     background-color: map-get($colors, white);
     width: $asideWidth;
+    @media (max-width: map-get($breakpoints, sm)) {
+      &:nth-child(1){
+        padding-top: $topHeight;
+      }
+    }
     .asideLogo {
       align-items: center;
       display: flex;
@@ -19,11 +24,23 @@ $topHeight: 80px;
       &__name {
         @include text(28, black, bold);
       }
+      @media (max-width: map-get($breakpoints, md)) {
+          text-align: center;
+      }
+      @media (max-width: map-get($breakpoints, sm)) {
+          display: none;
+      }
     }
     .asideMenu {
       padding: 2rem 1rem;
+      @media (max-width: map-get($breakpoints, md)) {
+        padding: 1.5rem 0.75rem 0 0.75rem;
+      }
       &__title {
         @include text(16, grey-90, medium);
+        @media (max-width: map-get($breakpoints, md)) {
+            text-align: center;
+        }
       }
       &__list {
         list-style: none;
@@ -34,8 +51,21 @@ $topHeight: 80px;
             @include text(16, grey-50, medium);
             border-radius: 0.5rem;
             cursor: pointer;
-            display: block;
             padding: 0.5rem 1rem;
+            display: flex;
+            align-items: flex-start;
+            @media (max-width: map-get($breakpoints, lg)) {
+              margin-bottom: 0.125rem;
+              display: flex;
+            }
+            @media (max-width: map-get($breakpoints, md)) {
+              padding: 0.625rem;
+              display: block;
+            }
+            @media (max-width: map-get($breakpoints, sm)) {
+              margin-bottom: 0.5rem;
+              padding: 0.375rem;
+            }
             &:hover {
               background-color: map-get($colors, grey-10);
             }
@@ -48,6 +78,26 @@ $topHeight: 80px;
             }
             .itemIcon {
               margin: 0 0.25rem 0 0;
+              @media (max-width: map-get($breakpoints, md)) {
+                margin: 0;
+                font-size: 1.6rem;
+                display: flex;
+                justify-content: center;
+              }
+              @media (max-width: map-get($breakpoints, sm)) {
+                font-size: 2.4rem;
+              }
+            }
+            .itemText{
+              @media (max-width: map-get($breakpoints, lg)) {
+                display: block;
+              }
+              @media (max-width: map-get($breakpoints, md)) {
+                display: none;
+              }
+            }
+            @media (max-width: map-get($breakpoints, lg)) {
+                text-align: center;
             }
           }
         }
@@ -68,6 +118,20 @@ $topHeight: 80px;
     .rightHeader {
       background-color: map-get($colors, white);
       height: $topHeight;
+      @media (max-width: map-get($breakpoints, sm)) {
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        padding-right: 92px;
+      }
+      &__Logo{
+        display: none;
+        @media (max-width: map-get($breakpoints, sm)) {
+          display: inline;
+          @include text(28, black, bold);
+        }
+      }
     }
     .rightContent {
       padding: 1rem;

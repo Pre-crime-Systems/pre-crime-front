@@ -13,7 +13,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
   const { children, className } = props;
   const navigate = useNavigate();
   const activeUrl = window.location.pathname;
-
+  
   return (
     <section className={`mainLayout ${className && className}`}>
       <aside className="mainLayout__aside">
@@ -34,7 +34,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
                 }}
               >
                 <Icon className="itemIcon" type="dashboard" />
-                <span>Dashboard</span>
+                <span className="itemText">Dashboard</span>
               </a>
             </li>
             <li className="menuItem">
@@ -48,7 +48,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
                 }}
               >
                 <Icon className="itemIcon" type="maps" />
-                <span>Mapa</span>
+                <span className="itemText" >Mapa</span>
               </a>
             </li>
             <li className="menuItem">
@@ -62,7 +62,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
                 }}
               >
                 <Icon className="itemIcon" type="reports" />
-                <span>Reportes</span>
+                <span className="itemText">Reportes</span>
               </a>
             </li>
             <li className="menuItem">
@@ -76,7 +76,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
                 }}
               >
                 <Icon className="itemIcon" type="reports" />
-                <span>Crímenes</span>
+                <span className="itemText">Crímenes</span>
               </a>
             </li>
           </ul>
@@ -95,20 +95,22 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
                 }}
               >
                 <Icon className="itemIcon" type="users" />
-                <span>Usuarios</span>
+                <span className="itemText">Usuarios</span>
               </a>
             </li>
             <li className="menuItem">
               <a className="menuItem__content">
                 <Icon className="itemIcon" type="logOut" />
-                <span>Cerrar sesión</span>
+                <span className="itemText">Cerrar sesión</span>
               </a>
             </li>
           </ul>
         </nav>
       </aside>
       <section className="mainLayout__right">
-        <header className="rightHeader"></header>
+        <header className="rightHeader">
+          <p className="rightHeader__Logo">Pre Crime</p>
+        </header>
         <main className="rightContent">{children}</main>
       </section>
     </section>
