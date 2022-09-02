@@ -38,7 +38,15 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
               </a>
             </li>
             <li className="menuItem">
-              <a className="menuItem__content">
+              <a
+                className={`menuItem__content ${
+                  activeUrl === RoutePaths.Map &&
+                  'menuItem__content--active'
+                }`}
+                onClick={() => {
+                  navigate(RoutePaths.Map);
+                }}
+              >
                 <Icon className="itemIcon" type="maps" />
                 <span>Mapa</span>
               </a>

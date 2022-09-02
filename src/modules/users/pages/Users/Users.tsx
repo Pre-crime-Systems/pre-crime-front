@@ -8,16 +8,66 @@ import './users.scss';
 const Users: React.FC = () => {
   const columns = [
     {
-      name: 'Nombre',
+      Header: 'Nombre',
+      accessor: 'name',
+      minWidth: 100,
     },
     {
-      name: 'Apellido',
+      Header: 'Apellido',
+      accessor: 'lastName',
+      minWidth: 100,
     },
     {
-      name: 'Correo',
+      Header: 'Correo',
+      accessor: 'email',
+      minWidth: 100,
     },
-    { name: 'Rol' },
+    {
+      Header: 'Rol',
+      accessor: 'role',
+      minWidth: 100,
+    },
+    {
+      Header: '',
+      id: 'detailButton',
+      Cell: () => <Button buttonType="secondary">Editar</Button>,
+      maxWidth: 140,
+      minWidth: 140,
+    },
   ];
+  const data = [
+    {
+      name: 'Nombre 1',
+      lastName: 'Apellido',
+      email: 'correo@dominio.com',
+      role: 'police',
+    },
+    {
+      name: 'Nombre 2',
+      lastName: 'Apellido',
+      email: 'correo@dominio.com',
+      role: 'police',
+    },
+    {
+      name: 'Nombre 3',
+      lastName: 'Apellido',
+      email: 'correo@dominio.com',
+      role: 'police',
+    },
+    {
+      name: 'Nombre 4',
+      lastName: 'Apellido',
+      email: 'correo@dominio.com',
+      role: 'police',
+    },
+    {
+      name: 'Nombre 5',
+      lastName: 'Apellido',
+      email: 'correo@dominio.com',
+      role: 'police',
+    },
+  ];
+
   return (
     <MainLayout className="usersPage">
       <>
@@ -25,7 +75,7 @@ const Users: React.FC = () => {
           <h1>Usuarios</h1>
         </Card>
         <Card className="usersPage__content">
-          <Table columns={columns} data={[1, 2, 3, 4, 5, 6]}></Table>
+          <Table columns={columns} data={data}></Table>
         </Card>
       </>
     </MainLayout>
