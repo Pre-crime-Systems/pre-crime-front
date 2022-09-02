@@ -57,6 +57,20 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
                 <span>Reportes</span>
               </a>
             </li>
+            <li className="menuItem">
+              <a
+                className={`menuItem__content ${
+                  activeUrl === RoutePaths.Crimes &&
+                  'menuItem__content--active'
+                }`}
+                onClick={() => {
+                  navigate(RoutePaths.Crimes);
+                }}
+              >
+                <Icon className="itemIcon" type="reports" />
+                <span>Crímenes</span>
+              </a>
+            </li>
           </ul>
         </nav>
         <div className="menuBorder"></div>

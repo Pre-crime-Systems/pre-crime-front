@@ -1,0 +1,57 @@
+@import '../../../../assets/scss/mixins';
+@import '../../../../assets/scss/variables';
+
+.crimesPage {
+    display: static;
+    &__header {
+      margin: 0 0 1rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+    &__content {
+        &--hidden{
+            display: none;
+        }
+    }
+}
+
+.addcrimePage{
+    display: static;
+    &--hidden{
+        display: none;
+    }
+    &__header{
+        margin: 0 0 1rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        font-size: 1.2rem;
+        &__button{
+            width: 2rem;
+        }
+    }
+    &__content{
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        gap: 0.7rem;
+        &__text{
+            font-size: 0.8rem;
+        }
+        &__textarea{
+            @include text(14, grey-90);
+            border-radius: 0.5rem;
+            border: 1px solid map-get($colors, grey-30);
+            height: 56px;
+            outline: none;
+            padding: 0.5rem 0.625rem;
+            width: 100%;
+            &::placeholder {
+            color: map-get($colors, grey-30);
+            }
+        }
+    }
+}
+  
