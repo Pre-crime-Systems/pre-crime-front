@@ -11,6 +11,12 @@ $topHeight: 80px;
   &__aside {
     background-color: map-get($colors, white);
     width: $asideWidth;
+    @media (max-width: map-get($breakpoints, lg)) {
+      width: 200px;
+    }
+    @media (max-width: map-get($breakpoints, md)) {
+      width: 82.5px;
+    }
     @media (max-width: map-get($breakpoints, sm)) {
       &:nth-child(1){
         padding-top: $topHeight;
