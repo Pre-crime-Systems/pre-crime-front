@@ -18,6 +18,7 @@ $topHeight: 80px;
       width: 82.5px;
     }
     @media (max-width: map-get($breakpoints, sm)) {
+      width: 80px;
       &:nth-child(1){
         padding-top: $topHeight;
       }
@@ -91,7 +92,7 @@ $topHeight: 80px;
                 justify-content: center;
               }
               @media (max-width: map-get($breakpoints, sm)) {
-                font-size: 2.4rem;
+                font-size: 2rem;
               }
             }
             .itemText{
