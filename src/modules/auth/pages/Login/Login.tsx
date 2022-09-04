@@ -12,7 +12,14 @@ import './login.scss';
 const Login: React.FC = () => {
   const navigate = useNavigate();
   const [loading, setLoading] = useState<boolean>(false);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
   const [responseEndpoint, callEndpoint] = useApi();
+
+  const onLogin = () => {
+    setLoading(true);
+    callEndpoint(login({ email, password }));
+  };
 
   useEffect(() => {
     if (loading && responseEndpoint?.data) {
@@ -37,8 +44,20 @@ const Login: React.FC = () => {
             className="loginInput"
             label="Correo electrónico"
             placeholder="correo@dominio.com"
+            value={email}
+            onChange={(event) => {
+              setEmail(event.target.value);
+            }}
           />
-          <Input className="loginInput" label="Contraseña" type="password" />
+          <Input
+            className="loginInput"
+            label="Contraseña"
+            type="password"
+            value={password}
+            onChange={(event) => {
+              setPassword(event.target.value);
+            }}
+          />
           <a
             className="loginLink"
             onClick={() => {
@@ -50,10 +69,7 @@ const Login: React.FC = () => {
           <Button
             className="loginButton"
             buttonType="secondary"
-            onClick={() => {
-              setLoading(true);
-              callEndpoint(login());
-            }}
+            onClick={onLogin}
           >
             Iniciar Sesión
           </Button>
