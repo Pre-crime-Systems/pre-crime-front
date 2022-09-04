@@ -1,14 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
 import Input from '../../../../components/Input/Input';
+import { useApi } from '../../../../hooks/useApi';
 import { RoutePaths } from '../../../../routes/routePaths';
+import { login } from '../../../../services/auth.service';
 import AuthLayout from '../../components/AuthLayout/AuthLayout';
 import './login.scss';
 
-const Login: React.FC<any> = (props: any) => {
+const Login: React.FC = () => {
   const navigate = useNavigate();
+  const [loading, setLoading] = useState<boolean>(false);
+  const [responseEndpoint, callEndpoint] = useApi();
+
+  useEffect(() => {
+    if (loading && responseEndpoint?.data) {
+      setLoading(false);
+      navigate(RoutePaths.Dashboard);
+    }
+  }, [responseEndpoint]);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <AuthLayout>
@@ -38,7 +51,8 @@ const Login: React.FC<any> = (props: any) => {
             className="loginButton"
             buttonType="secondary"
             onClick={() => {
-              navigate(RoutePaths.Dashboard);
+              setLoading(true);
+              callEndpoint(login());
             }}
           >
             Iniciar Sesión
