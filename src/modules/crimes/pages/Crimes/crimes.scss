@@ -8,6 +8,7 @@
       display: flex;
       justify-content: space-between;
       align-items: center;
+      gap: 1.5rem;
     }
     &__content {
         &--hidden{
@@ -27,9 +28,14 @@
         justify-content: space-between;
         align-items: center;
         font-size: 1.2rem;
+        gap: 1.5rem;
         &__button{
             width: 2rem;
         }
+        @media (max-width: map-get($breakpoints, md)) {
+            grid-template-columns: repeat(1, 1fr);
+            align-items: center;
+        }    
     }
     &__content{
         height: 100%;
