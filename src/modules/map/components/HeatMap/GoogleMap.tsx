@@ -1,4 +1,6 @@
 import React from 'react';
+import { createCustomEqual, deepEqual } from 'fast-equals';
+import { isLatLngLiteral } from '@googlemaps/typescript-guards';
 
 interface MapProps extends google.maps.MapOptions {
   style: { [key: string]: string };
@@ -19,9 +21,19 @@ const Map: React.FC<MapProps> = ({
 
   React.useEffect(() => {
     if (ref.current && !map) {
-      setMap(new window.google.maps.Map(ref.current, {}));
+      let newMap = new window.google.maps.Map(ref.current, {});
+      setMap(newMap);
     }
   }, [ref, map]);
+
+  // React.useEffect(() => {
+  //   if (map) {
+  //     let heatmap = new window.google.maps.visualization.HeatmapLayer({
+  //       data: getPoints(),
+  //       map: map,
+  //     });
+  //   }
+  // }, [ref, map]);
 
   // because React does not do deep comparisons, a custom hook is used
   // see discussion in https://github.com/googlemaps/js-samples/issues/946
@@ -47,6 +59,16 @@ const Map: React.FC<MapProps> = ({
     }
   }, [map, onClick, onIdle]);
 
+  // Heatmap data: 500 Points
+  function getPoints() {
+    return [
+      new google.maps.LatLng(37.782551, -122.445368),
+      new google.maps.LatLng(37.782745, -122.444586),
+      new google.maps.LatLng(37.782842, -122.443688),
+      new google.maps.LatLng(37.782919, -122.442815),
+    ];
+  }
+  console.log('Drawing map again');
   return (
     <>
       <div ref={ref} style={style} />
@@ -62,14 +84,48 @@ const Map: React.FC<MapProps> = ({
 
 export default Map;
 
-const compare = (a: any, b: any) => {
-  return new google.maps.LatLng(a).equals(new google.maps.LatLng(b));
-};
+// const compare = (a: any, b: any) => {
+//   console.log('comparing');
+
+//   if (
+//     isLatLngLiteral(a) ||
+//     a instanceof google.maps.LatLng ||
+//     isLatLngLiteral(b) ||
+//     b instanceof google.maps.LatLng
+//   ) {
+//     return new google.maps.LatLng(a).equals(new google.maps.LatLng(b));
+//   }
+
+//   // TODO extend to other types
+
+//   // use fast-equals for other objects
+//   return deepEqual(a, b);
+
+//   // return new google.maps.LatLng(a).equals(new google.maps.LatLng(b));
+// };
+
+const deepCompareEqualsForMaps = createCustomEqual(
+  (deepEqual) => (a: any, b: any) => {
+    if (
+      isLatLngLiteral(a) ||
+      a instanceof google.maps.LatLng ||
+      isLatLngLiteral(b) ||
+      b instanceof google.maps.LatLng
+    ) {
+      return new google.maps.LatLng(a).equals(new google.maps.LatLng(b));
+    }
+
+    // TODO extend to other types
+
+    // use fast-equals for other objects
+    return deepEqual(a, b);
+  }
+);
 
 function useDeepCompareMemoize(value: any) {
   const ref = React.useRef();
 
-  if (!compare(value, ref.current)) {
+  if (!deepCompareEqualsForMaps(value, ref.current)) {
     ref.current = value;
   }
 

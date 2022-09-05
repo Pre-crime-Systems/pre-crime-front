@@ -1,13 +1,14 @@
 import React from 'react';
 import GoogleMap from './GoogleMap';
 import GoogleMarker from './GoogleMarker';
+import GoogleHeatmap from './GoogleHeatmap';
 
 const HeatMap: React.FC = () => {
   const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
   const [zoom, setZoom] = React.useState(12);
   const [center, setCenter] = React.useState<google.maps.LatLngLiteral>({
-    lat: -12.0879652,
-    lng: -77.0510096,
+    lat: 37.782551,
+    lng: -122.445368,
   });
 
   const onClick = (e: google.maps.MapMouseEvent) => {
@@ -20,6 +21,15 @@ const HeatMap: React.FC = () => {
     setCenter(m.getCenter()!.toJSON());
   };
 
+  function getPoints() {
+    return [
+      new google.maps.LatLng(37.782551, -122.445368),
+      new google.maps.LatLng(37.782745, -122.444586),
+      new google.maps.LatLng(37.782842, -122.443688),
+      new google.maps.LatLng(37.782919, -122.442815),
+    ];
+  }
+
   return (
     <GoogleMap
       center={center}
@@ -31,6 +41,7 @@ const HeatMap: React.FC = () => {
       {clicks.map((latLng, i) => (
         <GoogleMarker key={i} position={latLng} />
       ))}
+      {/* <GoogleHeatmap data={getPoints()} /> */}
     </GoogleMap>
   );
 };
