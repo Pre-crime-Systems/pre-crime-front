@@ -6,6 +6,7 @@ import Input from '../../../../components/Input/Input';
 import { useApi } from '../../../../hooks/useApi';
 import { RoutePaths } from '../../../../routes/routePaths';
 import { login } from '../../../../services/auth.service';
+import * as localStorage from '../../../../utils/localStorage.util';
 import AuthLayout from '../../components/AuthLayout/AuthLayout';
 import './login.scss';
 
@@ -23,6 +24,8 @@ const Login: React.FC = () => {
 
   useEffect(() => {
     if (loading && responseEndpoint?.data) {
+      const token = responseEndpoint?.data?.token;
+      localStorage.setToken(token);
       setLoading(false);
       navigate(RoutePaths.Dashboard);
     }

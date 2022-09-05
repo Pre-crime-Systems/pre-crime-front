@@ -8,10 +8,9 @@ interface LoginRequest {
 
 export const login = ({ email, password }: LoginRequest) => {
   const request: ApiRequest = {
-    method: ApiMethod.Get, //change to Post
-    url: `${BASE_URL}/character`,
-    //add body
+    method: ApiMethod.Post,
+    url: `${BASE_URL}/api/authenticate`,
+    body: { username: email, password },
   };
-  console.log('body', { email, password });
   return request;
 };

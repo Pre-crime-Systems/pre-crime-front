@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import { ApiMethod, ApiRequest, ApiResponse } from '../models/api.model';
+import * as localStorage from '../utils/localStorage.util';
 
 export const useApi = (): [
   { data: any; error: boolean },
@@ -11,7 +12,7 @@ export const useApi = (): [
   const callEndpoint = async ({ method, url, body }: ApiRequest) => {
     setResponse(initResponse);
     try {
-      const token = '';
+      const token = localStorage.getToken();
       const request: RequestInit = {
         method,
         headers: {
