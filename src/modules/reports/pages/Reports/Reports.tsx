@@ -1,20 +1,27 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
 import MainLayout from '../../../../components/MainLayout/MainLayout';
 import Table from '../../../../components/Table/Table';
+import { useApi } from '../../../../hooks/useApi';
+import { getReports } from '../../../../services/report.service';
 import './reports.scss';
 
 const Reports: React.FC = () => {
+  const [loading, setLoading] = useState<boolean>(false);
+  const [reports, setReports] = useState<any>(null);
+  const [responseEndpoint, callEndpoint] = useApi();
+
   const columns = [
     {
       Header: 'Nombre',
-      accessor: 'name',
+      accessor: 'fileName',
       minWidth: 100,
     },
     {
       Header: 'Fecha',
-      accessor: 'date',
+      id: 'date',
+      Cell: () => <p>25/08/2022</p>,
       minWidth: 100,
     },
     {
@@ -31,13 +38,18 @@ const Reports: React.FC = () => {
       maxWidth: 140,
     },
   ];
-  const data = [
-    { name: 'Nombre 1', date: '25/08/2022' },
-    { name: 'Nombre 2', date: '25/08/2022' },
-    { name: 'Nombre 3', date: '25/08/2022' },
-    { name: 'Nombre 4', date: '25/08/2022' },
-    { name: 'Nombre 5', date: '25/08/2022' },
-  ];
+
+  useEffect(() => {
+    if (loading && responseEndpoint?.data) {
+      setLoading(false);
+      setReports(responseEndpoint?.data);
+    } else if (!loading && responseEndpoint?.data === null) {
+      setLoading(true);
+      callEndpoint(getReports());
+    }
+  }, [responseEndpoint]);
+
+  if (loading) return <div>Loading...</div>;
 
   return (
     <MainLayout className="reportsPage">
@@ -47,7 +59,7 @@ const Reports: React.FC = () => {
           <Button buttonType="secondary">Subir reporte</Button>
         </Card>
         <Card className="reportsPage__content">
-          <Table columns={columns} data={data}></Table>
+          {reports && <Table columns={columns} data={reports}></Table>}
         </Card>
       </>
     </MainLayout>

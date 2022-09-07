@@ -1,37 +1,57 @@
 import React from 'react';
-import GoogleMap from './GoogleMap';
-import GoogleMarker from './GoogleMarker';
+import {
+  GoogleMap,
+  HeatmapLayer,
+  useJsApiLoader,
+} from '@react-google-maps/api';
+
+import { API_KEY } from '../../../../constants/google.constant';
 
 const HeatMap: React.FC = () => {
-  const [clicks, setClicks] = React.useState<google.maps.LatLng[]>([]);
-  const [zoom, setZoom] = React.useState(12);
-  const [center, setCenter] = React.useState<google.maps.LatLngLiteral>({
-    lat: -12.0879652,
-    lng: -77.0510096,
+  const { isLoaded } = useJsApiLoader({
+    googleMapsApiKey: API_KEY,
+    libraries: ['visualization'],
   });
+  const center = { lat: 37.775, lng: -122.434 };
 
-  const onClick = (e: google.maps.MapMouseEvent) => {
-    // avoid directly mutating state
-    setClicks([...clicks, e.latLng!]);
+  const onLoad = (heatmapLayer: any) => {
+    console.log('HeatmapLayer onLoad heatmapLayer: ', heatmapLayer);
   };
 
-  const onIdle = (m: google.maps.Map) => {
-    setZoom(m.getZoom()!);
-    setCenter(m.getCenter()!.toJSON());
+  const onUnmount = (heatmapLayer: any) => {
+    console.log('HeatmapLayer onUnmount heatmapLayer: ', heatmapLayer);
   };
 
-  return (
+  return isLoaded ? (
     <GoogleMap
+      mapContainerStyle={{
+        flexGrow: '1',
+        height: '100%',
+      }}
+      zoom={13}
       center={center}
-      onClick={onClick}
-      onIdle={onIdle}
-      zoom={zoom}
-      style={{ flexGrow: '1', height: '100%' }}
     >
-      {clicks.map((latLng, i) => (
-        <GoogleMarker key={i} position={latLng} />
-      ))}
+      <HeatmapLayer
+        onLoad={onLoad}
+        onUnmount={onUnmount}
+        data={[
+          new google.maps.LatLng(37.782, -122.447),
+          new google.maps.LatLng(37.782, -122.445),
+          new google.maps.LatLng(37.782, -122.443),
+          new google.maps.LatLng(37.782, -122.441),
+          new google.maps.LatLng(37.782, -122.439),
+          new google.maps.LatLng(37.782, -122.437),
+          new google.maps.LatLng(37.782, -122.435),
+          new google.maps.LatLng(37.785, -122.447),
+          new google.maps.LatLng(37.785, -122.445),
+          new google.maps.LatLng(37.785, -122.443),
+          new google.maps.LatLng(37.785, -122.441),
+          new google.maps.LatLng(37.785, -122.439),
+          new google.maps.LatLng(37.785, -122.437),
+          new google.maps.LatLng(37.785, -122.435),
+        ]}
+      />
     </GoogleMap>
-  );
+  ) : null;
 };
 export default HeatMap;
