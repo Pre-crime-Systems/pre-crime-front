@@ -53,15 +53,13 @@ const Reports: React.FC = () => {
 
   return (
     <MainLayout className="reportsPage">
-      <>
-        <Card className="reportsPage__header">
-          <h1>Reports</h1>
-          <Button buttonType="secondary">Subir reporte</Button>
-        </Card>
-        <Card className="reportsPage__content">
-          {reports && <Table columns={columns} data={reports}></Table>}
-        </Card>
-      </>
+      <Card className="reportsPage__header">
+        <h1>Reports</h1>
+        <Button buttonType="secondary">Subir reporte</Button>
+      </Card>
+      <Card className="reportsPage__content">
+        {reports && <Table columns={columns} data={reports}></Table>}
+      </Card>
     </MainLayout>
   );
 };

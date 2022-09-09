@@ -5,7 +5,7 @@ import Icon from '../Icon/Icon';
 import './mainLayout.scss';
 
 interface MainLayoutProps {
-  children: React.ReactElement;
+  children: React.ReactNode;
   className?: string;
 }
 

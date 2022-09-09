@@ -118,67 +118,65 @@ const Crimes: React.FC = () => {
 
   return (
     <MainLayout className="crimesPage">
-      <>
-        <Card className="crimesPage__header">
-          <h1>Crimes</h1>
+      <Card className="crimesPage__header">
+        <h1>Crimes</h1>
+        <Button
+          onClick={() => {
+            crimesPageStatus = '--hidden';
+            addcrimePageStatus = ' ';
+          }}
+          buttonType="secondary"
+        >
+          Subir crímen
+        </Button>
+      </Card>
+      <Card className={'crimesPage__content' + crimesPageStatus}>
+        <Table columns={columns} data={data}></Table>
+      </Card>
+      <Card className={'addcrimePage' + addcrimePageStatus}>
+        <section className="addcrimePage__header">
+          <h1>Formulario de creación de crimen</h1>
           <Button
             onClick={() => {
-              crimesPageStatus = '--hidden';
-              addcrimePageStatus = ' ';
+              crimesPageStatus = ' ';
+              addcrimePageStatus = '--hidden';
             }}
+            className="addcrimePage__header__button"
             buttonType="secondary"
           >
-            Subir crímen
+            X
           </Button>
-        </Card>
-        <Card className={'crimesPage__content' + crimesPageStatus}>
-          <Table columns={columns} data={data}></Table>
-        </Card>
-        <Card className={'addcrimePage' + addcrimePageStatus}>
-          <section className="addcrimePage__header">
-            <h1>Formulario de creación de crimen</h1>
-            <Button
-              onClick={() => {
-                crimesPageStatus = ' ';
-                addcrimePageStatus = '--hidden';
-              }}
-              className="addcrimePage__header__button"
-              buttonType="secondary"
-            >
-              X
-            </Button>
-          </section>
-          <form className="addcrimePage__content">
-            <p className="addcrimePage__content__text">
-              Estación de policía, fecha y hora:
-            </p>
-            <InputContainer className="addcrimePage__content__aux">
-              <Input placeholder="Estación de policía"></Input>
-              <Input placeholder="Fecha"></Input>
-              <Input placeholder="Hora"></Input>
-            </InputContainer>
-            <p className="addcrimePage__content__text">
-              Tipo de delito y modalidad
-            </p>
-            <InputContainer className="addcrimePage__content__aux">
-              <Input placeholder="Tipo de delito"></Input>
-              <Input placeholder="Subtipo de delito"></Input>
-              <Input placeholder="Modalidad"></Input>
-            </InputContainer>
-            <p className="addcrimePage__content__text">Dirección y zona:</p>
-            <InputContainer className="addcrimePage__content__aux">
-              <Input placeholder="Dirección"></Input>
-              <Input placeholder="Zona"></Input>
-            </InputContainer>
-            <p className="addcrimePage__content__text">Detalles:</p>
-            <textarea
-              className="addcrimePage__content__textarea"
-              name="details"
-              id="details"
-            ></textarea>
-          </form>
-        </Card>
-      </>
+        </section>
+        <form className="addcrimePage__content">
+          <p className="addcrimePage__content__text">
+            Estación de policía, fecha y hora:
+          </p>
+          <InputContainer className="addcrimePage__content__aux">
+            <Input placeholder="Estación de policía"></Input>
+            <Input placeholder="Fecha"></Input>
+            <Input placeholder="Hora"></Input>
+          </InputContainer>
+          <p className="addcrimePage__content__text">
+            Tipo de delito y modalidad
+          </p>
+          <InputContainer className="addcrimePage__content__aux">
+            <Input placeholder="Tipo de delito"></Input>
+            <Input placeholder="Subtipo de delito"></Input>
+            <Input placeholder="Modalidad"></Input>
+          </InputContainer>
+          <p className="addcrimePage__content__text">Dirección y zona:</p>
+          <InputContainer className="addcrimePage__content__aux">
+            <Input placeholder="Dirección"></Input>
+            <Input placeholder="Zona"></Input>
+          </InputContainer>
+          <p className="addcrimePage__content__text">Detalles:</p>
+          <textarea
+            className="addcrimePage__content__textarea"
+            name="details"
+            id="details"
+          ></textarea>
+        </form>
+      </Card>
     </MainLayout>
   );
 };
