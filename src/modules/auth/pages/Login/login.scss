@@ -14,6 +14,15 @@
       @include text(14, grey-70);
     }
   }
+  &__errorCard {
+    background-color: map-get($colors, danger);
+    border-radius: 0.25rem;
+    padding: 1rem;
+    margin: 0 0 1rem;
+    .loginError {
+      @include text(14, white);
+    }
+  }
   &__content {
     .loginInput {
       margin: 0 0 0.5rem;
