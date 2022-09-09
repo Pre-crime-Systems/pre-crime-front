@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
+import Loading from '../../../../components/Loading/Loading';
 import MainLayout from '../../../../components/MainLayout/MainLayout';
 import Table from '../../../../components/Table/Table';
 import { useApi } from '../../../../hooks/useApi';
@@ -49,12 +50,11 @@ const Reports: React.FC = () => {
     }
   }, [responseEndpoint]);
 
-  if (loading) return <div>Loading...</div>;
-
   return (
     <MainLayout className="reportsPage">
+      {loading && <Loading />}
       <Card className="reportsPage__header">
-        <h1>Reports</h1>
+        <h1>Reportes</h1>
         <Button buttonType="secondary">Subir reporte</Button>
       </Card>
       <Card className="reportsPage__content">
