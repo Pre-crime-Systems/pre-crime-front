@@ -12,13 +12,28 @@ interface MainLayoutProps {
 const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
   const { children, className } = props;
   const navigate = useNavigate();
-  const activeUrl = window.location.pathname;
-  
+  const activePath = window.location.pathname;
+
+  const getNameByPath = (path: string) => {
+    switch (path) {
+      case RoutePaths.Dashboard:
+        return 'Dashboard';
+      case RoutePaths.Map:
+        return 'Mapa';
+      case RoutePaths.Reports:
+        return 'Reportes';
+      case RoutePaths.Crimes:
+        return 'Crímenes';
+      case RoutePaths.Users:
+        return 'Usuarios';
+    }
+  };
+
   return (
     <section className={`mainLayout ${className && className}`}>
       <aside className="mainLayout__aside">
         <section className="asideLogo">
-          <label className="asideLogo__name">Pre Crime</label>
+          <label className="asideLogo__name">PreCrime</label>
         </section>
         <nav className="asideMenu">
           <p className="asideMenu__title">Menú</p>
@@ -26,7 +41,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
             <li className="menuItem">
               <a
                 className={`menuItem__content ${
-                  activeUrl === RoutePaths.Dashboard &&
+                  activePath === RoutePaths.Dashboard &&
                   'menuItem__content--active'
                 }`}
                 onClick={() => {
@@ -40,21 +55,20 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
             <li className="menuItem">
               <a
                 className={`menuItem__content ${
-                  activeUrl === RoutePaths.Map &&
-                  'menuItem__content--active'
+                  activePath === RoutePaths.Map && 'menuItem__content--active'
                 }`}
                 onClick={() => {
                   navigate(RoutePaths.Map);
                 }}
               >
                 <Icon className="itemIcon" type="maps" />
-                <span className="itemText" >Mapa</span>
+                <span className="itemText">Mapa</span>
               </a>
             </li>
             <li className="menuItem">
               <a
                 className={`menuItem__content ${
-                  activeUrl === RoutePaths.Reports &&
+                  activePath === RoutePaths.Reports &&
                   'menuItem__content--active'
                 }`}
                 onClick={() => {
@@ -68,7 +82,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
             <li className="menuItem">
               <a
                 className={`menuItem__content ${
-                  activeUrl === RoutePaths.Crimes &&
+                  activePath === RoutePaths.Crimes &&
                   'menuItem__content--active'
                 }`}
                 onClick={() => {
@@ -88,7 +102,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
             <li className="menuItem">
               <a
                 className={`menuItem__content ${
-                  activeUrl === RoutePaths.Users && 'menuItem__content--active'
+                  activePath === RoutePaths.Users && 'menuItem__content--active'
                 }`}
                 onClick={() => {
                   navigate(RoutePaths.Users);
@@ -109,7 +123,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
       </aside>
       <section className="mainLayout__right">
         <header className="rightHeader">
-          <p className="rightHeader__Logo">Pre Crime</p>
+          <h1>{getNameByPath(activePath)}</h1>
         </header>
         <main className="rightContent">{children}</main>
       </section>
