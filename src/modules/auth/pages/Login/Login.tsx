@@ -20,6 +20,7 @@ const Login: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [errorResponse, setErrorResponse] = useState<boolean>(false);
   const [responseEndpoint, callEndpoint] = useApi();
+  localStorage.setToken(null);
 
   const validFields = () => {
     if (email.length > 0 && password.length > 4) {

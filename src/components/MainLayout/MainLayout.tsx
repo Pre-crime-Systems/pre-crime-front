@@ -113,7 +113,12 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
               </a>
             </li>
             <li className="menuItem">
-              <a className="menuItem__content">
+              <a
+                className="menuItem__content"
+                onClick={() => {
+                  navigate(RoutePaths.Login);
+                }}
+              >
                 <Icon className="itemIcon" type="logOut" />
                 <span className="itemText">Cerrar sesión</span>
               </a>

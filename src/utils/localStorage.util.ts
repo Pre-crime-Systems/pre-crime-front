@@ -21,5 +21,6 @@ const setLocalStorage = (
   window.localStorage.setItem(code, serializedValue);
 };
 
-export const setToken = (token: string) => setLocalStorage('token', token);
-export const getToken = (): string => getLocalStorage('token');
+export const setToken = (token: string | null) =>
+  setLocalStorage('token', token);
+export const getToken = (): string | null => getLocalStorage('token');
