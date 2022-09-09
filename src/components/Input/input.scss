@@ -19,7 +19,7 @@
     }
   }
   &__errorMessage {
-    @include text(10, negative-50, bold);
+    @include text(10, danger, bold);
     padding: 0.25rem 0 0;
   }
 }
