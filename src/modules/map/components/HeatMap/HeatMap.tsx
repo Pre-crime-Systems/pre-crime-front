@@ -26,6 +26,27 @@ const HeatMap: React.FC<HeatMapProps> = (props: HeatMapProps) => {
     zoomControl: false,
   };
 
+  const onLoadHeatMap = (heatmapLayer: any) => {
+    const gradient = [
+      'rgba(0, 255, 255, 0)',
+      'rgba(0, 255, 255, 1)',
+      'rgba(0, 191, 255, 1)',
+      'rgba(0, 127, 255, 1)',
+      'rgba(0, 63, 255, 1)',
+      'rgba(0, 0, 255, 1)',
+      'rgba(0, 0, 223, 1)',
+      'rgba(0, 0, 191, 1)',
+      'rgba(0, 0, 159, 1)',
+      'rgba(0, 0, 127, 1)',
+      'rgba(63, 0, 91, 1)',
+      'rgba(127, 0, 63, 1)',
+      'rgba(191, 0, 31, 1)',
+      'rgba(255, 0, 0, 1)',
+    ];
+    heatmapLayer.set('gradient', gradient);
+    heatmapLayer.set('radius', 20);
+  };
+
   const parserData = () => {
     return crimes?.map((crime) => {
       return new google.maps.LatLng(crime?.latitude, crime?.longitude);
@@ -38,11 +59,11 @@ const HeatMap: React.FC<HeatMapProps> = (props: HeatMapProps) => {
         flexGrow: '1',
         height: '100%',
       }}
-      zoom={12}
+      zoom={13}
       center={center}
       options={mapOptions}
     >
-      <HeatmapLayer data={parserData()} />
+      <HeatmapLayer data={parserData()} onLoad={onLoadHeatMap} />
     </GoogleMap>
   ) : null;
 };
