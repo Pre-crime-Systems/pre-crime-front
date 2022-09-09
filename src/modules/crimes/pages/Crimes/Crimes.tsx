@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
 import Loading from '../../../../components/Loading/Loading';
@@ -6,11 +6,16 @@ import MainLayout from '../../../../components/MainLayout/MainLayout';
 import Table from '../../../../components/Table/Table';
 import { useApi } from '../../../../hooks/useApi';
 import { getCrimes } from '../../../../services/crime.service';
+import CrimeModal from '../../components/CrimeModal/CrimeModal';
+import { ContextCrime, ContextCrimeProvider } from '../../context/ContextCrime';
+import { Types as CrimeTypes } from '../../context/crime.reducer';
 import './crimes.scss';
 
 const Crimes: React.FC = () => {
+  const { state, dispatch } = useContext(ContextCrime);
   const [loading, setLoading] = useState<boolean>(false);
   const [crimes, setCrimes] = useState<any>(null);
+  const [openModal, setOpenModal] = useState<boolean>(false);
   const [responseEndpoint, callEndpoint] = useApi();
 
   const columns = [
@@ -47,16 +52,32 @@ const Crimes: React.FC = () => {
   }, [responseEndpoint]);
 
   return (
-    <MainLayout className="crimesPage">
-      {loading && <Loading />}
-      <Card className="crimesPage__header">
-        <h1>Crimes</h1>
-        <Button buttonType="secondary">Subir crímen</Button>
-      </Card>
-      <Card className="crimesPage__content">
-        {crimes && <Table columns={columns} data={crimes}></Table>}
-      </Card>
-    </MainLayout>
+    <ContextCrimeProvider>
+      <MainLayout className="crimesPage">
+        {loading && <Loading />}
+        {openModal && (
+          <CrimeModal
+            onClose={() => {
+              setOpenModal(false);
+            }}
+          />
+        )}
+        <Card className="crimesPage__header">
+          <h1>Lista de crímenes</h1>
+          <Button
+            buttonType="secondary"
+            onClick={() => {
+              setOpenModal(true);
+            }}
+          >
+            Registrar crímen
+          </Button>
+        </Card>
+        <Card className="crimesPage__content">
+          {crimes && <Table columns={columns} data={crimes}></Table>}
+        </Card>
+      </MainLayout>
+    </ContextCrimeProvider>
   );
 };
 
