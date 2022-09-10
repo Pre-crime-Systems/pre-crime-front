@@ -1,0 +1,19 @@
+@import '../../assets/scss/mixins';
+@import '../../assets/scss/variables';
+
+.select {
+  &.select--error {
+    .select__label {
+      color: map-get($colors, danger);
+    }
+  }
+  &__label {
+    @include text(12, grey-90, bold);
+    display: block;
+    margin: 0 0 0.25rem;
+  }
+  &__errorMessage {
+    @include text(10, danger, bold);
+    padding: 0.25rem 0 0;
+  }
+}
