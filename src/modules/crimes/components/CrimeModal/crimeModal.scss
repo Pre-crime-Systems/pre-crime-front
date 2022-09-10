@@ -1,5 +1,13 @@
 @import '../../../../assets/scss/variables';
 
 .crimeModal {
-  color: red;
+  padding: 0 1rem 1rem;
+  &__groupFields {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(3, 1fr);
+    .crimeField {
+      margin: 0 0 1rem;
+    }
+  }
 }
