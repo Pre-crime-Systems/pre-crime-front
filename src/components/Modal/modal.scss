@@ -23,6 +23,19 @@
     position: relative;
     top: 0;
     width: 100%;
+    .modalHeader {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem;
+      &__title {
+        @include text(14, grey-90, bold);
+      }
+      &__close {
+        border-radius: 0.25rem;
+        padding: 0.25rem;
+      }
+    }
   }
 }
 
