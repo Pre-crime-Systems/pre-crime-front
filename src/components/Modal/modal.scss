@@ -1,0 +1,52 @@
+@import '../../assets/scss/mixins';
+@import '../../assets/scss/variables';
+
+.modal {
+  align-items: flex-start;
+  background: rgba(0, 0, 0, 0.7);
+  bottom: 0;
+  display: none;
+  justify-content: center;
+  left: 0;
+  overflow: auto;
+  position: fixed;
+  right: 0;
+  top: 0;
+  width: 100%;
+  z-index: 10;
+  &.modal--show {
+    display: flex;
+  }
+  &__content {
+    background: map-get($colors, white);
+    min-height: calc(100vh - calc(100vh - 100%));
+    position: relative;
+    top: 0;
+    width: 100%;
+    .modalHeader {
+      align-items: center;
+      display: flex;
+      justify-content: space-between;
+      padding: 1rem;
+      &__title {
+        @include text(14, grey-90, bold);
+      }
+      &__close {
+        border-radius: 0.25rem;
+        padding: 0.25rem;
+      }
+    }
+  }
+}
+
+@media (min-width: map-get($breakpoints, md)) {
+  .modal {
+    &__content {
+      border-radius: 0.25rem;
+      height: auto;
+      margin: 1.75rem auto;
+      min-height: auto;
+      width: 575px;
+    }
+  }
+}

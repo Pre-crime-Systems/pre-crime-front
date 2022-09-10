@@ -2,7 +2,7 @@ import React from 'react';
 import './authLayout.scss';
 
 interface AuthLayoutProps {
-  children: React.ReactElement;
+  children: React.ReactNode;
 }
 
 const AuthLayout: React.FC<AuthLayoutProps> = (props: AuthLayoutProps) => {

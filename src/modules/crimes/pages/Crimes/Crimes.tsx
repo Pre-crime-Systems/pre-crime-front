@@ -1,185 +1,83 @@
-import React from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
+import Loading from '../../../../components/Loading/Loading';
 import MainLayout from '../../../../components/MainLayout/MainLayout';
 import Table from '../../../../components/Table/Table';
-import Input from '../../../../components/Input/Input';
-import InputContainer from '../../components/InputContainer/InputContainer';
+import { useApi } from '../../../../hooks/useApi';
+import { getCrimes } from '../../../../services/crime.service';
+import CrimeModal from '../../components/CrimeModal/CrimeModal';
+import { ContextCrime, ContextCrimeProvider } from '../../context/ContextCrime';
+import { Types as CrimeTypes } from '../../context/crime.reducer';
 import './crimes.scss';
 
 const Crimes: React.FC = () => {
+  const { state, dispatch } = useContext(ContextCrime);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [crimes, setCrimes] = useState<any>(null);
+  const [openModal, setOpenModal] = useState<boolean>(false);
+  const [responseEndpoint, callEndpoint] = useApi();
+
   const columns = [
-    {
-      Header: 'Tipo',
-      accessor: 'type',
-      minWidth: 50,
-    },
-    {
-      Header: 'Subtipo',
-      accessor: 'subtype',
-      minWidth: 100,
-    },
-    {
-      Header: 'Modalidad',
-      accessor: 'modality',
-      minWidth: 100,
-    },
-    {
-      Header: 'Dirección',
-      accessor: 'address',
-      minWidth: 120,
-    },
-    {
-      Header: 'Zona',
-      accessor: 'zone',
-      minWidth: 100,
-    },
-    {
-      Header: 'Estación de policía',
-      accessor: 'station',
-      minWidth: 120,
-    },
     {
       Header: 'Fecha',
       accessor: 'date',
       minWidth: 50,
     },
     {
-      Header: 'Hora',
-      accessor: 'hour',
-      minWidth: 50,
-    },
-  ];
-  const data = [
-    {
-      type: 'AAA',
-      subtype: 'Nombre',
-      modality: 'Nombre',
-      address: 'Dirección',
-      zone: 'Zona',
-      station: 'Direccion',
-      date: '25/08/2022',
-      hour: '19:20',
+      Header: 'Dirección',
+      accessor: 'address',
+      minWidth: 100,
     },
     {
-      type: 'AAA',
-      subtype: 'Nombre',
-      modality: 'Nombre',
-      address: 'Dirección',
-      zone: 'Zona',
-      station: 'Direccion',
-      date: '25/08/2022',
-      hour: '19:20',
+      Header: 'Latitud',
+      accessor: 'latitude',
+      minWidth: 100,
     },
     {
-      type: 'AAA',
-      subtype: 'Nombre',
-      modality: 'Nombre',
-      address: 'Dirección',
-      zone: 'Zona',
-      station: 'Direccion',
-      date: '25/08/2022',
-      hour: '19:20',
-    },
-    {
-      type: 'AAA',
-      subtype: 'Nombre',
-      modality: 'Nombre',
-      address: 'Dirección',
-      zone: 'Zona',
-      station: 'Direccion',
-      date: '25/08/2022',
-      hour: '19:20',
-    },
-    {
-      type: 'AAA',
-      subtype: 'Nombre',
-      modality: 'Nombre',
-      address: 'Dirección',
-      zone: 'Zona',
-      station: 'Direccion',
-      date: '25/08/2022',
-      hour: '19:20',
-    },
-    {
-      type: 'AAA',
-      subtype: 'Nombre',
-      modality: 'Nombre',
-      address: 'Dirección',
-      zone: 'Zona',
-      station: 'Direccion',
-      date: '25/08/2022',
-      hour: '19:20',
+      Header: 'Longitud',
+      accessor: 'longitude',
+      minWidth: 120,
     },
   ];
 
-  let crimesPageStatus = '--hidden';
-  let addcrimePageStatus = '';
+  useEffect(() => {
+    if (loading && responseEndpoint?.data) {
+      setLoading(false);
+      setCrimes(responseEndpoint?.data);
+    } else if (!loading && responseEndpoint?.data === null) {
+      setLoading(true);
+      callEndpoint(getCrimes());
+    }
+  }, [responseEndpoint]);
 
   return (
-    <MainLayout className="crimesPage">
-      <>
-        <Card className="crimesPage__header">
-          <h1>Crimes</h1>
-          <Button
-            onClick={() => {
-              crimesPageStatus = '--hidden';
-              addcrimePageStatus = ' ';
+    <ContextCrimeProvider>
+      <MainLayout className="crimesPage">
+        {loading && <Loading />}
+        {openModal && (
+          <CrimeModal
+            onClose={() => {
+              setOpenModal(false);
             }}
+          />
+        )}
+        <Card className="crimesPage__header">
+          <h1>Lista de crímenes</h1>
+          <Button
             buttonType="secondary"
+            onClick={() => {
+              setOpenModal(true);
+            }}
           >
-            Subir crímen
+            Registrar crímen
           </Button>
         </Card>
-        <Card className={'crimesPage__content' + crimesPageStatus}>
-          <Table columns={columns} data={data}></Table>
+        <Card className="crimesPage__content">
+          {crimes && <Table columns={columns} data={crimes}></Table>}
         </Card>
-        <Card className={'addcrimePage' + addcrimePageStatus}>
-          <section className="addcrimePage__header">
-            <h1>Formulario de creación de crimen</h1>
-            <Button
-              onClick={() => {
-                crimesPageStatus = ' ';
-                addcrimePageStatus = '--hidden';
-              }}
-              className="addcrimePage__header__button"
-              buttonType="secondary"
-            >
-              X
-            </Button>
-          </section>
-          <form className="addcrimePage__content">
-            <p className="addcrimePage__content__text">
-              Estación de policía, fecha y hora:
-            </p>
-            <InputContainer className="addcrimePage__content__aux">
-              <Input placeholder="Estación de policía"></Input>
-              <Input placeholder="Fecha"></Input>
-              <Input placeholder="Hora"></Input>
-            </InputContainer>
-            <p className="addcrimePage__content__text">
-              Tipo de delito y modalidad
-            </p>
-            <InputContainer className="addcrimePage__content__aux">
-              <Input placeholder="Tipo de delito"></Input>
-              <Input placeholder="Subtipo de delito"></Input>
-              <Input placeholder="Modalidad"></Input>
-            </InputContainer>
-            <p className="addcrimePage__content__text">Dirección y zona:</p>
-            <InputContainer className="addcrimePage__content__aux">
-              <Input placeholder="Dirección"></Input>
-              <Input placeholder="Zona"></Input>
-            </InputContainer>
-            <p className="addcrimePage__content__text">Detalles:</p>
-            <textarea
-              className="addcrimePage__content__textarea"
-              name="details"
-              id="details"
-            ></textarea>
-          </form>
-        </Card>
-      </>
-    </MainLayout>
+      </MainLayout>
+    </ContextCrimeProvider>
   );
 };
 

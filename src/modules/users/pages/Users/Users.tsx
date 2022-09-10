@@ -70,14 +70,12 @@ const Users: React.FC = () => {
 
   return (
     <MainLayout className="usersPage">
-      <>
-        <Card className="usersPage__header">
-          <h1>Usuarios</h1>
-        </Card>
-        <Card className="usersPage__content">
-          <Table columns={columns} data={data}></Table>
-        </Card>
-      </>
+      <Card className="usersPage__header">
+        <h1>Usuarios</h1>
+      </Card>
+      <Card className="usersPage__content">
+        <Table columns={columns} data={data}></Table>
+      </Card>
     </MainLayout>
   );
 };
