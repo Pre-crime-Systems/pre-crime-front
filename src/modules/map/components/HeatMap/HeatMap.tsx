@@ -18,12 +18,24 @@ const HeatMap: React.FC<HeatMapProps> = (props: HeatMapProps) => {
     googleMapsApiKey: API_KEY,
     libraries,
   });
+  const zoom = 12;
   const center = { lat: -12.0874512, lng: -77.0499421 };
   const mapOptions = {
     mapTypeControl: false,
     fullscreenControl: false,
     streetViewControl: false,
     zoomControl: false,
+  };
+
+  const onLoadMap = (map: any) => {
+    map.data.loadGeoJson(
+      'https://raw.githubusercontent.com/joseluisq/peru-geojson-datasets/master/lima_callao_distritos.geojson'
+    );
+    map.data.setStyle({
+      fillColor: 'transparent',
+      strokeWeight: 1,
+      strokeColor: '#024481',
+    });
   };
 
   const onLoadHeatMap = (heatmapLayer: any) => {
@@ -55,13 +67,14 @@ const HeatMap: React.FC<HeatMapProps> = (props: HeatMapProps) => {
 
   return isLoaded ? (
     <GoogleMap
+      center={center}
       mapContainerStyle={{
         flexGrow: '1',
         height: '100%',
       }}
-      zoom={13}
-      center={center}
+      onLoad={onLoadMap}
       options={mapOptions}
+      zoom={zoom}
     >
       <HeatmapLayer data={parserData()} onLoad={onLoadHeatMap} />
     </GoogleMap>
