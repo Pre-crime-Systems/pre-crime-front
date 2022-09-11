@@ -6,8 +6,9 @@ import MainLayout from '../../../../components/MainLayout/MainLayout';
 import Loading from '../../../../components/Loading/Loading';
 import { useApi } from '../../../../hooks/useApi';
 import { getCrimes } from '../../../../services/crime.service';
-import HeatMap from '../../components/HeatMap/HeatMap';
+import CrimeMap from '../../components/CrimeMap/CrimeMap';
 import './map.scss';
+import CrimeFilters from '../../components/CrimeFilters/CrimeFilters';
 
 const Map: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -25,19 +26,11 @@ const Map: React.FC = () => {
   }, [responseEndpoint]);
 
   return (
-    <MainLayout className="MapPage">
+    <MainLayout className="mapPage">
       {loading && <Loading />}
-      <section className="MapPage__Container">
-        {crimes && <HeatMap crimes={crimes} />}
-        <Card className="MapPage__Container__Filters">
-          <Input placeholder="Fecha"></Input>
-          <Input placeholder="Hora"></Input>
-          <Input placeholder="Dirección"></Input>
-          <Button buttonType="secondary">Filtrar</Button>
-        </Card>
-        <Button className="MapPage__Container__Predict" buttonType="primary">
-          Predecir
-        </Button>
+      <CrimeFilters className="mapPage__filters" />
+      <section className="mapPage__map">
+        {crimes && <CrimeMap crimes={crimes} />}
       </section>
     </MainLayout>
   );
