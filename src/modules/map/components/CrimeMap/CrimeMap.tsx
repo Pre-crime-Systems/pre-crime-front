@@ -8,11 +8,11 @@ import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-ur
 import { API_KEY } from '../../../../constants/google.constant';
 const libraries: Libraries = ['visualization'];
 
-interface HeatMapProps {
+interface CrimeMapProps {
   crimes: any[];
 }
 
-const HeatMap: React.FC<HeatMapProps> = (props: HeatMapProps) => {
+const CrimeMap: React.FC<CrimeMapProps> = (props: CrimeMapProps) => {
   const { crimes } = props;
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: API_KEY,
@@ -108,6 +108,7 @@ const HeatMap: React.FC<HeatMapProps> = (props: HeatMapProps) => {
       mapContainerStyle={{
         flexGrow: '1',
         height: '100%',
+        borderRadius: '0.5rem',
       }}
       onLoad={onLoadMap}
       options={mapOptions}
@@ -117,4 +118,4 @@ const HeatMap: React.FC<HeatMapProps> = (props: HeatMapProps) => {
     </GoogleMap>
   ) : null;
 };
-export default HeatMap;
+export default CrimeMap;
