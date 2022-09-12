@@ -1,9 +1,16 @@
+@import '../../../../assets/scss/mixins';
+@import '../../../../assets/scss/variables';
+
 .crimeFilters {
   padding: 1rem;
   &__title {
+    @include text(14, grey-90, bold);
+    margin: 0 0 0.5rem;
   }
-  &__fields {
+  &__switch {
+    @include text(14, grey-90);
+    align-items: center;
     display: flex;
-    justify-content: space-between;
+    margin: 0.5rem 0 0;
   }
 }
