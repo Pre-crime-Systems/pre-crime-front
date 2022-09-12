@@ -1,13 +1,8 @@
 export const buildInfo = (eventProperties: any) => {
   return `<div class="crimeInfo">
-		<h4 class="crimeInfo__title">${eventProperties?.distrito}</h4>
-		<p class="crimeInfo__description">Probabilidad del crimen según código postal</p>
-		${eventProperties?.zipCodes?.map(
-			(zipCode: any) =>
-			`<p class="crimeInfo__item">${zipCode?.label}
-				<span class="itemPercentage">${zipCode?.percentage}</span>
-			</p>`
-		)}
+		<h4 class="crimeInfo__title">${eventProperties?.district}</h4>
+		<p class="crimeInfo__description">Probabilidad del crimen en el código postal ${eventProperties?.zipCode}</p>
+		<p class="crimeInfo__item">Porcentaje: ${eventProperties?.percentage}</p>
 	</div>`;
 };
 export const LIMA_GEOJSON_DATA = {

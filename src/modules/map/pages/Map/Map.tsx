@@ -9,9 +9,11 @@ import { getCrimes } from '../../../../services/crime.service';
 import CrimeMap from '../../components/CrimeMap/CrimeMap';
 import './map.scss';
 import CrimeFilters from '../../components/CrimeFilters/CrimeFilters';
+import PredictionMap from '../../components/CrimeMap/PredictionMap';
 
 const Map: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
+  const [viewPredictions, setViewPredictions] = useState<boolean>(false);
   const [crimes, setCrimes] = useState<any>(null);
   const [responseEndpoint, callEndpoint] = useApi();
 
@@ -28,9 +30,16 @@ const Map: React.FC = () => {
   return (
     <MainLayout className="mapPage">
       {loading && <Loading />}
-      <CrimeFilters className="mapPage__filters" />
+      <CrimeFilters
+        className="mapPage__filters"
+        mode={viewPredictions}
+        setMode={(value) => {
+          setViewPredictions(value);
+        }}
+      />
       <section className="mapPage__map">
-        {crimes && <CrimeMap crimes={crimes} />}
+        {crimes && !viewPredictions && <CrimeMap crimes={crimes} />}
+        {crimes && viewPredictions && <PredictionMap crimes={crimes} />}
       </section>
     </MainLayout>
   );

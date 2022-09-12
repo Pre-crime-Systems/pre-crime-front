@@ -10,9 +10,8 @@ import {
   HEATMAP_GRADIENT,
   HEATMAP_RADIUS,
 } from '../../../../constants/google.constant';
-import { buildInfo, LIMA_GEOJSON_DATA } from '../../utils/crime.util';
 import './crimeMap.scss';
-import { ZIP_CODES_DATA } from '../../utils/zipCodes.util';
+
 const libraries: Libraries = ['visualization'];
 
 interface CrimeMapProps {
@@ -40,42 +39,6 @@ const CrimeMap: React.FC<CrimeMapProps> = (props: CrimeMapProps) => {
   };
   const zoom = 12;
 
-  const onLoadMap = (map: any) => {
-    map.data.addGeoJson(LIMA_GEOJSON_DATA);
-    // map.data.addGeoJson(ZIP_CODES_DATA);
-    map.data.setStyle((feature: any) => {
-      const provi = feature.getProperty('provincia');
-      const color = provi === 'LIMA' ? 'red' : 'blue';
-      return {
-        fillColor: color,
-        strokeWeight: 1,
-        strokeColor: '#024481',
-      };
-    });
-
-    let prevInfo: any = null;
-    map.data.addListener('click', function (event: any) {
-      const infoWindow = new google.maps.InfoWindow({
-        content: buildInfo({
-          distrito: event.feature.getProperty('distrito'),
-          zipCodes: [
-            { label: '15001', percentage: '50%' },
-            { label: '15002', percentage: '40%' },
-          ],
-        }),
-        position: event.latLng,
-      });
-      if (prevInfo !== null && prevInfo !== infoWindow) {
-        prevInfo?.close();
-      }
-      infoWindow.open({
-        map,
-        shouldFocus: false,
-      });
-      prevInfo = infoWindow;
-    });
-  };
-
   const onLoadHeatMap = (heatmapLayer: any) => {
     heatmapLayer.set('gradient', HEATMAP_GRADIENT);
     heatmapLayer.set('radius', HEATMAP_RADIUS);
@@ -91,7 +54,6 @@ const CrimeMap: React.FC<CrimeMapProps> = (props: CrimeMapProps) => {
     <GoogleMap
       center={center}
       mapContainerStyle={mapStyle}
-      onLoad={onLoadMap}
       options={mapOptions}
       zoom={zoom}
     >
