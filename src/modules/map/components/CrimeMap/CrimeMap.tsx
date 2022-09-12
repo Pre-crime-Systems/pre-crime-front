@@ -9,8 +9,9 @@ import {
   API_KEY,
   HEATMAP_GRADIENT,
   HEATMAP_RADIUS,
-  LIMA_GEOJSON_URL,
 } from '../../../../constants/google.constant';
+import { buildInfo, LIMA_GEOJSON_DATA } from '../../utils/crime.util';
+import './crimeMap.scss';
 const libraries: Libraries = ['visualization'];
 
 interface CrimeMapProps {
@@ -38,18 +39,8 @@ const CrimeMap: React.FC<CrimeMapProps> = (props: CrimeMapProps) => {
   };
   const zoom = 12;
 
-  const contentString =
-    '<div id="content">' +
-    '<div id="siteNotice">' +
-    '</div>' +
-    '<h1 id="firstHeading" class="firstHeading">Uluru</h1>' +
-    '<div id="bodyContent">' +
-    '<p><b>Uluru</b>, also referred to as <b>Ayers Rock</b>, is a large </p>' +
-    '</div>' +
-    '</div>';
-
   const onLoadMap = (map: any) => {
-    map.data.loadGeoJson(LIMA_GEOJSON_URL);
+    map.data.addGeoJson(LIMA_GEOJSON_DATA);
     map.data.setStyle((feature: any) => {
       const provi = feature.getProperty('provincia');
       const color = provi === 'LIMA' ? 'red' : 'blue';
@@ -62,20 +53,23 @@ const CrimeMap: React.FC<CrimeMapProps> = (props: CrimeMapProps) => {
 
     let prevInfo: any = null;
     map.data.addListener('click', function (event: any) {
-      //set info
       const infoWindow = new google.maps.InfoWindow({
-        content: contentString,
+        content: buildInfo({
+          distrito: event.feature.getProperty('distrito'),
+          zipCodes: [
+            { label: '15001', percentage: '50%' },
+            { label: '15002', percentage: '40%' },
+          ],
+        }),
         position: event.latLng,
       });
       if (prevInfo !== null && prevInfo !== infoWindow) {
         prevInfo?.close();
       }
-      //show info
       infoWindow.open({
         map,
         shouldFocus: false,
       });
-      //save values
       prevInfo = infoWindow;
     });
   };
