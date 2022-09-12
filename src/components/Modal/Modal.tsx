@@ -1,5 +1,6 @@
 import * as React from 'react';
 import useEventListener from '../../utils/useEventListener';
+import Icon from '../Icon/Icon';
 import './modal.scss';
 
 interface IModalProps {
@@ -34,7 +35,7 @@ const Modal: React.FC<IModalProps> = (props: IModalProps) => {
           <h3 className="modalHeader__title">{title}</h3>
           {onClose && (
             <button className="modalHeader__close" onClick={onClose}>
-              close
+              <Icon type="close" />
             </button>
           )}
         </div>
