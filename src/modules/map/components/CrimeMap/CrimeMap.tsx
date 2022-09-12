@@ -12,6 +12,7 @@ import {
 } from '../../../../constants/google.constant';
 import { buildInfo, LIMA_GEOJSON_DATA } from '../../utils/crime.util';
 import './crimeMap.scss';
+import { ZIP_CODES_DATA } from '../../utils/zipCodes.util';
 const libraries: Libraries = ['visualization'];
 
 interface CrimeMapProps {
@@ -41,6 +42,7 @@ const CrimeMap: React.FC<CrimeMapProps> = (props: CrimeMapProps) => {
 
   const onLoadMap = (map: any) => {
     map.data.addGeoJson(LIMA_GEOJSON_DATA);
+    // map.data.addGeoJson(ZIP_CODES_DATA);
     map.data.setStyle((feature: any) => {
       const provi = feature.getProperty('provincia');
       const color = provi === 'LIMA' ? 'red' : 'blue';
