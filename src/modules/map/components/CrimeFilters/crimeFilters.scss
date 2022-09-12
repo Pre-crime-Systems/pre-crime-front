@@ -1,5 +1,9 @@
 .crimeFilters {
-  display: flex;
-  justify-content: space-between;
   padding: 1rem;
+  &__title {
+  }
+  &__fields {
+    display: flex;
+    justify-content: space-between;
+  }
 }
