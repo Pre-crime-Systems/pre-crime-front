@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Button from '../../../../components/Button/Button';
 import Input from '../../../../components/Input/Input';
 import Modal from '../../../../components/Modal/Modal';
 import Select from '../../../../components/Select/Select';
@@ -111,6 +112,14 @@ const CrimeModal: React.FC<CrimeModalProps> = (props: CrimeModalProps) => {
             }}
           />
           <Input className="crimeField" label="Dirección" />
+        </div>
+        <div className="crimeModal__buttons">
+          <Button buttonType="primary" className="itemButton" outline>
+            Cancelar
+          </Button>
+          <Button buttonType="primary" className="itemButton">
+            Registrar
+          </Button>
         </div>
       </section>
     </Modal>
