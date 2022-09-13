@@ -20,11 +20,11 @@ const libraries: Libraries = ['visualization'];
 
 interface GoogleMapsProps {
   data: any;
-  predictionMode: boolean;
+  predictionMode?: boolean;
 }
 
 const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
-  const { data, predictionMode } = props;
+  const { data, predictionMode = false } = props;
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: API_KEY,

@@ -6,13 +6,13 @@ import GoogleMaps from '../GoogleMaps/GoogleMaps';
 
 const PredictionMap: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
-  const [predictions, setPredictions] = useState<any>(null);
+  const [data, setData] = useState<any>(null);
   const [responseEndpoint, callEndpoint] = useApi();
 
   useEffect(() => {
     if (loading && responseEndpoint?.data) {
       setLoading(false);
-      setPredictions(responseEndpoint?.data);
+      setData(responseEndpoint?.data);
     } else if (!loading && responseEndpoint?.data === null) {
       setLoading(true);
       callEndpoint(getPredictions());
@@ -23,6 +23,10 @@ const PredictionMap: React.FC = () => {
     return <Loading />;
   }
 
-  return <GoogleMaps predictionMode data={predictions}></GoogleMaps>;
+  if (data) {
+    return <GoogleMaps predictionMode data={data}></GoogleMaps>;
+  }
+
+  return null;
 };
 export default PredictionMap;
