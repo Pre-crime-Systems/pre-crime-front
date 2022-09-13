@@ -10,4 +10,14 @@
       margin: 0 0 1rem;
     }
   }
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    .itemButton {
+      margin: 0.5rem;
+      &:last-of-type {
+        margin: 0.5rem 0 0.5rem 0.5rem;
+      }
+    }
+  }
 }

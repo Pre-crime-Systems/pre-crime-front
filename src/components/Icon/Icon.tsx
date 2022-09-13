@@ -1,6 +1,8 @@
 import React from 'react';
+import cx from 'classnames';
+import './icon.scss';
 
-type IconType = 'dashboard' | 'maps' | 'reports' | 'users' | 'logOut';
+type IconType = 'dashboard' | 'maps' | 'reports' | 'users' | 'logOut' | 'close';
 
 interface IconProps {
   className?: string;
@@ -98,10 +100,26 @@ const Icon: React.FC<IconProps> = (props: IconProps) => {
             <path d="M20 3h-9c-1.103 0-2 .897-2 2v4h2V5h9v14h-9v-4H9v4c0 1.103.897 2 2 2h9c1.103 0 2-.897 2-2V5c0-1.103-.897-2-2-2z"></path>
           </svg>
         );
+      case 'close':
+        return (
+          <svg
+            stroke="currentColor"
+            fill="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            height="1em"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path d="M405 136.798L375.202 107 256 226.202 136.798 107 107 136.798 226.202 256 107 375.202 136.798 405 256 285.798 375.202 405 405 375.202 285.798 256z"></path>
+          </svg>
+        );
     }
   };
 
-  return <span className={className && className}>{getIcon()}</span>;
+  return (
+    <span className={cx('icon', className && className)}>{getIcon()}</span>
+  );
 };
 
 export default Icon;

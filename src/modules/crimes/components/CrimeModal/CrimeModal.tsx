@@ -1,8 +1,13 @@
-import React, { useContext, useState } from 'react';
+import React, { useEffect, useState } from 'react';
+import Button from '../../../../components/Button/Button';
 import Input from '../../../../components/Input/Input';
 import Modal from '../../../../components/Modal/Modal';
 import Select from '../../../../components/Select/Select';
-import { ContextCrime } from '../../context/ContextCrime';
+import { useApi } from '../../../../hooks/useApi';
+import {
+  getDistricts,
+  getZonesByDistrict,
+} from '../../../../services/location.service';
 import './crimeModal.scss';
 
 interface CrimeModalProps {
@@ -11,10 +16,45 @@ interface CrimeModalProps {
 
 const CrimeModal: React.FC<CrimeModalProps> = (props: CrimeModalProps) => {
   const { onClose } = props;
-  const { state, dispatch } = useContext(ContextCrime);
-  const [date, setDate] = useState<string>('');
-  const [time, setTime] = useState<string>('');
-  const [address, setAddress] = useState<string>('');
+  const [districts, setDistricts] = useState<any>(null);
+  const [loadingDistricts, setLoadingDistricts] = useState<any>(null);
+  const [selectedDistrict, setSelectedDistrict] = useState<any>(null);
+  const [zones, setZones] = useState<any>(null);
+  const [loadingZones, setLoadingZones] = useState<any>(null);
+  const [selectedZone, setSelectedZone] = useState<any>(null);
+  const [districtsResponse, callDistricts] = useApi();
+  const [zonesResponse, callZones] = useApi();
+
+  useEffect(() => {
+    if (loadingDistricts && districtsResponse?.data) {
+      setLoadingDistricts(false);
+      setDistricts(
+        districtsResponse?.data?.map((district: any) => {
+          return {
+            label: district?.name,
+            value: district?.id,
+          };
+        })
+      );
+    } else if (!loadingDistricts && districtsResponse?.data === null) {
+      setLoadingDistricts(true);
+      callDistricts(getDistricts());
+    }
+  }, [districtsResponse]);
+
+  useEffect(() => {
+    if (loadingZones && zonesResponse?.data) {
+      setLoadingZones(false);
+      setZones(
+        zonesResponse?.data?.map((zone: any) => {
+          return {
+            label: zone?.code,
+            value: zone?.id,
+          };
+        })
+      );
+    }
+  }, [zonesResponse]);
 
   return (
     <Modal active={true} title="Registrar un crímen" onClose={onClose}>
@@ -25,22 +65,8 @@ const CrimeModal: React.FC<CrimeModalProps> = (props: CrimeModalProps) => {
             label="Comisaria"
             options={[{ label: 'Comisaria del sol', value: 1 }]}
           />
-          <Input
-            className="crimeField"
-            label="Fecha"
-            value={date}
-            onChange={(event) => {
-              setDate(event.target.value);
-            }}
-          />
-          <Input
-            className="crimeField"
-            label="Hora"
-            value={date}
-            onChange={(event) => {
-              setTime(event.target.value);
-            }}
-          />
+          <Input className="crimeField" label="Fecha" value={''} />
+          <Input className="crimeField" label="Hora" value={''} />
         </div>
         <div className="crimeModal__groupFields">
           <Select
@@ -63,14 +89,37 @@ const CrimeModal: React.FC<CrimeModalProps> = (props: CrimeModalProps) => {
           <Select
             className="crimeField"
             label="Distrito"
-            options={[{ label: 'Un distrito', value: 1 }]}
+            placeholder="Distrito"
+            options={districts}
+            value={selectedDistrict}
+            onChange={(newValue) => {
+              setSelectedDistrict(newValue);
+              setSelectedZone(null);
+              if (newValue) {
+                setLoadingZones(true);
+                callZones(getZonesByDistrict(newValue?.value));
+              }
+            }}
           />
           <Select
             className="crimeField"
-            label="Zona"
-            options={[{ label: 'Una zona', value: 1 }]}
+            label="Código postal"
+            placeholder="Código postal"
+            options={zones}
+            value={selectedZone}
+            onChange={(newValue) => {
+              setSelectedZone(newValue);
+            }}
           />
           <Input className="crimeField" label="Dirección" />
+        </div>
+        <div className="crimeModal__buttons">
+          <Button buttonType="primary" className="itemButton" outline>
+            Cancelar
+          </Button>
+          <Button buttonType="primary" className="itemButton">
+            Registrar
+          </Button>
         </div>
       </section>
     </Modal>
