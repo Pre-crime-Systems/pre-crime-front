@@ -1,15 +1,12 @@
 import React, { useEffect, useState } from 'react';
-import Button from '../../../../components/Button/Button';
-import Input from '../../../../components/Input/Input';
-import Card from '../../../../components/Card/Card';
 import MainLayout from '../../../../components/MainLayout/MainLayout';
 import Loading from '../../../../components/Loading/Loading';
 import { useApi } from '../../../../hooks/useApi';
 import { getCrimes } from '../../../../services/crime.service';
 import CrimeMap from '../../components/CrimeMap/CrimeMap';
-import './map.scss';
 import CrimeFilters from '../../components/CrimeFilters/CrimeFilters';
 import PredictionMap from '../../components/CrimeMap/PredictionMap';
+import './map.scss';
 
 const Map: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
@@ -39,7 +36,7 @@ const Map: React.FC = () => {
       />
       <section className="mapPage__map">
         {crimes && !viewPredictions && <CrimeMap crimes={crimes} />}
-        {crimes && viewPredictions && <PredictionMap crimes={crimes} />}
+        {viewPredictions && <PredictionMap />}
       </section>
     </MainLayout>
   );

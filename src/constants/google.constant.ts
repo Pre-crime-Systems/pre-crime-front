@@ -18,3 +18,15 @@ export const HEATMAP_GRADIENT = [
   'rgba(255, 0, 0, 1)',
 ];
 export const HEATMAP_RADIUS = 20;
+export const MAP_OPTIONS = {
+  mapTypeControl: false,
+  fullscreenControl: false,
+  streetViewControl: false,
+  zoomControl: false,
+};
+export const MAP_STYLE = {
+  flexGrow: '1',
+  height: '100%',
+  borderRadius: '0.5rem',
+};
+export const MAP_ZOOM = 12;

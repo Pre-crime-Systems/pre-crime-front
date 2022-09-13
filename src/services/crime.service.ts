@@ -8,3 +8,11 @@ export const getCrimes = () => {
   };
   return request;
 };
+
+export const getPredictions = () => {
+  const request: ApiRequest = {
+    method: ApiMethod.Get,
+    url: `${BASE_URL}/api/geo`,
+  };
+  return request;
+};
