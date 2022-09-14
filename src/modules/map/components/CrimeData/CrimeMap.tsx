@@ -6,10 +6,11 @@ import GoogleMaps from '../GoogleMaps/GoogleMaps';
 
 interface CrimeMapProps {
   filters: any;
+  resetData: any;
 }
 
 const CrimeMap: React.FC<CrimeMapProps> = (props: CrimeMapProps) => {
-  const { filters } = props;
+  const { filters, resetData } = props;
 
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>(null);
@@ -35,6 +36,12 @@ const CrimeMap: React.FC<CrimeMapProps> = (props: CrimeMapProps) => {
       setFilteredData(filtered);
     }
   }, [filters]);
+
+  useEffect(() => {
+    if (resetData && data) {
+      setFilteredData(data);
+    }
+  }, [resetData]);
 
   if (loading) {
     return <Loading />;

@@ -6,12 +6,13 @@ import GoogleMaps from '../GoogleMaps/GoogleMaps';
 
 interface PredictionMapProps {
   filters: any;
+  resetData: any;
 }
 
 const PredictionMap: React.FC<PredictionMapProps> = (
   props: PredictionMapProps
 ) => {
-  const { filters } = props;
+  const { filters, resetData } = props;
 
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>(null);
@@ -38,6 +39,12 @@ const PredictionMap: React.FC<PredictionMapProps> = (
       setFilteredData({ type: data?.type, features: filteredFeatures });
     }
   }, [filters]);
+
+  useEffect(() => {
+    if (resetData && data) {
+      setFilteredData(data);
+    }
+  }, [resetData]);
 
   if (loading) {
     return <Loading />;

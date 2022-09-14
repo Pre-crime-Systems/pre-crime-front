@@ -8,22 +8,22 @@ import './map.scss';
 const Map: React.FC = () => {
   const [predictionMode, setPredictionMode] = useState<boolean>(false);
   const [filters, setFilters] = useState<any>(null);
+  const [reset, setReset] = useState<any>(null);
 
   return (
     <MainLayout className="mapPage">
       <CrimeFilters
         className="mapPage__filters"
         predictionMode={predictionMode}
-        setFilters={(filters) => {
-          setFilters(filters);
-        }}
-        setPredictionMode={(value) => {
-          setPredictionMode(value);
-        }}
+        onClearFilters={setReset}
+        setFilters={setFilters}
+        setPredictionMode={setPredictionMode}
       />
       <section className="mapPage__map">
-        {!predictionMode && <CrimeMap filters={filters} />}
-        {predictionMode && <PredictionMap filters={filters} />}
+        {!predictionMode && <CrimeMap filters={filters} resetData={reset} />}
+        {predictionMode && (
+          <PredictionMap filters={filters} resetData={reset} />
+        )}
       </section>
     </MainLayout>
   );

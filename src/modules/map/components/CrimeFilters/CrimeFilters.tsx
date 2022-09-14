@@ -1,13 +1,14 @@
 import React, { useState } from 'react';
 import cx from 'classnames';
+import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
 import Select from '../../../../components/Select/Select';
 import './crimeFilters.scss';
-import Button from '../../../../components/Button/Button';
 
 interface CrimeFiltersProps {
   className?: string;
   predictionMode: boolean;
+  onClearFilters: (value: any) => void;
   setFilters: (value: any) => void;
   setPredictionMode: (value: boolean) => void;
 }
@@ -15,13 +16,20 @@ interface CrimeFiltersProps {
 const CrimeFilters: React.FC<CrimeFiltersProps> = (
   props: CrimeFiltersProps
 ) => {
-  const { className, predictionMode, setPredictionMode, setFilters } = props;
+  const {
+    className,
+    predictionMode,
+    onClearFilters,
+    setPredictionMode,
+    setFilters,
+  } = props;
   const [date, setDate] = useState<any>(null);
   const [time, setTime] = useState<any>(null);
 
-  const onClean = () => {
+  const onClear = () => {
     setDate(null);
     setTime(null);
+    onClearFilters(Math.random());
   };
 
   const onApply = () => {
@@ -95,7 +103,7 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
           buttonType="primary"
           className="filterButtons__item"
           outline
-          onClick={onClean}
+          onClick={onClear}
         >
           Limpiar
         </Button>
@@ -118,7 +126,7 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
         <input
           type="checkbox"
           onClick={() => {
-            onClean();
+            onClear();
             setPredictionMode(!predictionMode);
           }}
         />
