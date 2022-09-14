@@ -2,6 +2,7 @@ import React from 'react';
 import {
   GoogleMap,
   HeatmapLayer,
+  Polyline,
   useJsApiLoader,
 } from '@react-google-maps/api';
 import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-url';
@@ -41,6 +42,15 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
       return 'red';
     }
   };
+
+  let lineCoords: any[] = [];
+  if (predictionMode) {
+    data?.features?.forEach((feature: any) => {
+      const lat = feature?.properties?.y;
+      const lng = feature?.properties?.x;
+      lineCoords.push({ lat, lng });
+    });
+  }
 
   const onLoadMap = (map: any) => {
     if (predictionMode) {
@@ -96,6 +106,21 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
       options={MAP_OPTIONS}
       zoom={MAP_ZOOM}
     >
+      {predictionMode && (
+        <Polyline
+          path={lineCoords}
+          options={{
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            clickable: false,
+            draggable: false,
+            editable: false,
+            visible: true,
+            zIndex: 1,
+          }}
+        />
+      )}
       {!predictionMode && (
         <HeatmapLayer data={parserData()} onLoad={onLoadHeatMap} />
       )}
