@@ -1,7 +1,8 @@
-import React from 'react';
-import { useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import cx from 'classnames';
 import { RoutePaths } from '../../routes/routePaths';
 import Icon from '../Icon/Icon';
+import MainMenu from '../MainMenu/MainMenu';
 import './mainLayout.scss';
 
 interface MainLayoutProps {
@@ -11,7 +12,7 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
   const { children, className } = props;
-  const navigate = useNavigate();
+  const [showMenu, setShowMenu] = useState<boolean>(false);
   const activePath = window.location.pathname;
 
   const getNameByPath = (path: string) => {
@@ -35,96 +36,27 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
         <section className="asideLogo">
           <label className="asideLogo__name">PreCrime</label>
         </section>
-        <nav className="asideMenu">
-          <p className="asideMenu__title">Menú</p>
-          <ul className="asideMenu__list">
-            <li className="menuItem">
-              <a
-                className={`menuItem__content ${
-                  activePath === RoutePaths.Dashboard &&
-                  'menuItem__content--active'
-                }`}
-                onClick={() => {
-                  navigate(RoutePaths.Dashboard);
-                }}
-              >
-                <Icon className="itemIcon" type="dashboard" />
-                <span className="itemText">Dashboard</span>
-              </a>
-            </li>
-            <li className="menuItem">
-              <a
-                className={`menuItem__content ${
-                  activePath === RoutePaths.Map && 'menuItem__content--active'
-                }`}
-                onClick={() => {
-                  navigate(RoutePaths.Map);
-                }}
-              >
-                <Icon className="itemIcon" type="maps" />
-                <span className="itemText">Mapa</span>
-              </a>
-            </li>
-            <li className="menuItem">
-              <a
-                className={`menuItem__content ${
-                  activePath === RoutePaths.Reports &&
-                  'menuItem__content--active'
-                }`}
-                onClick={() => {
-                  navigate(RoutePaths.Reports);
-                }}
-              >
-                <Icon className="itemIcon" type="reports" />
-                <span className="itemText">Reportes</span>
-              </a>
-            </li>
-            <li className="menuItem">
-              <a
-                className={`menuItem__content ${
-                  activePath === RoutePaths.Crimes &&
-                  'menuItem__content--active'
-                }`}
-                onClick={() => {
-                  navigate(RoutePaths.Crimes);
-                }}
-              >
-                <Icon className="itemIcon" type="reports" />
-                <span className="itemText">Crímenes</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
-        <div className="menuBorder"></div>
-        <nav className="asideMenu">
-          <p className="asideMenu__title">Cuenta</p>
-          <ul className="asideMenu__list">
-            <li className="menuItem">
-              <a
-                className={`menuItem__content ${
-                  activePath === RoutePaths.Users && 'menuItem__content--active'
-                }`}
-                onClick={() => {
-                  navigate(RoutePaths.Users);
-                }}
-              >
-                <Icon className="itemIcon" type="users" />
-                <span className="itemText">Usuarios</span>
-              </a>
-            </li>
-            <li className="menuItem">
-              <a
-                className="menuItem__content"
-                onClick={() => {
-                  navigate(RoutePaths.Login);
-                }}
-              >
-                <Icon className="itemIcon" type="logOut" />
-                <span className="itemText">Cerrar sesión</span>
-              </a>
-            </li>
-          </ul>
-        </nav>
+        <section
+          className={cx('asideOptions', showMenu && 'asideOptions--show')}
+        >
+          <MainMenu className="asideOptions__desktop" />
+          <div
+            className={cx(
+              'asideOptions__mobile',
+              showMenu && 'asideOptions__mobile--show'
+            )}
+          >
+            <button
+              className="menuButton"
+              onClick={() => {
+                setShowMenu(!showMenu);
+              }}
+            >
+              <Icon className="menuButton__icon" type="menu" />
+            </button>
+            <MainMenu className="menuContent" />
+          </div>
+        </section>
       </aside>
       <section className="mainLayout__right">
         <header className="rightHeader">

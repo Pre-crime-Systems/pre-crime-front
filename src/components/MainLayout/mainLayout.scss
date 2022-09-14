@@ -21,51 +21,10 @@ $topHeight: 70px;
         @include text(18, primary, bold);
       }
     }
-    .asideMenu {
-      padding: 2rem;
-      &__title {
-        @include text(16, grey-90, medium);
+    .asideOptions {
+      &__mobile {
+        display: none;
       }
-      &__list {
-        list-style: none;
-        margin: 1rem 0 0;
-        padding: 0;
-        .menuItem {
-          &__content {
-            @include text(16, grey-50, medium);
-            border-radius: 0.5rem;
-            cursor: pointer;
-            padding: 1rem;
-            display: flex;
-            align-items: flex-start;
-            &:hover {
-              background-color: map-get($colors, grey-10);
-            }
-            &--active {
-              background-color: map-get($colors, primary);
-              color: map-get($colors, white);
-              &:hover {
-                background-color: darken(map-get($colors, primary), 10%);
-              }
-            }
-            .itemIcon {
-              margin: 0 0.5rem 0 0;
-            }
-            @media (max-width: map-get($breakpoints, lg)) {
-              text-align: center;
-            }
-          }
-        }
-      }
-      &:last-of-type {
-        border: none;
-      }
-    }
-    .menuBorder {
-      background-color: map-get($colors, grey-10);
-      height: 1px;
-      margin: auto;
-      width: 90%;
     }
   }
   &__right {
@@ -74,11 +33,64 @@ $topHeight: 70px;
       align-items: center;
       display: flex;
       height: $topHeight;
-      height: $topHeight;
       padding: 1rem;
     }
     .rightContent {
       padding: 1rem;
+    }
+  }
+}
+
+@media (max-width: map-get($breakpoints, md )) {
+  .mainLayout {
+    flex-direction: column;
+    &__aside {
+      width: 100%;
+      display: block;
+      .asideLogo {
+        justify-content: center;
+      }
+      .asideOptions {
+        position: absolute;
+        top: 0;
+        z-index: 1;
+        &.asideOptions--show {
+          background-color: rgba(map-get($colors, black), 0.5);
+          height: 100vh;
+          width: 100vw;
+        }
+        &__desktop {
+          display: none;
+        }
+        &__mobile {
+          display: block;
+          .menuButton {
+            align-items: center;
+            background-color: transparent;
+            border: none;
+            border-right: 1px solid map-get($colors, grey-30);
+            display: flex;
+            height: $topHeight;
+            justify-content: center;
+            width: $topHeight;
+            &__icon {
+              @include text(28, grey-50);
+            }
+          }
+          .menuContent {
+            display: none;
+          }
+          &.asideOptions__mobile--show {
+            background-color: map-get($colors, white);
+            height: 100vh;
+            width: 70%;
+            .menuContent {
+              border-top: 1px solid map-get($colors, grey-30);
+              display: block;
+            }
+          }
+        }
+      }
     }
   }
 }
