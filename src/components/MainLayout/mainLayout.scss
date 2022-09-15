@@ -1,8 +1,8 @@
 @import '../../assets/scss/mixins';
 @import '../../assets/scss/variables';
 
-$asideWidth: 270px;
-$topHeight: 70px;
+$asideWidth: 220px;
+$topHeight: 60px;
 
 .mainLayout {
   align-items: stretch;
@@ -36,7 +36,7 @@ $topHeight: 70px;
       padding: 1rem;
     }
     .rightContent {
-      padding: 1rem;
+      padding: 0 1rem;
     }
   }
 }

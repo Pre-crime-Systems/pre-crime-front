@@ -2,7 +2,7 @@
 @import '../../assets/scss/variables';
 
 .asideMenu {
-  padding: 2rem;
+  padding: 1rem 1.5rem;
   &__title {
     @include text(16, grey-90, medium);
   }

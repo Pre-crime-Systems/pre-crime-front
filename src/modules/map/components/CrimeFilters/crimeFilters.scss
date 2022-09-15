@@ -44,3 +44,23 @@
     }
   }
 }
+
+@media (max-width: map-get($breakpoints, md )) {
+  .crimeFilters {
+    &__options {
+      .filterItems__field {
+        margin: 0 0.5rem 0.5rem 0;
+        width: 150px;
+        &:last-of-type {
+          margin: 0 0 0.5rem;
+        }
+      }
+      .filterButtons__item {
+        margin: 0 0.5rem 0.5rem 0;
+        &:last-of-type {
+          margin: 0 0 0.5rem;
+        }
+      }
+    }
+  }
+}
