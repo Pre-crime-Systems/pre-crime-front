@@ -4,6 +4,7 @@ import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
 import Select from '../../../../components/Select/Select';
 import './crimeFilters.scss';
+import Switch from '../../../../components/Switch/Switch';
 
 interface CrimeFiltersProps {
   className?: string;
@@ -121,16 +122,15 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
   return (
     <Card className={cx('crimeFilters', className && className)}>
       <h3 className="crimeFilters__title">Filtros</h3>
-      <div className="crimeFilters__switch">
-        <label>Modo predicciones</label>
-        <input
-          type="checkbox"
-          onClick={() => {
-            onClear();
-            setPredictionMode(!predictionMode);
-          }}
-        />
-      </div>
+      <Switch
+        checked={predictionMode}
+        className="crimeFilters__switch"
+        label="Modo predicciones"
+        onChange={() => {
+          onClear();
+          setPredictionMode(!predictionMode);
+        }}
+      />
       <section className="crimeFilters__options">
         {predictionMode ? FiltersPrediction() : FilterHistorical()}
         {FilterButtons()}
