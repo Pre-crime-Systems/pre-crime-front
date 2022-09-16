@@ -3,6 +3,7 @@ import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
 import Loading from '../../../../components/Loading/Loading';
 import MainLayout from '../../../../components/MainLayout/MainLayout';
+import Pagination from '../../../../components/Pagination/Pagination';
 import Table from '../../../../components/Table/Table';
 import { useApi } from '../../../../hooks/useApi';
 import { getCrimes } from '../../../../services/crime.service';
@@ -13,8 +14,9 @@ import './crimes.scss';
 
 const Crimes: React.FC = () => {
   const { state, dispatch } = useContext(ContextCrime);
-  const [loading, setLoading] = useState<boolean>(false);
   const [crimes, setCrimes] = useState<any>(null);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const [loading, setLoading] = useState<boolean>(false);
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [responseEndpoint, callEndpoint] = useApi();
 
@@ -75,6 +77,16 @@ const Crimes: React.FC = () => {
         </Card>
         <Card className="crimesPage__content">
           {crimes && <Table columns={columns} data={crimes}></Table>}
+          {crimes && (
+            <Pagination
+              page={currentPage}
+              size={2}
+              total={10}
+              onPageChange={(current: number) => {
+                setCurrentPage(current);
+              }}
+            />
+          )}
         </Card>
       </MainLayout>
     </ContextCrimeProvider>

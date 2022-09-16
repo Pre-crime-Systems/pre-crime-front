@@ -3,12 +3,14 @@ import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
 import Loading from '../../../../components/Loading/Loading';
 import MainLayout from '../../../../components/MainLayout/MainLayout';
+import Pagination from '../../../../components/Pagination/Pagination';
 import Table from '../../../../components/Table/Table';
 import { useApi } from '../../../../hooks/useApi';
 import { getReports } from '../../../../services/report.service';
 import './reports.scss';
 
 const Reports: React.FC = () => {
+  const [currentPage, setCurrentPage] = useState<number>(1);
   const [loading, setLoading] = useState<boolean>(false);
   const [reports, setReports] = useState<any>(null);
   const [responseEndpoint, callEndpoint] = useApi();
@@ -59,6 +61,16 @@ const Reports: React.FC = () => {
       </Card>
       <Card className="reportsPage__content">
         {reports && <Table columns={columns} data={reports}></Table>}
+        {reports && (
+          <Pagination
+            page={currentPage}
+            size={2}
+            total={10}
+            onPageChange={(current: number) => {
+              setCurrentPage(current);
+            }}
+          />
+        )}
       </Card>
     </MainLayout>
   );
