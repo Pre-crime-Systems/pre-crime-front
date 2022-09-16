@@ -47,7 +47,7 @@ const Pagination: React.FunctionComponent<PaginationProps> = (
   const getVisiblePages = () => {
     let returnPages: INumberPage[] | null = null;
 
-    if (windowInnerWidth > 991.98 && totalPages) {
+    if (windowInnerWidth >= 768 && totalPages) {
       const standardPage = 5;
       if (totalPages <= standardPage) {
         const pages = [];
