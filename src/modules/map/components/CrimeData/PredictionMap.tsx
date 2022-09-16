@@ -34,14 +34,24 @@ const PredictionMap: React.FC<PredictionMapProps> = (
   useEffect(() => {
     if (filters && data) {
       setSelectedHour(filters?.time?.value);
-      setFilteredData(data);
+      setLoading(true);
+      setFilteredData(null);
+      setTimeout(() => {
+        setFilteredData(data);
+        setLoading(false);
+      }, 1000);
     }
   }, [filters]);
 
   useEffect(() => {
-    if (resetData) {
+    if (resetData && data) {
       setSelectedHour(0);
-      setFilteredData(data);
+      setLoading(true);
+      setFilteredData(null);
+      setTimeout(() => {
+        setFilteredData(data);
+        setLoading(false);
+      }, 1000);
     }
   }, [resetData]);
 

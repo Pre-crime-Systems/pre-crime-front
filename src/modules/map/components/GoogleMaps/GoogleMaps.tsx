@@ -35,12 +35,12 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
   const center = { lat: -12.0874512, lng: -77.0499421 };
 
   const getColor = (percentage: number) => {
-    if (percentage > 0 && percentage < 40) {
+    if (percentage >= 0 && percentage < 40) {
       return 'yellow';
-    } else if (percentage >= 40 && percentage < 80) {
-      return 'orange';
-    } else if (percentage >= 80) {
-      return 'red';
+    } else if (percentage >= 40 && percentage < 70) {
+      return '#ff8324';
+    } else if (percentage >= 70) {
+      return '#b02753';
     }
   };
 
@@ -49,12 +49,7 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
     data?.features?.forEach((feature: any) => {
       const prediction =
         feature?.properties?.predictionPercentage[selectedHour];
-      if (
-        prediction === 0 &&
-        (selectedHour % 2 === 0
-          ? feature?.properties?.name.charAt(0) === 'L'
-          : feature?.properties?.name.charAt(0) === 'S')
-      ) {
+      if (prediction >= 70) {
         const lat = feature?.properties?.y;
         const lng = feature?.properties?.x;
         lineCoords.push({ lat, lng });
