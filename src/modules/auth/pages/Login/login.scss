@@ -2,16 +2,18 @@
 @import '../../../../assets/scss/variables';
 
 .loginCard {
-  width: 70%;
+  width: 60%;
   margin: auto;
   &__header {
     margin: 0 0 2rem;
     .loginTitle {
       @include text(18, grey-90, bold);
-      margin: 0 0 0.25rem;
+      margin: 0 0 1rem;
+      text-align: center;
     }
     .loginDescription {
       @include text(14, grey-70);
+      text-align: center;
     }
   }
   &__errorCard {
@@ -25,7 +27,7 @@
   }
   &__content {
     .loginInput {
-      margin: 0 0 0.5rem;
+      margin: 0 0 1.5rem;
     }
     .loginLink {
       @include text(14, grey-70);
@@ -34,6 +36,7 @@
     }
     .loginButton {
       margin: 2rem 0 0;
+      width: 100%;
     }
   }
 }

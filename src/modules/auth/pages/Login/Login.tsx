@@ -109,13 +109,9 @@ const Login: React.FC = () => {
                 navigate(RoutePaths.ResetPassword);
               }}
             >
-              ¿Olvidate tu contraseña?
+              ¿Olvidaste tu contraseña?
             </a>
-            <Button
-              className="loginButton"
-              buttonType="secondary"
-              type="submit"
-            >
+            <Button className="loginButton" buttonType="primary" type="submit">
               Iniciar Sesión
             </Button>
           </form>
