@@ -4,7 +4,7 @@
 .asideMenu {
   padding: 1rem 1.5rem;
   &__title {
-    @include text(16, grey-90, medium);
+    @include text(14, grey-90, medium);
   }
   &__list {
     list-style: none;
@@ -12,7 +12,7 @@
     padding: 0;
     .menuItem {
       &__content {
-        @include text(16, grey-50, medium);
+        @include text(14, grey-50, medium);
         border-radius: 0.5rem;
         cursor: pointer;
         padding: 1rem;

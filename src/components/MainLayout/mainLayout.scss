@@ -11,7 +11,7 @@ $topHeight: 60px;
   height: 100vh;
   &__aside {
     background-color: map-get($colors, white);
-    width: $asideWidth;
+    min-width: $asideWidth;
     .asideLogo {
       align-items: center;
       display: flex;
@@ -45,8 +45,8 @@ $topHeight: 60px;
   .mainLayout {
     flex-direction: column;
     &__aside {
-      width: 100%;
       display: block;
+      min-width: 100%;
       .asideLogo {
         justify-content: center;
       }
