@@ -9,7 +9,9 @@ type IconType =
   | 'users'
   | 'logOut'
   | 'close'
-  | 'menu';
+  | 'menu'
+  | 'chevron-left'
+  | 'chevron-right';
 
 interface IconProps {
   className?: string;
@@ -133,6 +135,40 @@ const Icon: React.FC<IconProps> = (props: IconProps) => {
             xmlns="http://www.w3.org/2000/svg"
           >
             <path d="M4 11h12v2H4zm0-5h16v2H4zm0 12h7.235v-2H4z"></path>
+          </svg>
+        );
+      }
+      case 'chevron-left': {
+        return (
+          <svg
+            stroke="currentColor"
+            fill="none"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            height="1em"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <polyline points="15 18 9 12 15 6"></polyline>
+          </svg>
+        );
+      }
+      case 'chevron-right': {
+        return (
+          <svg
+            stroke="currentColor"
+            fill="none"
+            stroke-width="2"
+            viewBox="0 0 24 24"
+            stroke-linecap="round"
+            stroke-linejoin="round"
+            height="1em"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <polyline points="9 18 15 12 9 6"></polyline>
           </svg>
         );
       }
