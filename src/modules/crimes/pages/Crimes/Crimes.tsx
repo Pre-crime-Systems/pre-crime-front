@@ -1,4 +1,5 @@
 import React, { useContext, useEffect, useState } from 'react';
+import dayjs from 'dayjs';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
 import Loading from '../../../../components/Loading/Loading';
@@ -20,10 +21,16 @@ const Crimes: React.FC = () => {
   const [openModal, setOpenModal] = useState<boolean>(false);
   const [responseEndpoint, callEndpoint] = useApi();
 
+  const renderDate = (data: any) => {
+    const date = data?.cell?.row?.original?.date;
+    return <p>{dayjs(date).format('DD/MM/YYYY')}</p>;
+  };
+
   const columns = [
     {
       Header: 'Fecha',
-      accessor: 'date',
+      id: 'date',
+      Cell: (data: any) => renderDate(data),
       minWidth: 50,
     },
     {
