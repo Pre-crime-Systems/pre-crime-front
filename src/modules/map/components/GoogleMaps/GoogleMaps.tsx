@@ -22,10 +22,11 @@ const libraries: Libraries = ['visualization'];
 interface GoogleMapsProps {
   data: any;
   predictionMode?: boolean;
+  selectedHour?: number;
 }
 
 const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
-  const { data, predictionMode = false } = props;
+  const { data, predictionMode = false, selectedHour = 0 } = props;
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: API_KEY,
@@ -46,9 +47,18 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
   let lineCoords: any[] = [];
   if (predictionMode) {
     data?.features?.forEach((feature: any) => {
-      const lat = feature?.properties?.y;
-      const lng = feature?.properties?.x;
-      lineCoords.push({ lat, lng });
+      const prediction =
+        feature?.properties?.predictionPercentage[selectedHour];
+      if (
+        prediction === 0 &&
+        (selectedHour % 2 === 0
+          ? feature?.properties?.name.charAt(0) === 'L'
+          : feature?.properties?.name.charAt(0) === 'S')
+      ) {
+        const lat = feature?.properties?.y;
+        const lng = feature?.properties?.x;
+        lineCoords.push({ lat, lng });
+      }
     });
   }
 
@@ -56,8 +66,8 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
     if (predictionMode) {
       map.data.addGeoJson(data);
       map.data.setStyle((feature: any) => {
-        const percentage = feature.getProperty('predictionPercentage');
-        const color = getColor(percentage);
+        const percentageArray = feature.getProperty('predictionPercentage');
+        const color = getColor(percentageArray[selectedHour]);
         return {
           fillColor: color,
           strokeWeight: 1,
@@ -70,7 +80,9 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
         const infoWindow = new google.maps.InfoWindow({
           content: buildInfo({
             district: event.feature.getProperty('name'),
-            percentage: event.feature.getProperty('predictionPercentage'),
+            percentage: event.feature.getProperty('predictionPercentage')[
+              selectedHour
+            ],
             zipCode: event.feature.getProperty('postalCode'),
           }),
           position: event.latLng,

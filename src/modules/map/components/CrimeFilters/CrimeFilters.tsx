@@ -5,6 +5,7 @@ import Card from '../../../../components/Card/Card';
 import Select from '../../../../components/Select/Select';
 import './crimeFilters.scss';
 import Switch from '../../../../components/Switch/Switch';
+import { HOURS } from '../../../../constants/data.constant';
 
 interface CrimeFiltersProps {
   className?: string;
@@ -84,10 +85,7 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
         <Select
           className="filterItems__field"
           label="Hora"
-          options={[
-            { label: '10:00', value: 'L' },
-            { label: '11:00', value: 'S' },
-          ]}
+          options={HOURS}
           value={time}
           onChange={(newValue) => {
             setTime(newValue);
@@ -129,6 +127,9 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
         onChange={() => {
           onClear();
           setPredictionMode(!predictionMode);
+          if (!predictionMode) {
+            setTime(HOURS[0]);
+          }
         }}
       />
       <section className="crimeFilters__options">

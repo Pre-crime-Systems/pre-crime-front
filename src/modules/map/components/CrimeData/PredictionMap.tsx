@@ -17,6 +17,7 @@ const PredictionMap: React.FC<PredictionMapProps> = (
   const [loading, setLoading] = useState<boolean>(false);
   const [data, setData] = useState<any>(null);
   const [filteredData, setFilteredData] = useState<any>(null);
+  const [selectedHour, setSelectedHour] = useState<number>(0);
   const [responseEndpoint, callEndpoint] = useApi();
 
   useEffect(() => {
@@ -32,16 +33,14 @@ const PredictionMap: React.FC<PredictionMapProps> = (
 
   useEffect(() => {
     if (filters && data) {
-      const filteredFeatures = data?.features?.filter(
-        (feature: any) =>
-          feature?.properties?.name?.charAt(0) === filters?.time?.value
-      );
-      setFilteredData({ type: data?.type, features: filteredFeatures });
+      setSelectedHour(filters?.time?.value);
+      setFilteredData(data);
     }
   }, [filters]);
 
   useEffect(() => {
-    if (resetData && data) {
+    if (resetData) {
+      setSelectedHour(0);
       setFilteredData(data);
     }
   }, [resetData]);
@@ -51,7 +50,13 @@ const PredictionMap: React.FC<PredictionMapProps> = (
   }
 
   if (data) {
-    return <GoogleMaps predictionMode data={filteredData}></GoogleMaps>;
+    return (
+      <GoogleMaps
+        predictionMode
+        data={filteredData}
+        selectedHour={selectedHour}
+      ></GoogleMaps>
+    );
   }
 
   return null;
