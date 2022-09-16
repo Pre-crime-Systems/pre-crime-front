@@ -1,6 +1,8 @@
 @import '../../assets/scss/mixins';
 @import '../../assets/scss/variables';
 
+$buttonSize: 24px;
+
 .pagination {
   align-items: center;
   display: flex;
@@ -10,15 +12,15 @@
     display: flex;
     justify-content: center;
     .pageButton {
-      @include text(14, grey-30, medium);
+      @include text(12, grey-30, medium);
       background: map-get($colors, white);
       border-radius: 0.25rem;
       border: none;
       cursor: pointer;
-      height: 36px;
+      height: $buttonSize;
       margin: 0 0.25rem;
       outline: none;
-      width: 36px;
+      width: $buttonSize;
       &:hover {
         background: map-get($colors, white);
         color: map-get($colors, grey-50);
