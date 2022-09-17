@@ -20,7 +20,7 @@ const Input: React.FunctionComponent<InputProps> = ({
   ...props
 }: InputProps) => {
   const { className, ...otherInputProps } = props;
-  const isErrorString = typeof error === 'string';
+  const isErrorString = error && typeof error === 'string';
   return (
     <div
       className={`input ${className && className} ${error && `input--error`}`}

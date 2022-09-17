@@ -36,7 +36,8 @@ const Login: React.FC = () => {
     }
   };
 
-  const onLogin = () => {
+  const onLogin = (event: any) => {
+    event.preventDefault();
     if (validFields()) {
       setLoading(true);
       callEndpoint(login({ email, password }));
@@ -76,13 +77,13 @@ const Login: React.FC = () => {
               </p>
             </section>
           )}
-          <form className="loginCard__content">
+          <form className="loginCard__content" onSubmit={onLogin}>
             <Input
               className="loginInput"
               error={emailInvalid && 'Correo electrónico inválido'}
               label="Correo electrónico"
               placeholder="correo@dominio.com"
-              type="email"
+              type="text"
               value={email}
               onChange={(event) => {
                 setEmail(event.target.value);
@@ -108,14 +109,9 @@ const Login: React.FC = () => {
                 navigate(RoutePaths.ResetPassword);
               }}
             >
-              ¿Olvidate tu contraseña?
+              ¿Olvidaste tu contraseña?
             </a>
-            <Button
-              className="loginButton"
-              buttonType="secondary"
-              onClick={onLogin}
-              type="submit"
-            >
+            <Button className="loginButton" buttonType="primary" type="submit">
               Iniciar Sesión
             </Button>
           </form>

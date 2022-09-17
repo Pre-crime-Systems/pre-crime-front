@@ -10,7 +10,7 @@
     background-color: map-get($colors, primary);
     display: flex;
     justify-content: center;
-    width: 40%;
+    width: 55%;
     .asideLogo {
       &__name {
         @include text(28, white, bold);
@@ -18,6 +18,7 @@
     }
   }
   &__content {
+    background-color: map-get($colors, white);
     align-items: center;
     display: flex;
     flex: 1;

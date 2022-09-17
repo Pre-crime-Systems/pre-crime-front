@@ -1,0 +1,45 @@
+@import '../../assets/scss/mixins';
+@import '../../assets/scss/variables';
+
+$buttonSize: 24px;
+
+.pagination {
+  align-items: center;
+  display: flex;
+  justify-content: center;
+  &__content {
+    align-items: center;
+    display: flex;
+    justify-content: center;
+    .pageButton {
+      @include text(12, grey-30, medium);
+      background: map-get($colors, white);
+      border-radius: 0.25rem;
+      border: none;
+      cursor: pointer;
+      height: $buttonSize;
+      margin: 0 0.25rem;
+      outline: none;
+      width: $buttonSize;
+      &:hover {
+        background: map-get($colors, white);
+        color: map-get($colors, grey-50);
+      }
+      &:disabled {
+        color: map-get($colors, grey-30);
+        background: map-get($colors, grey-10);
+        pointer-events: none;
+      }
+      .pageButton__icon {
+        color: map-get($colors, grey-30);
+      }
+      &.pageButton--active {
+        background: map-get($colors, primary);
+        color: map-get($colors, white);
+      }
+      &.pageButton--block {
+        pointer-events: none;
+      }
+    }
+  }
+}

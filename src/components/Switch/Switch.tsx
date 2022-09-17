@@ -8,21 +8,33 @@ export interface ISwitch
     HTMLInputElement
   > {
   className?: string;
-  label: string;
   disabled?: boolean;
+  label?: React.ReactNode | string;
+  ref?: any;
 }
 
 const Switch: React.FC<ISwitch> = ({
-  label = '',
+  checked = false,
   disabled = false,
+  label = '',
   ...props
 }: ISwitch) => {
-  const { className } = props;
+  const { className, ref } = props;
+  const isLabelString = label && typeof label === 'string';
   return (
-    <div className={cx(className && className)}>
-      {label && <label htmlFor="switch">{label}</label>}
-      <input type="checkbox" id="switch" />
-    </div>
+    <section className={cx('switch', className && className)}>
+      {isLabelString && <label className={'switch__label'}>{label}</label>}
+      <label className={'switch__field'}>
+        <input
+          {...props}
+          className="switchInput"
+          disabled={disabled}
+          ref={ref}
+          type="checkbox"
+        />
+        <span className="switchSlider"></span>
+      </label>
+    </section>
   );
 };
 

@@ -11,14 +11,14 @@
   justify-content: center;
   min-height: 36px;
   outline: none;
-  padding: 0.5rem 1.5rem;
+  padding: 0.625rem 1rem;
   &.button--primary {
     background-color: map-get($colors, primary);
     &:hover {
-      background: darken(map-get($colors, primary), 10%);
+      background: darken(map-get($colors, primary), 5%);
     }
     &:active {
-      background: darken(map-get($colors, primary), 20%);
+      background: darken(map-get($colors, primary), 10%);
     }
     &.button--outline {
       background-color: transparent;
@@ -35,10 +35,10 @@
   &.button--secondary {
     background-color: map-get($colors, secondary);
     &:hover {
-      background: darken(map-get($colors, secondary), 10%);
+      background: darken(map-get($colors, secondary), 5%);
     }
     &:active {
-      background: darken(map-get($colors, secondary), 20%);
+      background: darken(map-get($colors, secondary), 10%);
     }
     &.button--outline {
       background-color: transparent;

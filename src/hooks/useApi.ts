@@ -29,8 +29,8 @@ export const useApi = (): [
 
       const fetchResponse = await fetch(url, request);
       const fetchJson = await fetchResponse.json();
-      if (fetchJson?.error) {
-        console.error('[ERROR API]', fetchJson?.error);
+
+      if (fetchJson?.error?.indexOf('JWT expired') > -1) {
         navigate(RoutePaths.Login);
       } else {
         setResponse({ data: fetchJson, error: false });

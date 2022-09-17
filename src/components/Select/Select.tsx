@@ -3,6 +3,31 @@ import Select from 'react-select';
 import cx from 'classnames';
 import './select.scss';
 
+const customStyles = {
+  control: (values: any) => ({
+    ...values,
+    borderColor: '#c5c8cd',
+    borderRadius: '0.5rem',
+    color: '#343a40',
+    fontSize: '.875rem',
+  }),
+  option: (values: any) => ({
+    ...values,
+    color: '#575d62',
+    fontSize: '.875rem',
+    padding: '.375rem .625rem',
+  }),
+  placeholder: (values: any) => ({
+    ...values,
+    color: '#575d62',
+    fontSize: '.875rem',
+  }),
+  indicatorSeparator: (values: any) => ({
+    ...values,
+    display: 'none',
+  }),
+};
+
 export interface SelectOption {
   label: string;
   value: any;
@@ -36,26 +61,22 @@ const ReactSelect: React.FC<SelectProps> = ({
 
   return (
     <div
-      className={cx(
-        'select',
-        error && 'select--error',
-
-        className && className
-      )}
+      className={cx('select', error && 'select--error', className && className)}
     >
       {label && <label className="select__label">{label}</label>}
       <Select
         {...props}
-        value={value && value}
-        placeholder={placeholder}
+        isClearable={false}
         isDisabled={disabled && disabled}
-        options={options}
-        isClearable={isClearable}
+        isLoading={isLoading && isLoading}
+        styles={customStyles}
         onChange={(value: any) => onChange && onChange(value)}
         onInputChange={(value: any) => onInputChange && onInputChange(value)}
-        isLoading={isLoading && isLoading}
+        options={options}
+        placeholder={placeholder}
+        value={value && value}
       />
-      {isErrorString && <p className="select_errorMessage">{error}</p>}
+      {isErrorString && <p className="select__errorMessage">{error}</p>}
     </div>
   );
 };

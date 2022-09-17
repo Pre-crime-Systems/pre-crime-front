@@ -24,7 +24,7 @@ const NewPassword: React.FC<any> = (props: any) => {
             label="Repetir nueva contraseña"
             type="password"
           />
-          <Button className="newPasswordButton" buttonType="secondary">
+          <Button className="newPasswordButton" buttonType="primary">
             Establecer
           </Button>
         </section>

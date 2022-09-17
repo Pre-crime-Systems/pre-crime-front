@@ -11,6 +11,7 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Bar } from 'react-chartjs-2';
+import { CHART_COLORS } from '../../../../constants/chart.constant';
 
 interface BarChartProps {
   className?: string;
@@ -47,12 +48,12 @@ const BarChart: React.FC<BarChartProps> = (props: BarChartProps) => {
       {
         label: 'Dataset 1',
         data: labels2.map(() => 1000),
-        backgroundColor: 'rgba(255, 99, 132, 0.5)',
+        ...CHART_COLORS[0],
       },
       {
         label: 'Dataset 2',
         data: labels2.map(() => 1000),
-        backgroundColor: 'rgba(53, 162, 235, 0.5)',
+        ...CHART_COLORS[1],
       },
     ],
   };

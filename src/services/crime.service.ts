@@ -12,7 +12,7 @@ export const getCrimes = () => {
 export const getPredictions = () => {
   const request: ApiRequest = {
     method: ApiMethod.Get,
-    url: `${BASE_URL}/api/geo`,
+    url: `${BASE_URL}/api/bigQuery/geo`,
   };
   return request;
 };

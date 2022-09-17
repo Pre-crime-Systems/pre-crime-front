@@ -1,0 +1,49 @@
+@import '../../assets/scss/mixins';
+@import '../../assets/scss/variables';
+
+.asideMenu {
+  padding: 1rem 1.5rem;
+  &__title {
+    @include text(14, grey-90, medium);
+  }
+  &__list {
+    list-style: none;
+    margin: 1rem 0 0;
+    padding: 0;
+    .menuItem {
+      &__content {
+        @include text(14, grey-50, medium);
+        border-radius: 0.5rem;
+        cursor: pointer;
+        padding: 1rem;
+        display: flex;
+        align-items: flex-start;
+        &:hover {
+          background-color: map-get($colors, grey-10);
+        }
+        &--active {
+          background-color: map-get($colors, primary);
+          color: map-get($colors, white);
+          &:hover {
+            background-color: darken(map-get($colors, primary), 5%);
+          }
+        }
+        .itemIcon {
+          margin: 0 0.5rem 0 0;
+        }
+        @media (max-width: map-get($breakpoints, lg)) {
+          text-align: center;
+        }
+      }
+    }
+  }
+  &:last-of-type {
+    border: none;
+  }
+}
+.menuBorder {
+  background-color: map-get($colors, grey-10);
+  height: 1px;
+  margin: auto;
+  width: 90%;
+}

@@ -2,6 +2,7 @@ import React from 'react';
 import {
   GoogleMap,
   HeatmapLayer,
+  Polyline,
   useJsApiLoader,
 } from '@react-google-maps/api';
 import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-url';
@@ -21,10 +22,11 @@ const libraries: Libraries = ['visualization'];
 interface GoogleMapsProps {
   data: any;
   predictionMode?: boolean;
+  selectedHour?: number;
 }
 
 const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
-  const { data, predictionMode = false } = props;
+  const { data, predictionMode = false, selectedHour = 0 } = props;
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: API_KEY,
@@ -33,21 +35,34 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
   const center = { lat: -12.0874512, lng: -77.0499421 };
 
   const getColor = (percentage: number) => {
-    if (percentage > 0 && percentage < 40) {
+    if (percentage >= 0 && percentage < 40) {
       return 'yellow';
-    } else if (percentage >= 40 && percentage < 80) {
-      return 'orange';
-    } else if (percentage >= 80) {
-      return 'red';
+    } else if (percentage >= 40 && percentage < 70) {
+      return '#ff8324';
+    } else if (percentage >= 70) {
+      return '#b02753';
     }
   };
+
+  let lineCoords: any[] = [];
+  if (predictionMode) {
+    data?.features?.forEach((feature: any) => {
+      const prediction =
+        feature?.properties?.predictionPercentage[selectedHour];
+      if (prediction >= 70) {
+        const lat = feature?.properties?.y;
+        const lng = feature?.properties?.x;
+        lineCoords.push({ lat, lng });
+      }
+    });
+  }
 
   const onLoadMap = (map: any) => {
     if (predictionMode) {
       map.data.addGeoJson(data);
       map.data.setStyle((feature: any) => {
-        const percentage = feature.getProperty('predictionPercentage');
-        const color = getColor(percentage);
+        const percentageArray = feature.getProperty('predictionPercentage');
+        const color = getColor(percentageArray[selectedHour]);
         return {
           fillColor: color,
           strokeWeight: 1,
@@ -60,7 +75,9 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
         const infoWindow = new google.maps.InfoWindow({
           content: buildInfo({
             district: event.feature.getProperty('name'),
-            percentage: event.feature.getProperty('predictionPercentage'),
+            percentage: event.feature.getProperty('predictionPercentage')[
+              selectedHour
+            ],
             zipCode: event.feature.getProperty('postalCode'),
           }),
           position: event.latLng,
@@ -96,6 +113,21 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
       options={MAP_OPTIONS}
       zoom={MAP_ZOOM}
     >
+      {predictionMode && (
+        <Polyline
+          path={lineCoords}
+          options={{
+            strokeColor: '#FF0000',
+            strokeOpacity: 0.8,
+            strokeWeight: 2,
+            clickable: false,
+            draggable: false,
+            editable: false,
+            visible: true,
+            zIndex: 1,
+          }}
+        />
+      )}
       {!predictionMode && (
         <HeatmapLayer data={parserData()} onLoad={onLoadHeatMap} />
       )}

@@ -28,7 +28,7 @@ const ResetPassword: React.FC<any> = (props: any) => {
           />
           <Button
             className="resetPasswordButton"
-            buttonType="secondary"
+            buttonType="primary"
             onClick={() => {
               navigate(RoutePaths.NewPassword);
             }}

@@ -4,6 +4,7 @@
 .dashboardPage {
   &__cards {
     display: flex;
+    flex-wrap: wrap;
     .chartCard {
       flex: 2;
       margin: 0 1rem 0 0;
@@ -17,6 +18,16 @@
       &:last-of-type {
         margin: 0;
         flex: 1;
+      }
+    }
+  }
+}
+
+@media (max-width: map-get($breakpoints, md )) {
+  .dashboardPage {
+    &__cards {
+      .chartCard {
+        margin: 0 0 1rem;
       }
     }
   }

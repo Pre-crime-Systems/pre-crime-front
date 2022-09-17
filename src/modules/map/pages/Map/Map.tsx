@@ -6,20 +6,24 @@ import PredictionMap from '../../components/CrimeData/PredictionMap';
 import './map.scss';
 
 const Map: React.FC = () => {
-  const [viewPredictions, setViewPredictions] = useState<boolean>(false);
+  const [predictionMode, setPredictionMode] = useState<boolean>(false);
+  const [filters, setFilters] = useState<any>(null);
+  const [reset, setReset] = useState<any>(null);
 
   return (
     <MainLayout className="mapPage">
       <CrimeFilters
         className="mapPage__filters"
-        mode={viewPredictions}
-        setMode={(value) => {
-          setViewPredictions(value);
-        }}
+        predictionMode={predictionMode}
+        onClearFilters={setReset}
+        setFilters={setFilters}
+        setPredictionMode={setPredictionMode}
       />
       <section className="mapPage__map">
-        {!viewPredictions && <CrimeMap />}
-        {viewPredictions && <PredictionMap />}
+        {!predictionMode && <CrimeMap filters={filters} resetData={reset} />}
+        {predictionMode && (
+          <PredictionMap filters={filters} resetData={reset} />
+        )}
       </section>
     </MainLayout>
   );
