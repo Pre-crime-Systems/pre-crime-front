@@ -1,8 +1,9 @@
-import React from 'react';
+import React, { useCallback, useRef, useState } from 'react';
 import {
+  DirectionsRenderer,
+  DirectionsService,
   GoogleMap,
   HeatmapLayer,
-  Polyline,
   useJsApiLoader,
 } from '@react-google-maps/api';
 import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-url';
@@ -14,7 +15,12 @@ import {
   MAP_STYLE,
   MAP_ZOOM,
 } from '../../../../constants/google.constant';
-import { buildInfo } from '../../utils/crime.util';
+import {
+  buildInfo,
+  getDirection,
+  getZipCodeColor,
+  IDirection,
+} from '../../utils/map.util';
 import './googleMaps.scss';
 
 const libraries: Libraries = ['visualization'];
@@ -27,6 +33,8 @@ interface GoogleMapsProps {
 
 const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
   const { data, predictionMode = false, selectedHour = 0 } = props;
+  const [direction, setDirection] = useState<IDirection | null>(null);
+  const [directionResponse, setDirectionResponse] = useState<any>(null);
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: API_KEY,
@@ -34,35 +42,12 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
   });
   const center = { lat: -12.0874512, lng: -77.0499421 };
 
-  const getColor = (percentage: number) => {
-    if (percentage >= 0 && percentage < 40) {
-      return 'yellow';
-    } else if (percentage >= 40 && percentage < 70) {
-      return '#ff8324';
-    } else if (percentage >= 70) {
-      return '#b02753';
-    }
-  };
-
-  let lineCoords: any[] = [];
-  if (predictionMode) {
-    data?.features?.forEach((feature: any) => {
-      const prediction =
-        feature?.properties?.predictionPercentage[selectedHour];
-      if (prediction >= 70) {
-        const lat = feature?.properties?.y;
-        const lng = feature?.properties?.x;
-        lineCoords.push({ lat, lng });
-      }
-    });
-  }
-
   const onLoadMap = (map: any) => {
     if (predictionMode) {
       map.data.addGeoJson(data);
       map.data.setStyle((feature: any) => {
         const percentageArray = feature.getProperty('predictionPercentage');
-        const color = getColor(percentageArray[selectedHour]);
+        const color = getZipCodeColor(percentageArray[selectedHour]);
         return {
           fillColor: color,
           strokeWeight: 1,
@@ -105,6 +90,20 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
     });
   };
 
+  if (predictionMode && direction == null) {
+    const response = getDirection(data?.features, selectedHour);
+    setDirection(response);
+  }
+  let count = useRef(0);
+  const directionsCallback = useCallback((response: any) => {
+    if (response !== null) {
+      if (response.status === 'OK' && count.current < 1) {
+        count.current += 1;
+        setDirectionResponse(response);
+      }
+    }
+  }, []);
+
   return isLoaded ? (
     <GoogleMap
       center={center}
@@ -113,18 +112,22 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
       options={MAP_OPTIONS}
       zoom={MAP_ZOOM}
     >
-      {predictionMode && (
-        <Polyline
-          path={lineCoords}
+      {predictionMode && direction && (
+        <DirectionsService
           options={{
-            strokeColor: '#FF0000',
-            strokeOpacity: 0.8,
-            strokeWeight: 2,
-            clickable: false,
-            draggable: false,
-            editable: false,
-            visible: true,
-            zIndex: 1,
+            destination: direction?.destination,
+            origin: direction?.origin,
+            travelMode: google.maps.TravelMode.DRIVING,
+            optimizeWaypoints: true,
+            waypoints: direction?.waypoints,
+          }}
+          callback={directionsCallback}
+        />
+      )}
+      {predictionMode && directionResponse && (
+        <DirectionsRenderer
+          options={{
+            directions: directionResponse,
           }}
         />
       )}
