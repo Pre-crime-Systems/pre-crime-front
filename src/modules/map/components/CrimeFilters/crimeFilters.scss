@@ -7,28 +7,12 @@
     @include text(14, grey-90, bold);
     margin: 0 0 0.5rem;
   }
-  &__switch {
-    @include text(14, grey-90);
-    align-items: center;
-    display: flex;
-    margin: 0.5rem 0 0;
-  }
   &__options {
-    align-items: flex-end;
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-between;
     margin: 0.5rem 0 0;
     .filterItems {
-      align-items: center;
-      display: flex;
-      flex-wrap: wrap;
       &__field {
-        margin: 0 0.5rem 0 0;
+        margin: 0 0 0.5rem;
         width: 200px;
-        &:last-of-type {
-          margin: 0;
-        }
       }
     }
     .filterButtons {
@@ -37,6 +21,8 @@
       flex-wrap: wrap;
       &__item {
         margin: 0 0.5rem 0 0;
+        flex: 1;
+        height: 36px;
         &:last-of-type {
           margin: 0;
         }
@@ -48,13 +34,6 @@
 @media (max-width: map-get($breakpoints, md )) {
   .crimeFilters {
     &__options {
-      .filterItems__field {
-        margin: 0 0.5rem 0.5rem 0;
-        width: 150px;
-        &:last-of-type {
-          margin: 0 0 0.5rem;
-        }
-      }
       .filterButtons__item {
         margin: 0 0.5rem 0.5rem 0;
         &:last-of-type {

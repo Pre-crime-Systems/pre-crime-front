@@ -1,29 +1,44 @@
 import React, { useState } from 'react';
+import cx from 'classnames';
 import MainLayout from '../../../../components/MainLayout/MainLayout';
-import CrimeFilters from '../../components/CrimeFilters/CrimeFilters';
-import CrimeMap from '../../components/CrimeData/CrimeMap';
-import PredictionMap from '../../components/CrimeData/PredictionMap';
+import HistoricalMap from '../../components/CrimeMap/HistoricalMap';
+import PredictionMap from '../../components/CrimeMap/PredictionMap';
 import './map.scss';
 
 const Map: React.FC = () => {
-  const [predictionMode, setPredictionMode] = useState<boolean>(false);
-  const [filters, setFilters] = useState<any>(null);
-  const [reset, setReset] = useState<any>(null);
+  const [tabIndex, setTabIndex] = useState<number>(0);
 
   return (
     <MainLayout className="mapPage">
-      <CrimeFilters
-        className="mapPage__filters"
-        predictionMode={predictionMode}
-        onClearFilters={setReset}
-        setFilters={setFilters}
-        setPredictionMode={setPredictionMode}
-      />
-      <section className="mapPage__map">
-        {!predictionMode && <CrimeMap filters={filters} resetData={reset} />}
-        {predictionMode && (
-          <PredictionMap filters={filters} resetData={reset} />
-        )}
+      <section className="mapPage__tabs">
+        <div className="tabList">
+          <div
+            className={cx(
+              'tabList__item',
+              tabIndex === 0 && 'tabList__item--active'
+            )}
+            onClick={() => {
+              setTabIndex(0);
+            }}
+          >
+            <p className="tabTitle">Historial</p>
+          </div>
+          <div
+            className={cx(
+              'tabList__item',
+              tabIndex === 1 && 'tabList__item--active'
+            )}
+            onClick={() => {
+              setTabIndex(1);
+            }}
+          >
+            <p className="tabTitle">Predicción</p>
+          </div>
+        </div>
+        <div className="tabContent">
+          {tabIndex === 0 && <HistoricalMap />}
+          {tabIndex === 1 && <PredictionMap />}
+        </div>
       </section>
     </MainLayout>
   );

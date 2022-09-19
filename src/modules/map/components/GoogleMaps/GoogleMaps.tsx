@@ -27,14 +27,15 @@ const libraries: Libraries = ['visualization'];
 
 interface GoogleMapsProps {
   data: any;
+  filters: any;
   predictionMode?: boolean;
-  selectedHour?: number;
 }
 
 const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
-  const { data, predictionMode = false, selectedHour = 0 } = props;
+  const { data, filters, predictionMode = false } = props;
   const [direction, setDirection] = useState<IDirection | null>(null);
   const [directionResponse, setDirectionResponse] = useState<any>(null);
+  const selectedHour = predictionMode ? filters?.time?.value : 0;
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: API_KEY,
