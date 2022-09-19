@@ -1,0 +1,9 @@
+.crimeMap {
+  height: 80vh;
+  position: relative;
+  &__filters {
+    position: absolute;
+    right: 10px;
+    top: 10px;
+  }
+}

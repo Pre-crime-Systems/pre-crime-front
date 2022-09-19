@@ -2,19 +2,16 @@ import React, { useEffect, useState } from 'react';
 import Loading from '../../../../components/Loading/Loading';
 import { useApi } from '../../../../hooks/useApi';
 import { getCrimes } from '../../../../services/crime.service';
+import CrimeFilters from '../CrimeFilters/CrimeFilters';
 import GoogleMaps from '../GoogleMaps/GoogleMaps';
+import './crimeMap.scss';
 
-interface CrimeMapProps {
-  filters: any;
-  resetData: any;
-}
-
-const CrimeMap: React.FC<CrimeMapProps> = (props: CrimeMapProps) => {
-  const { filters, resetData } = props;
-
-  const [loading, setLoading] = useState<boolean>(false);
+const HistoricalMap: React.FC = () => {
   const [data, setData] = useState<any>(null);
   const [filteredData, setFilteredData] = useState<any>(null);
+  const [filters, setFilters] = useState<any>(null);
+  const [loading, setLoading] = useState<boolean>(false);
+  const [reset, setReset] = useState<any>(null);
   const [responseEndpoint, callEndpoint] = useApi();
 
   useEffect(() => {
@@ -38,19 +35,30 @@ const CrimeMap: React.FC<CrimeMapProps> = (props: CrimeMapProps) => {
   }, [filters]);
 
   useEffect(() => {
-    if (resetData && data) {
+    if (reset && data) {
       setFilteredData(data);
     }
-  }, [resetData]);
+  }, [reset]);
 
   if (loading) {
     return <Loading />;
   }
 
   if (data) {
-    return <GoogleMaps data={filteredData}></GoogleMaps>;
+    return (
+      <div className="crimeMap">
+        <GoogleMaps data={filteredData} filters={filters} />
+        <CrimeFilters
+          className="crimeMap__filters"
+          filters={filters}
+          onClearFilters={setReset}
+          predictionMode={false}
+          setFilters={setFilters}
+        />
+      </div>
+    );
   }
 
   return null;
 };
-export default CrimeMap;
+export default HistoricalMap;

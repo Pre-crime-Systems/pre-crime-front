@@ -3,30 +3,24 @@ import cx from 'classnames';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
 import Select from '../../../../components/Select/Select';
-import './crimeFilters.scss';
-import Switch from '../../../../components/Switch/Switch';
 import { HOURS } from '../../../../constants/data.constant';
+import './crimeFilters.scss';
 
 interface CrimeFiltersProps {
   className?: string;
+  filters: any;
   predictionMode: boolean;
   onClearFilters: (value: any) => void;
   setFilters: (value: any) => void;
-  setPredictionMode: (value: boolean) => void;
 }
 
 const CrimeFilters: React.FC<CrimeFiltersProps> = (
   props: CrimeFiltersProps
 ) => {
-  const {
-    className,
-    predictionMode,
-    onClearFilters,
-    setPredictionMode,
-    setFilters,
-  } = props;
-  const [date, setDate] = useState<any>(null);
-  const [time, setTime] = useState<any>(null);
+  const { className, filters, predictionMode, onClearFilters, setFilters } =
+    props;
+  const [date, setDate] = useState<any>(filters?.date || null);
+  const [time, setTime] = useState<any>(filters?.time || null);
 
   const onClear = () => {
     setDate(null);
@@ -120,18 +114,6 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
   return (
     <Card className={cx('crimeFilters', className && className)}>
       <h3 className="crimeFilters__title">Filtros</h3>
-      <Switch
-        checked={predictionMode}
-        className="crimeFilters__switch"
-        label="Modo predicciones"
-        onChange={() => {
-          onClear();
-          setPredictionMode(!predictionMode);
-          if (!predictionMode) {
-            setTime(HOURS[0]);
-          }
-        }}
-      />
       <section className="crimeFilters__options">
         {predictionMode ? FiltersPrediction() : FilterHistorical()}
         {FilterButtons()}
