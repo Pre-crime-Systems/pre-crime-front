@@ -3,7 +3,12 @@ import cx from 'classnames';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
 import Select from '../../../../components/Select/Select';
-import { HOURS } from '../../../../constants/data.constant';
+import {
+  HOURS,
+  MODALITIES_CRIME,
+  SUBTYPES_CRIME,
+  TYPES_CRIME,
+} from '../../../../constants/data.constant';
 import './crimeFilters.scss';
 
 interface CrimeFiltersProps {
@@ -19,11 +24,21 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
 ) => {
   const { className, filters, predictionMode, onClearFilters, setFilters } =
     props;
-  const [date, setDate] = useState<any>(filters?.date || null);
+  //historical
+  const [typeCrime, setTypeCrime] = useState<any>(filters?.typeCrime || null);
+  const [subtypeCrime, setSubtypeCrime] = useState<any>(
+    filters?.subtypeCrime || null
+  );
+  const [modalityCrime, setModalityCrime] = useState<any>(
+    filters?.modalityCrime || null
+  );
+  //prediction
   const [time, setTime] = useState<any>(filters?.time || null);
 
   const onClear = () => {
-    setDate(null);
+    setTypeCrime(null);
+    setSubtypeCrime(null);
+    setModalityCrime(null);
     setTime(null);
     onClearFilters(Math.random());
   };
@@ -35,8 +50,9 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
       });
     } else {
       setFilters({
-        date,
-        time,
+        typeCrime,
+        subtypeCrime,
+        modalityCrime,
       });
     }
   };
@@ -46,27 +62,29 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
       <section className="filterItems">
         <Select
           className="filterItems__field"
-          label="Fecha"
-          options={[
-            { label: '25/08/97', value: '25/08/97' },
-            { label: '26/08/97', value: '26/08/97' },
-          ]}
-          value={date}
+          label="Tipo de crimen"
+          options={TYPES_CRIME}
+          value={typeCrime}
           onChange={(newValue) => {
-            setDate(newValue);
-            setTime(null);
+            setTypeCrime(newValue);
           }}
         />
         <Select
           className="filterItems__field"
-          label="Hora"
-          options={[
-            { label: '08:00', value: 'Upc San isidro' },
-            { label: '09:00', value: 'Upc San Miguel' },
-          ]}
-          value={time}
+          label="Subtipo de crimen"
+          options={SUBTYPES_CRIME}
+          value={subtypeCrime}
           onChange={(newValue) => {
-            setTime(newValue);
+            setSubtypeCrime(newValue);
+          }}
+        />
+        <Select
+          className="filterItems__field"
+          label="Modalidad de crimen"
+          options={MODALITIES_CRIME}
+          value={modalityCrime}
+          onChange={(newValue) => {
+            setModalityCrime(newValue);
           }}
         />
       </section>
