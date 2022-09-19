@@ -22,9 +22,9 @@ export const getHistoricalCrimesByFilters = (filters: any) => {
     method: ApiMethod.Post,
     url: `${BASE_URL}/api/crimes/filter`,
     body: {
-      modalityCrimeId: filters?.modalityCrime?.value || 0,
-      subtypeCrimeId: filters?.subtypeCrime?.value || 0,
-      typeCrimeId: filters?.typeCrime?.value || 0,
+      modalityCrimeId: filters?.modalityCrime?.value || null,
+      subtypeCrimeId: filters?.subtypeCrime?.value || null,
+      typeCrimeId: filters?.typeCrime?.value || null,
     },
   };
   return request;
