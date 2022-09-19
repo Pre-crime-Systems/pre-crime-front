@@ -11,7 +11,7 @@ import {
   Tooltip,
 } from 'chart.js';
 import { Line } from 'react-chartjs-2';
-import { CHART_COLORS } from '../../../../constants/chart.constant';
+import { LINE_COLOR } from '../../../../constants/chart.constant';
 
 interface LineChartProps {
   className?: string;
@@ -30,28 +30,35 @@ ChartJS.register(
 
 const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
   const { className } = props;
-  const labels = [
-    'January',
-    'February',
-    'March',
-    'April',
-    'May',
-    'June',
-    'July',
+  const response = [
+    {
+      label: 'Enero',
+      value: Math.random(),
+    },
+    {
+      label: 'Febrero',
+      value: Math.random(),
+    },
+    {
+      label: 'Marzo',
+      value: Math.random(),
+    },
+    {
+      label: 'Abril',
+      value: Math.random(),
+    },
+    {
+      label: 'Mayo',
+      value: Math.random(),
+    },
   ];
 
   const data = {
-    labels,
+    labels: response.map((res) => res.label),
     datasets: [
       {
-        label: 'Dataset 1',
-        data: labels.map(() => 1000),
-        ...CHART_COLORS[0],
-      },
-      {
-        label: 'Dataset 2',
-        data: labels.map(() => 1000),
-        ...CHART_COLORS[1],
+        data: response.map((res) => res.value),
+        ...LINE_COLOR,
       },
     ],
   };
@@ -60,7 +67,7 @@ const LineChart: React.FC<LineChartProps> = (props: LineChartProps) => {
     responsive: true,
     plugins: {
       legend: {
-        position: 'top' as const,
+        display: false,
       },
     },
   };

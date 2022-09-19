@@ -1,8 +1,9 @@
 import React from 'react';
 import Card from '../../../../components/Card/Card';
 import MainLayout from '../../../../components/MainLayout/MainLayout';
+import Select from '../../../../components/Select/Select';
 import LineChart from '../../components/LineChart/LineChart';
-import BarChart from '../../components/BarChart/BarChart';
+import PieChart from '../../components/PieChart/PieChart';
 import './dashboard.scss';
 
 const Dashboard: React.FC = () => {
@@ -11,18 +12,35 @@ const Dashboard: React.FC = () => {
       <section className="dashboardPage__cards">
         <Card className="chartCard">
           <div className="chartCard__title">
-            <h2 className="titleText">Evolución de crímenes</h2>
+            <h2 className="titleText">Crimen por tipo de delito</h2>
+            <Select
+              placeholder="Filtro por mes"
+              options={[
+                { label: 'Enero', value: 1 },
+                { label: 'Febrero', value: 2 },
+                { label: 'Marzo', value: 3 },
+                { label: 'Abril', value: 4 },
+              ]}
+            />
           </div>
           <div>
-            <LineChart />
+            <PieChart />
           </div>
         </Card>
         <Card className="chartCard">
           <div className="chartCard__title">
-            <h2 className="titleText">Cantidad de delitos</h2>
+            <h2 className="titleText">Cantidad de crímenes</h2>
+            <Select
+              placeholder="Filtro por tiempo"
+              options={[
+                { label: 'Hoy', value: 1 },
+                { label: 'Mes', value: 2 },
+                { label: 'Año', value: 3 },
+              ]}
+            />
           </div>
           <div>
-            <BarChart />
+            <LineChart />
           </div>
         </Card>
       </section>
