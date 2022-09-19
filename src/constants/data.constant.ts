@@ -96,3 +96,24 @@ export const HOURS = [
     value: 23,
   },
 ];
+
+export const TYPES_CRIME = [
+  { value: 1, label: 'Delito contra el patrimonio' },
+  { value: 2, label: 'Delito contra la persona' },
+  { value: 3, label: 'Delito contra la vida, el cuerpo y salud' },
+  { value: 4, label: 'Delito contra la seguridad pública' },
+];
+
+export const SUBTYPES_CRIME = [
+  { value: 1, label: 'Robo' },
+  { value: 2, label: 'Hurto' },
+  { value: 3, label: 'Agresión' },
+  { value: 4, label: 'Asalto' },
+];
+
+export const MODALITIES_CRIME = [
+  { value: 1, label: 'Agresión' },
+  { value: 2, label: 'Arma' },
+  { value: 3, label: 'Banda' },
+  { value: 4, label: 'Arma blanca' },
+];

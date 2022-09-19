@@ -1,7 +1,10 @@
 import React, { useEffect, useState } from 'react';
 import Loading from '../../../../components/Loading/Loading';
 import { useApi } from '../../../../hooks/useApi';
-import { getCrimes } from '../../../../services/crime.service';
+import {
+  getCrimes,
+  getHistoricalCrimesByFilters,
+} from '../../../../services/crime.service';
 import CrimeFilters from '../CrimeFilters/CrimeFilters';
 import GoogleMaps from '../GoogleMaps/GoogleMaps';
 import './crimeMap.scss';
@@ -13,6 +16,7 @@ const HistoricalMap: React.FC = () => {
   const [loading, setLoading] = useState<boolean>(false);
   const [reset, setReset] = useState<any>(null);
   const [responseEndpoint, callEndpoint] = useApi();
+  const [responseFilters, callFilters] = useApi();
 
   useEffect(() => {
     if (loading && responseEndpoint?.data) {
@@ -26,11 +30,16 @@ const HistoricalMap: React.FC = () => {
   }, [responseEndpoint]);
 
   useEffect(() => {
+    if (loading && responseFilters?.data) {
+      setLoading(false);
+      setFilteredData(responseFilters?.data);
+    }
+  }, [responseFilters]);
+
+  useEffect(() => {
     if (filters && data) {
-      const filtered = data?.filter(
-        (crime: any) => crime?.address?.indexOf(filters?.time?.value) > -1
-      );
-      setFilteredData(filtered);
+      setLoading(true);
+      callFilters(getHistoricalCrimesByFilters(filters));
     }
   }, [filters]);
 
