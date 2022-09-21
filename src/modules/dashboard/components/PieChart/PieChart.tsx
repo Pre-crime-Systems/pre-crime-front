@@ -3,11 +3,11 @@ import { Chart as ChartJS, ArcElement, Tooltip, Legend } from 'chart.js';
 import { Pie } from 'react-chartjs-2';
 import { PIE_COLORS } from '../../../../constants/chart.constant';
 
+ChartJS.register(ArcElement, Tooltip, Legend);
+
 interface PieChartProps {
   className?: string;
 }
-
-ChartJS.register(ArcElement, Tooltip, Legend);
 
 const PieChart: React.FC<PieChartProps> = (props: PieChartProps) => {
   const { className } = props;
@@ -26,7 +26,7 @@ const PieChart: React.FC<PieChartProps> = (props: PieChartProps) => {
     },
   ];
 
-  const data = {
+  const pieData = {
     labels: response.map((res) => res.label),
     datasets: [
       {
@@ -47,7 +47,7 @@ const PieChart: React.FC<PieChartProps> = (props: PieChartProps) => {
   };
   return (
     <section className={className && className}>
-      <Pie options={options} data={data} />
+      <Pie options={options} data={pieData} />
     </section>
   );
 };
