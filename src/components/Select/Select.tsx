@@ -4,18 +4,23 @@ import cx from 'classnames';
 import './select.scss';
 
 const customStyles = {
-  control: (values: any) => ({
-    ...values,
+  control: (provided: any) => ({
+    ...provided,
     borderColor: '#c5c8cd',
     borderRadius: '0.5rem',
+    boxShadow: 'none',
     color: '#343a40',
     fontSize: '.875rem',
+    '&:hover': {
+      boxShadow: '0 0 0 1px #c5c8cd',
+    },
   }),
-  option: (values: any) => ({
-    ...values,
-    color: '#575d62',
+  option: (provided: any, state: any) => ({
+    ...provided,
+    color: state.isSelected ? '#343a40' : '#575d62',
     fontSize: '.875rem',
     padding: '.375rem .625rem',
+    backgroundColor: state.isSelected || state.isFocused ? '#e5e8ec' : 'white',
   }),
   placeholder: (values: any) => ({
     ...values,
@@ -69,11 +74,11 @@ const ReactSelect: React.FC<SelectProps> = ({
         isClearable={false}
         isDisabled={disabled && disabled}
         isLoading={isLoading && isLoading}
-        styles={customStyles}
         onChange={(value: any) => onChange && onChange(value)}
         onInputChange={(value: any) => onInputChange && onInputChange(value)}
         options={options}
         placeholder={placeholder}
+        styles={customStyles}
         value={value && value}
       />
       {isErrorString && <p className="select__errorMessage">{error}</p>}

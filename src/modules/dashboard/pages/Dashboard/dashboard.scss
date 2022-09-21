@@ -16,6 +16,9 @@
         .titleText {
           @include text(14, black, medium);
         }
+        .titleSelect {
+          width: 120px;
+        }
       }
       &:last-of-type {
         margin: 0;

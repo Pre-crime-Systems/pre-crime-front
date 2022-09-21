@@ -64,7 +64,8 @@ const Dashboard: React.FC = () => {
           <div className="chartCard__title">
             <h2 className="titleText">Crimen por tipo de delito</h2>
             <Select
-              placeholder="Filtro por mes"
+              className="titleSelect"
+              placeholder="Mes"
               options={[
                 { label: 'Enero', value: 1 },
                 { label: 'Febrero', value: 2 },
@@ -81,7 +82,8 @@ const Dashboard: React.FC = () => {
           <div className="chartCard__title">
             <h2 className="titleText">Cantidad de crímenes</h2>
             <Select
-              placeholder="Filtro por tiempo"
+              className="titleSelect"
+              placeholder="Tiempo"
               options={crimeQuantityFilterOptions}
               value={crimeQuantityFilterSelected}
               onChange={(newValue) => {
