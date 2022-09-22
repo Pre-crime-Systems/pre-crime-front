@@ -7,8 +7,13 @@ export interface CrimePredictionFilters {
   timeRange: CrimeTimeRange;
 }
 
+export interface CrimeSelectFilter {
+  label: string;
+  value: any;
+}
+
 export interface CrimeHistoricalFilters {
-  typeCrimeId: number;
-  subtypeCrimeId: number;
-  modalityCrimeId: number;
+  typeCrime: CrimeSelectFilter;
+  subtypeCrime: CrimeSelectFilter;
+  modalityCrime: CrimeSelectFilter;
 }

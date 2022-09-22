@@ -10,7 +10,10 @@ import {
   TYPES_CRIME,
 } from '../../../../constants/data.constant';
 import { CrimeTimeRange } from '../../../../models/crime.model';
-import { crimePredictionTimeRange } from '../../../../constants/crime.constant';
+import {
+  crimePredictionTimeRange,
+  crimeSelectDefaultOption,
+} from '../../../../constants/crime.constant';
 import './crimeFilters.scss';
 
 interface CrimeFiltersProps {
@@ -27,12 +30,10 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
   const { className, filters, predictionMode, onClearFilters, setFilters } =
     props;
   //historical
-  const [typeCrime, setTypeCrime] = useState<any>(filters?.typeCrime || null);
-  const [subtypeCrime, setSubtypeCrime] = useState<any>(
-    filters?.subtypeCrime || null
-  );
+  const [typeCrime, setTypeCrime] = useState<any>(filters?.typeCrime);
+  const [subtypeCrime, setSubtypeCrime] = useState<any>(filters?.subtypeCrime);
   const [modalityCrime, setModalityCrime] = useState<any>(
-    filters?.modalityCrime || null
+    filters?.modalityCrime
   );
   //prediction
   const [timeRange, setTimeRange] = useState<CrimeTimeRange>(
@@ -69,7 +70,7 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
         <Select
           className="filterItems__field"
           label="Tipo de crimen"
-          options={TYPES_CRIME}
+          options={[crimeSelectDefaultOption, ...TYPES_CRIME]}
           value={typeCrime}
           onChange={(newValue) => {
             setTypeCrime(newValue);
@@ -78,7 +79,7 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
         <Select
           className="filterItems__field"
           label="Subtipo de crimen"
-          options={SUBTYPES_CRIME}
+          options={[crimeSelectDefaultOption, ...SUBTYPES_CRIME]}
           value={subtypeCrime}
           onChange={(newValue) => {
             setSubtypeCrime(newValue);
@@ -87,7 +88,7 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
         <Select
           className="filterItems__field"
           label="Modalidad de crimen"
-          options={MODALITIES_CRIME}
+          options={[crimeSelectDefaultOption, ...MODALITIES_CRIME]}
           value={modalityCrime}
           onChange={(newValue) => {
             setModalityCrime(newValue);
