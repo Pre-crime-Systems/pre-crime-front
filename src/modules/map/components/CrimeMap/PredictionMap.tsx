@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Loading from '../../../../components/Loading/Loading';
+import { crimePredictionTimeRange } from '../../../../constants/crime.constant';
 import { useApi } from '../../../../hooks/useApi';
+import { CrimePredictionFilters } from '../../../../models/crime.model';
 import { getPredictions } from '../../../../services/crime.service';
 import CrimeFilters from '../CrimeFilters/CrimeFilters';
 import GoogleMaps from '../GoogleMaps/GoogleMaps';
@@ -9,7 +11,9 @@ import './crimeMap.scss';
 const PredictionMap: React.FC = () => {
   const [data, setData] = useState<any>(null);
   const [filteredData, setFilteredData] = useState<any>(null);
-  const [filters, setFilters] = useState<any>(null);
+  const [filters, setFilters] = useState<CrimePredictionFilters>({
+    timeRange: crimePredictionTimeRange,
+  });
   const [loading, setLoading] = useState<boolean>(false);
   const [reset, setReset] = useState<any>(null);
   const [responseEndpoint, callEndpoint] = useApi();
@@ -40,7 +44,9 @@ const PredictionMap: React.FC = () => {
     if (reset && data) {
       setLoading(true);
       setFilteredData(null);
-      setFilters(null);
+      setFilters({
+        timeRange: crimePredictionTimeRange,
+      });
       setTimeout(() => {
         setFilteredData(data);
         setLoading(false);

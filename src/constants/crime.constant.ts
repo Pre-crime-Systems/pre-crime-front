@@ -1,6 +1,6 @@
-import { CrimeRangeTime } from '../models/crime.model';
+import { CrimeTimeRange } from '../models/crime.model';
 
-export const crimePredictionRangeTime: CrimeRangeTime = {
+export const crimePredictionTimeRange: CrimeTimeRange = {
   max: 23,
   min: 0,
 };
