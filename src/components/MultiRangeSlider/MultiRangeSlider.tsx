@@ -26,10 +26,13 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = (
   const minValRef = useRef<HTMLInputElement>(null);
   const maxValRef = useRef<HTMLInputElement>(null);
   const range = useRef<HTMLDivElement>(null);
+  const minLimitVal = 0;
+  const maxLimitVal = 23;
 
   // Convert to percentage
   const getPercent = useCallback(
-    (value: number) => Math.round(((value - min) / (max - min)) * 100),
+    (value: number) =>
+      Math.round(((value - minLimitVal) / (maxLimitVal - minLimitVal)) * 100),
     [min, max]
   );
 
@@ -61,7 +64,7 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = (
   // // Get min and max values when their state changes
   useEffect(() => {
     onChange({ min: minVal, max: maxVal });
-  }, [minVal, maxVal, onChange]);
+  }, [minVal, maxVal]);
 
   return (
     <section className={cx('multiRangeSlider', className && className)}>
@@ -69,8 +72,8 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = (
       <div className="multiRangeSlider__content">
         <input
           type="range"
-          min={min}
-          max={max}
+          min={minLimitVal}
+          max={maxLimitVal}
           value={minVal}
           ref={minValRef}
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
@@ -84,8 +87,8 @@ const MultiRangeSlider: FC<MultiRangeSliderProps> = (
         />
         <input
           type="range"
-          min={min}
-          max={max}
+          min={minLimitVal}
+          max={maxLimitVal}
           value={maxVal}
           ref={maxValRef}
           onChange={(event: ChangeEvent<HTMLInputElement>) => {
