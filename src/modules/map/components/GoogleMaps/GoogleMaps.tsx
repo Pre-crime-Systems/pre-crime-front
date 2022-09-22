@@ -1,4 +1,4 @@
-import React, { useCallback, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import {
   DirectionsRenderer,
   DirectionsService,
@@ -17,6 +17,7 @@ import {
 } from '../../../../constants/google.constant';
 import {
   buildInfo,
+  getAveragePercentageOfCrimeByZipCode,
   getDirection,
   getZipCodeColor,
   IDirection,
@@ -35,7 +36,7 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
   const { data, filters, predictionMode = false } = props;
   const [direction, setDirection] = useState<IDirection | null>(null);
   const [directionResponse, setDirectionResponse] = useState<any>(null);
-  const selectedHour = predictionMode ? filters?.time?.value : 0;
+  const timeRangeFilter = predictionMode ? filters?.timeRange : null;
 
   const { isLoaded } = useJsApiLoader({
     googleMapsApiKey: API_KEY,
@@ -46,9 +47,12 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
   const onLoadMap = (map: any) => {
     if (predictionMode) {
       map.data.addGeoJson(data);
-      map.data.setStyle((feature: any) => {
-        const percentageArray = feature.getProperty('predictionPercentage');
-        const color = getZipCodeColor(percentageArray[selectedHour]);
+      map.data.setStyle((feature: google.maps.Data.Feature) => {
+        const percentage = getAveragePercentageOfCrimeByZipCode(
+          feature,
+          timeRangeFilter
+        );
+        const color = getZipCodeColor(percentage);
         return {
           fillColor: color,
           strokeWeight: 1,
@@ -61,9 +65,10 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
         const infoWindow = new google.maps.InfoWindow({
           content: buildInfo({
             district: event.feature.getProperty('name'),
-            percentage: event.feature.getProperty('predictionPercentage')[
-              selectedHour
-            ],
+            percentage: getAveragePercentageOfCrimeByZipCode(
+              event.feature,
+              timeRangeFilter
+            ),
             zipCode: event.feature.getProperty('postalCode'),
           }),
           position: event.latLng,
@@ -80,6 +85,16 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
     }
   };
 
+  let count = useRef(0);
+  const directionsCallback = useCallback((response: any) => {
+    if (response !== null) {
+      if (response.status === 'OK' && count.current < 1) {
+        count.current += 1;
+        setDirectionResponse(response);
+      }
+    }
+  }, []);
+
   const onLoadHeatMap = (heatmapLayer: any) => {
     heatmapLayer.set('gradient', HEATMAP_GRADIENT);
     heatmapLayer.set('radius', HEATMAP_RADIUS);
@@ -91,19 +106,12 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
     });
   };
 
-  if (predictionMode && direction == null) {
-    const response = getDirection(data?.features, selectedHour);
-    setDirection(response);
-  }
-  let count = useRef(0);
-  const directionsCallback = useCallback((response: any) => {
-    if (response !== null) {
-      if (response.status === 'OK' && count.current < 1) {
-        count.current += 1;
-        setDirectionResponse(response);
-      }
+  useEffect(() => {
+    if (data && predictionMode && timeRangeFilter && direction == null) {
+      const response = getDirection(data.features, timeRangeFilter);
+      setDirection(response);
     }
-  }, []);
+  }, [direction]);
 
   return isLoaded ? (
     <GoogleMap

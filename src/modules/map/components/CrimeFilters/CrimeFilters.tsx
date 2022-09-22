@@ -2,13 +2,18 @@ import React, { useState } from 'react';
 import cx from 'classnames';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
+import MultiRangeSlider from '../../../../components/MultiRangeSlider/MultiRangeSlider';
 import Select from '../../../../components/Select/Select';
 import {
-  HOURS,
   MODALITIES_CRIME,
   SUBTYPES_CRIME,
   TYPES_CRIME,
 } from '../../../../constants/data.constant';
+import { CrimeTimeRange } from '../../../../models/crime.model';
+import {
+  crimePredictionTimeRange,
+  crimeSelectDefaultOption,
+} from '../../../../constants/crime.constant';
 import './crimeFilters.scss';
 
 interface CrimeFiltersProps {
@@ -25,28 +30,30 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
   const { className, filters, predictionMode, onClearFilters, setFilters } =
     props;
   //historical
-  const [typeCrime, setTypeCrime] = useState<any>(filters?.typeCrime || null);
-  const [subtypeCrime, setSubtypeCrime] = useState<any>(
-    filters?.subtypeCrime || null
-  );
+  const [typeCrime, setTypeCrime] = useState<any>(filters?.typeCrime);
+  const [subtypeCrime, setSubtypeCrime] = useState<any>(filters?.subtypeCrime);
   const [modalityCrime, setModalityCrime] = useState<any>(
-    filters?.modalityCrime || null
+    filters?.modalityCrime
   );
   //prediction
-  const [time, setTime] = useState<any>(filters?.time || null);
+  const [timeRange, setTimeRange] = useState<CrimeTimeRange>(
+    filters?.timeRange
+  );
+  const [timeRangeModified, setRangeTimeModified] = useState<CrimeTimeRange>(
+    crimePredictionTimeRange
+  );
 
   const onClear = () => {
     setTypeCrime(null);
     setSubtypeCrime(null);
     setModalityCrime(null);
-    setTime(null);
     onClearFilters(Math.random());
   };
 
   const onApply = () => {
     if (predictionMode) {
       setFilters({
-        time,
+        timeRange: timeRangeModified,
       });
     } else {
       setFilters({
@@ -57,13 +64,13 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
     }
   };
 
-  const FilterHistorical = () => {
+  const HistoricalFilters = () => {
     return (
       <section className="filterItems">
         <Select
           className="filterItems__field"
           label="Tipo de crimen"
-          options={TYPES_CRIME}
+          options={[crimeSelectDefaultOption, ...TYPES_CRIME]}
           value={typeCrime}
           onChange={(newValue) => {
             setTypeCrime(newValue);
@@ -72,7 +79,7 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
         <Select
           className="filterItems__field"
           label="Subtipo de crimen"
-          options={SUBTYPES_CRIME}
+          options={[crimeSelectDefaultOption, ...SUBTYPES_CRIME]}
           value={subtypeCrime}
           onChange={(newValue) => {
             setSubtypeCrime(newValue);
@@ -81,7 +88,7 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
         <Select
           className="filterItems__field"
           label="Modalidad de crimen"
-          options={MODALITIES_CRIME}
+          options={[crimeSelectDefaultOption, ...MODALITIES_CRIME]}
           value={modalityCrime}
           onChange={(newValue) => {
             setModalityCrime(newValue);
@@ -91,16 +98,19 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
     );
   };
 
-  const FiltersPrediction = () => {
+  const PredictionFilters = () => {
     return (
       <section className="filterItems">
-        <Select
+        <MultiRangeSlider
           className="filterItems__field"
           label="Hora"
-          options={HOURS}
-          value={time}
-          onChange={(newValue) => {
-            setTime(newValue);
+          max={timeRange?.max || 23}
+          min={timeRange?.min || 0}
+          onChange={({ min, max }: { min: number; max: number }) => {
+            setRangeTimeModified({
+              max,
+              min,
+            });
           }}
         />
       </section>
@@ -133,7 +143,7 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
     <Card className={cx('crimeFilters', className && className)}>
       <h3 className="crimeFilters__title">Filtros</h3>
       <section className="crimeFilters__options">
-        {predictionMode ? FiltersPrediction() : FilterHistorical()}
+        {predictionMode ? PredictionFilters() : HistoricalFilters()}
         {FilterButtons()}
       </section>
     </Card>

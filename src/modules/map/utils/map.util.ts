@@ -7,22 +7,45 @@ export interface IDirection {
 export const buildInfo = (eventProperties: any) => {
   return `<div class="crimeInfo">
 		<h4 class="crimeInfo__title">${eventProperties?.district}</h4>
-		<p class="crimeInfo__description">Probabilidad del crimen en el código postal ${eventProperties?.zipCode}</p>
-		<p class="crimeInfo__item">Porcentaje: ${eventProperties?.percentage}</p>
+		<p class="crimeInfo__description">Probabilidad del crimen en el código postal ${
+      eventProperties?.zipCode
+    }</p>
+		<p class="crimeInfo__item">Porcentaje: ${eventProperties?.percentage.toFixed(
+      2
+    )}</p>
 	</div>`;
 };
 
-export const getDirection = (features: any, selectedHour: number) => {
+export const getAveragePercentageOfCrimeByZipCode = (
+  feature: google.maps.Data.Feature,
+  timeRange: any
+) => {
+  const percentages = feature.getProperty('predictionPercentage');
+  let sumPercentages = 0;
+  for (let index = timeRange?.min; index <= timeRange?.max; index++) {
+    sumPercentages = sumPercentages + percentages[index];
+  }
+  return sumPercentages / (timeRange?.max - timeRange?.min);
+};
+
+export const getDirection = (features: any[], timeRange: any) => {
   let coords: google.maps.LatLng[] = [];
   let origin: google.maps.LatLng | string = '';
   let destination: google.maps.LatLng | string = '';
   let waypoints: google.maps.DirectionsWaypoint[] = [];
 
-  features?.forEach((feature: any) => {
-    const prediction = feature?.properties?.predictionPercentage[selectedHour];
-    if (prediction >= 70) {
-      const lat = feature?.properties?.y;
-      const lng = feature?.properties?.x;
+  features.forEach((feature) => {
+    const percentages = feature.properties.predictionPercentage;
+    let sumPercentages = 0;
+    let averagePercentage = 0;
+    for (let index = timeRange?.min; index <= timeRange?.max; index++) {
+      sumPercentages = sumPercentages + percentages[index];
+    }
+    averagePercentage = sumPercentages / (timeRange?.max - timeRange?.min);
+
+    if (averagePercentage >= 70) {
+      const lat = feature.properties.y;
+      const lng = feature.properties.x;
       coords.push(new google.maps.LatLng(lat, lng));
       waypoints.push({ location: new google.maps.LatLng(lat, lng) });
     }
@@ -40,6 +63,8 @@ export const getDirection = (features: any, selectedHour: number) => {
     waypoints,
   };
 
+  console.log('direction', direction);
+
   return direction;
 };
 
@@ -49,6 +74,6 @@ export const getZipCodeColor = (percentage: number) => {
   } else if (percentage >= 40 && percentage < 70) {
     return '#ff8324';
   } else if (percentage >= 70) {
-    return '#b02753';
+    return 'purple';
   }
 };

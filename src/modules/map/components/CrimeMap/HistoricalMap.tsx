@@ -1,6 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import Loading from '../../../../components/Loading/Loading';
+import { crimeSelectDefaultOption } from '../../../../constants/crime.constant';
 import { useApi } from '../../../../hooks/useApi';
+import { CrimeHistoricalFilters } from '../../../../models/crime.model';
 import {
   getCrimes,
   getHistoricalCrimesByFilters,
@@ -12,7 +14,11 @@ import './crimeMap.scss';
 const HistoricalMap: React.FC = () => {
   const [data, setData] = useState<any>(null);
   const [filteredData, setFilteredData] = useState<any>(null);
-  const [filters, setFilters] = useState<any>(null);
+  const [filters, setFilters] = useState<CrimeHistoricalFilters>({
+    typeCrime: crimeSelectDefaultOption,
+    subtypeCrime: crimeSelectDefaultOption,
+    modalityCrime: crimeSelectDefaultOption,
+  });
   const [loading, setLoading] = useState<boolean>(false);
   const [reset, setReset] = useState<any>(null);
   const [responseEndpoint, callEndpoint] = useApi();
@@ -45,6 +51,11 @@ const HistoricalMap: React.FC = () => {
 
   useEffect(() => {
     if (reset && data) {
+      setFilters({
+        typeCrime: crimeSelectDefaultOption,
+        subtypeCrime: crimeSelectDefaultOption,
+        modalityCrime: crimeSelectDefaultOption,
+      });
       setFilteredData(data);
     }
   }, [reset]);
