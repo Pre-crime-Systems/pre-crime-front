@@ -7,6 +7,10 @@ export type InitialStateType = {
 
 const initialState: InitialStateType = {
   list: {
+    table: {
+      loading: false,
+      data: null,
+    },
     modal: {
       active: false,
       mode: 'add',
@@ -17,7 +21,7 @@ const initialState: InitialStateType = {
 
 const ContextCrime = createContext<{
   state: InitialStateType;
-  dispatch: Dispatch<CrimeActions | CrimeActions>;
+  dispatch: Dispatch<CrimeActions>;
 }>({
   state: initialState,
   dispatch: () => null,

@@ -31,7 +31,7 @@ const CrimeModal: React.FC = () => {
   const [policeStationsLoading, setPoliceStationsLoading] = useState<any>(null);
   const [policeStationSelected, setPoliceStationSelected] = useState<any>(null);
   const [policeStationsResponse, callPoliceStations] = useApi();
-  const [addressSelected, setAddressSelected] = useState<any>('');
+  const [addressSelected, setAddressSelected] = useState<any>(null);
   const [dateSelected, setDateSelected] = useState<any>(null);
   const [timeSelected, setTimeSelected] = useState<any>(null);
   const [crimeResponse, callEndpoint] = useApi();
@@ -66,6 +66,13 @@ const CrimeModal: React.FC = () => {
   useEffect(() => {
     if (loading && crimeResponse?.data) {
       onClose();
+      dispatch({
+        type: Types.SetTable,
+        payload: {
+          data: null,
+          loading: false,
+        },
+      });
     }
   }, [crimeResponse]);
 

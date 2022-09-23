@@ -8,16 +8,24 @@ interface IModal {
   data: any;
 }
 
+interface ITable {
+  data: any;
+  loading: boolean;
+}
+
 export type CrimeTypes = {
   modal: IModal;
+  table: ITable;
 };
 
 export enum Types {
   SetModal = 'SET_MODAL',
+  SetTable = 'SET_TABLE',
 }
 
 type CrimePayload = {
   [Types.SetModal]: IModal;
+  [Types.SetTable]: ITable;
 };
 
 export type CrimeActions =
@@ -29,6 +37,11 @@ export const crimeReducer = (state: CrimeTypes, action: CrimeActions) => {
       return {
         ...state,
         modal: action.payload,
+      };
+    case Types.SetTable:
+      return {
+        ...state,
+        table: action.payload,
       };
     default:
       return state;

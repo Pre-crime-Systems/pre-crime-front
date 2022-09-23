@@ -13,9 +13,8 @@ import './crimesTable.scss';
 
 const CrimesTable: React.FC = () => {
   const { state, dispatch } = useContext(ContextCrime);
-  const [crimes, setCrimes] = useState<any>(null);
+  const { data: crimes, loading } = state?.list?.table;
   const [currentPage, setCurrentPage] = useState<number>(1);
-  const [loading, setLoading] = useState<boolean>(false);
   const [responseEndpoint, callEndpoint] = useApi();
 
   const renderDate = (data: any) => {
@@ -52,7 +51,6 @@ const CrimesTable: React.FC = () => {
         <Button
           buttonType="secondary"
           onClick={() => {
-            console.log('open detail', data);
             dispatch({
               type: Types.SetModal,
               payload: {
@@ -73,13 +71,28 @@ const CrimesTable: React.FC = () => {
 
   useEffect(() => {
     if (loading && responseEndpoint?.data) {
-      setLoading(false);
-      setCrimes(responseEndpoint?.data);
-    } else if (!loading && responseEndpoint?.data === null) {
-      setLoading(true);
-      callEndpoint(getCrimes());
+      dispatch({
+        type: Types.SetTable,
+        payload: {
+          data: responseEndpoint?.data,
+          loading: false,
+        },
+      });
     }
   }, [responseEndpoint]);
+
+  useEffect(() => {
+    if (!loading && crimes === null) {
+      dispatch({
+        type: Types.SetTable,
+        payload: {
+          data: null,
+          loading: true,
+        },
+      });
+      callEndpoint(getCrimes());
+    }
+  }, [crimes]);
 
   return (
     <Card className="crimesTable">
