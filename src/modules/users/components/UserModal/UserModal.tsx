@@ -13,16 +13,18 @@ import './userModal.scss';
 const UserModal: React.FC = () => {
   const { state, dispatch } = useContext(ContextUser);
   const [loading, setLoading] = useState<boolean>(false);
-  const [username, setUsername] = useState<string>('');
+  const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
+  const [username, setUsername] = useState<string>('');
   const [role, setRole] = useState<any>(null);
   const [userResponse, callEndpoint] = useApi();
 
   const { modal } = state?.list;
 
   const onClose = () => {
-    setUsername('');
+    setEmail('');
     setPassword('');
+    setUsername('');
     setRole(null);
     dispatch({
       type: Types.SetModal,
@@ -36,8 +38,9 @@ const UserModal: React.FC = () => {
 
   const onSave = () => {
     const user = {
-      username,
+      email,
       password,
+      username,
       role: role?.value,
     };
     setLoading(true);
@@ -68,11 +71,11 @@ const UserModal: React.FC = () => {
         <div className="userModal__groupFields">
           <Input
             className="userField"
-            label="Usuario"
-            type="text"
-            value={username}
+            label="Correo electrónico"
+            type="email"
+            value={email}
             onChange={(event) => {
-              setUsername(event.target.value);
+              setEmail(event.target.value);
             }}
           />
           <Input
@@ -86,6 +89,15 @@ const UserModal: React.FC = () => {
           />
         </div>
         <div className="userModal__groupFields">
+          <Input
+            className="userField"
+            label="Usuario"
+            type="text"
+            value={username}
+            onChange={(event) => {
+              setUsername(event.target.value);
+            }}
+          />
           <Select
             className="userField"
             label="Rol"

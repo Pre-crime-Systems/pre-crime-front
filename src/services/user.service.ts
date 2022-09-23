@@ -2,16 +2,22 @@ import { BASE_URL } from '../constants/api.constant';
 import { ApiMethod, ApiRequest } from '../models/api.model';
 
 interface CreateUserRequest {
-  username: string;
+  email: string;
   password: string;
+  username: string;
   role: string;
 }
 
-export const createUser = ({ username, password, role }: CreateUserRequest) => {
+export const createUser = ({
+  email,
+  password,
+  username,
+  role,
+}: CreateUserRequest) => {
   const request: ApiRequest = {
     method: ApiMethod.Post,
     url: `${BASE_URL}/api/register`,
-    body: { username, password, role },
+    body: { email, password, username, role },
   };
   return request;
 };
