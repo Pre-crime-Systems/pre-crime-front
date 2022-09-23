@@ -1,19 +1,31 @@
 import {
-  CrimeQuantityFilter,
-  CrimeQuantityFilterType,
+  DashboardCrimeQuantityFilter,
+  DashboardCrimeQuantityFilterType,
+  DashboardTypeCrimeFilter,
 } from '../models/dashboard.model';
 
-export const crimeQuantityFilterOptions: CrimeQuantityFilter[] = [
+export const crimeQuantityFilterOptions: DashboardCrimeQuantityFilter[] = [
   {
     label: 'De hoy',
-    value: CrimeQuantityFilterType.HOURS,
+    value: DashboardCrimeQuantityFilterType.HOURS,
   },
   {
     label: 'Del mes',
-    value: CrimeQuantityFilterType.DAYS,
+    value: DashboardCrimeQuantityFilterType.DAYS,
   },
   {
     label: 'Del año',
-    value: CrimeQuantityFilterType.MONTHS,
+    value: DashboardCrimeQuantityFilterType.MONTHS,
+  },
+];
+
+export const typesCrimeFilterOptions: DashboardTypeCrimeFilter[] = [
+  {
+    label: 'Septiembre 2022',
+    value: '2022-9',
+  },
+  {
+    label: 'Octubre 2022',
+    value: '2022-10',
   },
 ];

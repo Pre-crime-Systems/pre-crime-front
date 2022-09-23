@@ -1,10 +1,15 @@
-export enum CrimeQuantityFilterType {
+export enum DashboardCrimeQuantityFilterType {
   HOURS = 'HOURS',
   DAYS = 'DAYS',
   MONTHS = 'MONTHS',
 }
 
-export interface CrimeQuantityFilter {
+export interface DashboardCrimeQuantityFilter {
   label: string;
-  value: CrimeQuantityFilterType;
+  value: DashboardCrimeQuantityFilterType;
+}
+
+export interface DashboardTypeCrimeFilter {
+  label: string;
+  value: string;
 }
