@@ -32,12 +32,14 @@ const Modal: React.FC<IModalProps> = (props: IModalProps) => {
     <article className={`modal ${active ? 'modal--show' : ''}`}>
       <section className="modal__content">
         <div className="modalHeader">
-          <h3 className="modalHeader__title">{title}</h3>
           {onClose && (
-            <button className="modalHeader__close" onClick={onClose}>
-              <Icon type="close" />
-            </button>
+            <div className="modalHeader__close">
+              <button className="closeButton" onClick={onClose}>
+                <Icon type="close" />
+              </button>
+            </div>
           )}
+          <h3 className="modalHeader__title">{title}</h3>
         </div>
         {children}
       </section>
