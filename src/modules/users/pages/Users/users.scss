@@ -1,9 +1,10 @@
 .usersPage {
   &__header {
-    align-items: center;
-    display: flex;
-    justify-content: flex-start;
+    flex: 2;
     margin: 0 0 1rem;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
   }
   &__content {
   }
