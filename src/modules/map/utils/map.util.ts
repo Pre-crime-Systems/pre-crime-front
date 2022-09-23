@@ -22,10 +22,12 @@ export const getAveragePercentageOfCrimeByZipCode = (
 ) => {
   const percentages = feature.getProperty('predictionPercentage');
   let sumPercentages = 0;
+  let iterations = 0;
   for (let index = timeRange?.min; index <= timeRange?.max; index++) {
     sumPercentages = sumPercentages + percentages[index];
+    iterations++;
   }
-  return sumPercentages / (timeRange?.max - timeRange?.min);
+  return sumPercentages / iterations;
 };
 
 export const getDirection = (features: any[], timeRange: any) => {
