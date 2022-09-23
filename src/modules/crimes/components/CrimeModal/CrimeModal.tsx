@@ -70,13 +70,14 @@ const CrimeModal: React.FC = () => {
 
   const onSave = () => {
     const crime = {
-      districtSelected,
-      zoneSelected,
-      policeStationSelected,
       address: addressSelected,
-      dateSelected,
-      timeSelected,
       date: dayjs(`${dateSelected} ${timeSelected}:00`).toISOString(),
+      detail: descriptionSelected,
+      modalityCrimeId: modalitySelected?.value,
+      policeStationId: policeStationSelected?.value,
+      subtypeCrimeId: subtypeCrimeSelected?.value,
+      typeCrimeId: typeCrimeSelected?.value,
+      zoneId: zoneSelected?.value,
     };
     setLoading(true);
     callEndpoint(createCrime(crime));
