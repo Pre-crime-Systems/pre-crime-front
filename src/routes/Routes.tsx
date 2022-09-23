@@ -3,7 +3,7 @@ import Dashboard from '../modules/dashboard/pages/Dashboard/Dashboard';
 import Login from '../modules/auth/pages/Login/Login';
 import NewPassword from '../modules/auth/pages/NewPassword/NewPassword';
 import Reports from '../modules/reports/pages/Reports/Reports';
-import Crimes from '../modules/crimes/pages/Crimes/Crimes';
+import CrimesInit from '../modules/crimes/pages/CrimesInit';
 import Map from '../modules/map/pages/Map/Map';
 import ResetPassword from '../modules/auth/pages/ResetPassword/ResetPassword';
 import Users from '../modules/users/pages/Users/Users';
@@ -21,7 +21,7 @@ const AppRoutes = () => {
         <Route path={RoutePaths.Dashboard} element={<Dashboard />} />
         <Route path={RoutePaths.Map} element={<Map />} />
         <Route path={RoutePaths.Reports} element={<Reports />} />
-        <Route path={RoutePaths.Crimes} element={<Crimes />} />
+        <Route path={RoutePaths.Crimes} element={<CrimesInit />} />
         <Route path={RoutePaths.Users} element={<Users />} />
       </Routes>
     </BrowserRouter>
