@@ -13,6 +13,8 @@ import './userModal.scss';
 const UserModal: React.FC = () => {
   const { state, dispatch } = useContext(ContextUser);
   const [loading, setLoading] = useState<boolean>(false);
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
   const [email, setEmail] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [username, setUsername] = useState<string>('');
@@ -22,6 +24,8 @@ const UserModal: React.FC = () => {
   const { modal } = state?.list;
 
   const onClose = () => {
+    setFirstName('');
+    setLastName('');
     setEmail('');
     setPassword('');
     setUsername('');
@@ -38,6 +42,8 @@ const UserModal: React.FC = () => {
 
   const onSave = () => {
     const user = {
+      firstName,
+      lastName,
       email,
       password,
       username,
@@ -68,6 +74,26 @@ const UserModal: React.FC = () => {
     >
       {loading && <Loading />}
       <section className="userModal">
+        <div className="userModal__groupFields">
+          <Input
+            className="userField"
+            label="Nombres"
+            type="text"
+            value={firstName}
+            onChange={(event) => {
+              setFirstName(event.target.value);
+            }}
+          />
+          <Input
+            className="userField"
+            label="Apellidos"
+            type="text"
+            value={lastName}
+            onChange={(event) => {
+              setLastName(event.target.value);
+            }}
+          />
+        </div>
         <div className="userModal__groupFields">
           <Input
             className="userField"
