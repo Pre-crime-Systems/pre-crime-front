@@ -50,6 +50,7 @@ const CrimesTable: React.FC = () => {
       Cell: (data: any) => (
         <Button
           buttonType="secondary"
+          outline
           onClick={() => {
             dispatch({
               type: Types.SetModal,

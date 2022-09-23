@@ -1,4 +1,5 @@
 import React, { useContext } from 'react';
+import dayjs from 'dayjs';
 import Button from '../../../../components/Button/Button';
 import Modal from '../../../../components/Modal/Modal';
 import { ContextCrime } from '../../context/ContextCrime';
@@ -29,16 +30,18 @@ const CrimeDetailModal: React.FC = () => {
       <section className="crimeDetailModal">
         <div className="crimeDetailModal__data">
           <div className="crimeData">
-            <label className="crimeData__label">Fecha</label>
-            <p className="crimeData__value">{modal?.data?.date}</p>
-          </div>
-          <div className="crimeData">
-            <label className="crimeData__label">Hora</label>
-            <p className="crimeData__value">{modal?.data?.date}</p>
+            <label className="crimeData__label">Fecha y hora</label>
+            <p className="crimeData__value">
+              {dayjs(modal?.data?.date).format('DD/MM/YYYY HH:MM A')}
+            </p>
           </div>
           <div className="crimeData">
             <label className="crimeData__label">Dirección</label>
             <p className="crimeData__value">{modal?.data?.address}</p>
+          </div>
+          <div className="crimeData">
+            <label className="crimeData__label">Descripción</label>
+            <p className="crimeData__value">{modal?.data?.detail}</p>
           </div>
         </div>
         <div className="crimeDetailModal__buttons">
