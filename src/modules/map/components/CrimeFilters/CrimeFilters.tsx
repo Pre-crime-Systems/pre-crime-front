@@ -1,19 +1,20 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
 import MultiRangeSlider from '../../../../components/MultiRangeSlider/MultiRangeSlider';
 import Select from '../../../../components/Select/Select';
-import {
-  MODALITIES_CRIME,
-  SUBTYPES_CRIME,
-  TYPES_CRIME,
-} from '../../../../constants/data.constant';
 import { CrimeTimeRange } from '../../../../models/crime.model';
 import {
   crimePredictionTimeRange,
   crimeSelectDefaultOption,
 } from '../../../../constants/crime.constant';
+import { useApi } from '../../../../hooks/useApi';
+import {
+  getModalities,
+  getSubtypes,
+  getTypes,
+} from '../../../../services/type.service';
 import './crimeFilters.scss';
 
 interface CrimeFiltersProps {
@@ -30,11 +31,25 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
   const { className, filters, predictionMode, onClearFilters, setFilters } =
     props;
   //historical
-  const [typeCrime, setTypeCrime] = useState<any>(filters?.typeCrime);
-  const [subtypeCrime, setSubtypeCrime] = useState<any>(filters?.subtypeCrime);
-  const [modalityCrime, setModalityCrime] = useState<any>(
+  const [typesCrime, setTypesCrime] = useState<any>([]);
+  const [typesCrimeLoading, setTypesCrimeLoading] = useState<any>(null);
+  const [typeCrimeSelected, setTypeCrimeSelected] = useState<any>(
+    filters?.typeCrime
+  );
+  const [typesCrimeResponse, callTypesCrime] = useApi();
+  const [subtypesCrime, setSubtypesCrime] = useState<any>([]);
+  const [subtypesCrimeLoading, setSubtypesCrimeLoading] = useState<any>(null);
+  const [subtypeCrimeSelected, setSubtypeCrimeSelected] = useState<any>(
+    filters?.subtypeCrime
+  );
+  const [subtypesCrimeResponse, callSubtypesCrime] = useApi();
+  const [modalities, setModalities] = useState<any>([]);
+  const [modalitiesLoading, setModalitiesLoading] = useState<any>(null);
+  const [modalitySelected, setModalitySelected] = useState<any>(
     filters?.modalityCrime
   );
+  const [modalitiesResponse, callModalities] = useApi();
+
   //prediction
   const [timeRange, setTimeRange] = useState<CrimeTimeRange>(
     filters?.timeRange
@@ -43,13 +58,6 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
     crimePredictionTimeRange
   );
 
-  const onClear = () => {
-    setTypeCrime(null);
-    setSubtypeCrime(null);
-    setModalityCrime(null);
-    onClearFilters(Math.random());
-  };
-
   const onApply = () => {
     if (predictionMode) {
       setFilters({
@@ -57,12 +65,78 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
       });
     } else {
       setFilters({
-        typeCrime,
-        subtypeCrime,
-        modalityCrime,
+        typeCrime: typeCrimeSelected,
+        subtypeCrime: subtypeCrimeSelected,
+        modalityCrime: modalitySelected,
       });
     }
   };
+
+  const onClear = () => {
+    setTypeCrimeSelected(null);
+    setSubtypeCrimeSelected(null);
+    setModalitySelected(null);
+    onClearFilters(Math.random());
+  };
+
+  useEffect(() => {
+    if (typesCrimeLoading && typesCrimeResponse?.data) {
+      setTypesCrimeLoading(false);
+      setTypesCrime(
+        typesCrimeResponse?.data?.map((typeCrime: any) => {
+          return {
+            label: typeCrime?.name,
+            value: typeCrime?.id,
+          };
+        })
+      );
+    } else if (!typesCrimeLoading && typesCrimeResponse?.data === null) {
+      setTypesCrimeLoading(true);
+      callTypesCrime(getTypes());
+    }
+  }, [typesCrimeResponse]);
+
+  useEffect(() => {
+    if (typeCrimeSelected?.value) {
+      setSubtypesCrimeLoading(true);
+      callSubtypesCrime(getSubtypes(typeCrimeSelected?.value));
+    }
+  }, [typeCrimeSelected]);
+
+  useEffect(() => {
+    if (subtypesCrimeLoading && subtypesCrimeResponse?.data) {
+      setSubtypesCrimeLoading(false);
+      setSubtypesCrime(
+        subtypesCrimeResponse?.data?.map((subtype: any) => {
+          return {
+            label: subtype?.name,
+            value: subtype?.id,
+          };
+        })
+      );
+    }
+  }, [subtypesCrimeResponse]);
+
+  useEffect(() => {
+    if (subtypeCrimeSelected?.value) {
+      setModalitiesLoading(true);
+      callModalities(getModalities(subtypeCrimeSelected?.value));
+    }
+  }, [subtypeCrimeSelected]);
+
+  useEffect(() => {
+    if (modalitiesLoading && modalitiesResponse?.data) {
+      setModalitiesLoading(false);
+      setModalities(
+        modalitiesResponse?.data?.map((modality: any) => {
+          return {
+            label: modality?.name,
+            value: modality?.id,
+          };
+        })
+      );
+    }
+  }, [modalitiesResponse]);
 
   const HistoricalFilters = () => {
     return (
@@ -70,28 +144,31 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
         <Select
           className="filterItems__field"
           label="Tipo de crimen"
-          options={[crimeSelectDefaultOption, ...TYPES_CRIME]}
-          value={typeCrime}
+          options={[crimeSelectDefaultOption, ...typesCrime]}
+          value={typeCrimeSelected}
           onChange={(newValue) => {
-            setTypeCrime(newValue);
+            setTypeCrimeSelected(newValue);
+            setSubtypeCrimeSelected(null);
+            setModalitySelected(null);
           }}
         />
         <Select
           className="filterItems__field"
           label="Subtipo de crimen"
-          options={[crimeSelectDefaultOption, ...SUBTYPES_CRIME]}
-          value={subtypeCrime}
+          options={[crimeSelectDefaultOption, ...subtypesCrime]}
+          value={subtypeCrimeSelected}
           onChange={(newValue) => {
-            setSubtypeCrime(newValue);
+            setSubtypeCrimeSelected(newValue);
+            setModalitySelected(null);
           }}
         />
         <Select
           className="filterItems__field"
           label="Modalidad de crimen"
-          options={[crimeSelectDefaultOption, ...MODALITIES_CRIME]}
-          value={modalityCrime}
+          options={[crimeSelectDefaultOption, ...modalities]}
+          value={modalitySelected}
           onChange={(newValue) => {
-            setModalityCrime(newValue);
+            setModalitySelected(newValue);
           }}
         />
       </section>

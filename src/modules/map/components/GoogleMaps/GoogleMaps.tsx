@@ -8,7 +8,6 @@ import {
 } from '@react-google-maps/api';
 import { Libraries } from '@react-google-maps/api/dist/utils/make-load-script-url';
 import {
-  API_KEY,
   HEATMAP_GRADIENT,
   HEATMAP_RADIUS,
   MAP_OPTIONS,
@@ -39,7 +38,7 @@ const GoogleMaps: React.FC<GoogleMapsProps> = (props: GoogleMapsProps) => {
   const timeRangeFilter = predictionMode ? filters?.timeRange : null;
 
   const { isLoaded } = useJsApiLoader({
-    googleMapsApiKey: API_KEY,
+    googleMapsApiKey: process.env.REACT_APP_GOOGLE_API_KEY || '',
     libraries,
   });
   const center = { lat: -12.0874512, lng: -77.0499421 };

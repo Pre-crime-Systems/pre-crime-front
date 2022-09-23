@@ -24,25 +24,29 @@
     top: 0;
     width: 100%;
     .modalHeader {
-      align-items: center;
-      display: flex;
-      justify-content: space-between;
       padding: 1rem;
+      &__close {
+        display: flex;
+        justify-content: flex-end;
+        .closeButton {
+          align-items: center;
+          background-color: transparent;
+          border-radius: 50%;
+          border: none;
+          color: map-get($colors, grey-30);
+          cursor: pointer;
+          display: flex;
+          height: 30px;
+          justify-content: center;
+          padding: 0.25rem;
+          width: 30px;
+          &:hover {
+            background-color: map-get($colors, grey-10);
+          }
+        }
+      }
       &__title {
         @include text(14, grey-90, bold);
-      }
-      &__close {
-        align-items: center;
-        background-color: map-get($colors, secondary);
-        border-radius: 50%;
-        border: none;
-        color: map-get($colors, white);
-        cursor: pointer;
-        display: flex;
-        height: 30px;
-        justify-content: center;
-        padding: 0.25rem;
-        width: 30px;
       }
     }
   }

@@ -7,6 +7,10 @@ export type InitialStateType = {
 
 const initialState: InitialStateType = {
   list: {
+    table: {
+      loading: false,
+      data: null,
+    },
     modal: {
       active: false,
       mode: 'add',
@@ -33,7 +37,6 @@ interface ContextCrimeProviderProps {
 const ContextCrimeProvider: React.FC<ContextCrimeProviderProps> = (
   props: ContextCrimeProviderProps
 ) => {
-  console.log('ContextCrimeProvider....');
   const { children } = props;
   const [state, dispatch] = useReducer(mainReducer, initialState);
 

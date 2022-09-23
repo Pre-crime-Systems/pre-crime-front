@@ -7,30 +7,17 @@ ChartJS.register(ArcElement, Tooltip, Legend);
 
 interface PieChartProps {
   className?: string;
+  data: any[];
 }
 
 const PieChart: React.FC<PieChartProps> = (props: PieChartProps) => {
-  const { className } = props;
-  const response = [
-    {
-      label: 'Delito contra el patrimonio',
-      value: 50,
-    },
-    {
-      label: 'Delito contra la vida, el cuerpo y salud',
-      value: 20,
-    },
-    {
-      label: 'Delito contra la seguridad pública',
-      value: 30,
-    },
-  ];
+  const { className, data } = props;
 
   const pieData = {
-    labels: response.map((res) => res.label),
+    labels: data.map((res) => res.label),
     datasets: [
       {
-        data: response.map((res) => res.value),
+        data: data.map((res) => res.value),
         borderWidth: 1,
         ...PIE_COLORS,
       },

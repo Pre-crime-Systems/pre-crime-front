@@ -48,6 +48,19 @@ const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
           <li className="menuItem">
             <a
               className={`menuItem__content ${
+                activePath === RoutePaths.Crimes && 'menuItem__content--active'
+              }`}
+              onClick={() => {
+                navigate(RoutePaths.Crimes);
+              }}
+            >
+              <Icon className="itemIcon" type="finger-print" />
+              <span className="itemText">Crímenes</span>
+            </a>
+          </li>
+          <li className="menuItem">
+            <a
+              className={`menuItem__content ${
                 activePath === RoutePaths.Reports && 'menuItem__content--active'
               }`}
               onClick={() => {
@@ -56,19 +69,6 @@ const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
             >
               <Icon className="itemIcon" type="reports" />
               <span className="itemText">Reportes</span>
-            </a>
-          </li>
-          <li className="menuItem">
-            <a
-              className={`menuItem__content ${
-                activePath === RoutePaths.Crimes && 'menuItem__content--active'
-              }`}
-              onClick={() => {
-                navigate(RoutePaths.Crimes);
-              }}
-            >
-              <Icon className="itemIcon" type="reports" />
-              <span className="itemText">Crímenes</span>
             </a>
           </li>
         </ul>

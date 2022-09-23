@@ -1,21 +1,31 @@
 import { ActionMap } from '../../../models/actionMap.model';
 
+export type CrimeModalMode = 'add' | 'edit' | 'detail';
+
 interface IModal {
   active: boolean;
-  mode: 'add' | 'edit';
+  mode: CrimeModalMode;
   data: any;
+}
+
+interface ITable {
+  data: any;
+  loading: boolean;
 }
 
 export type CrimeTypes = {
   modal: IModal;
+  table: ITable;
 };
 
 export enum Types {
   SetModal = 'SET_MODAL',
+  SetTable = 'SET_TABLE',
 }
 
 type CrimePayload = {
   [Types.SetModal]: IModal;
+  [Types.SetTable]: ITable;
 };
 
 export type CrimeActions =
@@ -24,10 +34,14 @@ export type CrimeActions =
 export const crimeReducer = (state: CrimeTypes, action: CrimeActions) => {
   switch (action.type) {
     case Types.SetModal:
-      console.log('1', action.payload);
       return {
         ...state,
         modal: action.payload,
+      };
+    case Types.SetTable:
+      return {
+        ...state,
+        table: action.payload,
       };
     default:
       return state;

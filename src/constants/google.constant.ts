@@ -1,4 +1,3 @@
-export const API_KEY = 'AIzaSyCM3Dm-SQp5TYZLHRjEYfmGuUG3A1MfS8E';
 export const LIMA_GEOJSON_URL =
   'https://raw.githubusercontent.com/joseluisq/peru-geojson-datasets/master/lima_callao_distritos.geojson';
 export const HEATMAP_GRADIENT = [

@@ -1,13 +1,18 @@
+@import '../../../../assets/scss/mixins';
 @import '../../../../assets/scss/variables';
 
-.crimeModal {
+.crimeDetailModal {
   padding: 0 1rem 1rem;
-  &__groupFields {
-    display: grid;
-    grid-gap: 20px;
-    grid-template-columns: repeat(2, 1fr);
-    .crimeField {
+  &__data {
+    .crimeData {
       margin: 0 0 1rem;
+      &__label {
+        @include text(14, grey-90, medium);
+      }
+      &__value {
+        @include text(12, grey-90);
+        margin: 0.25rem 0 0;
+      }
     }
   }
   &__buttons {

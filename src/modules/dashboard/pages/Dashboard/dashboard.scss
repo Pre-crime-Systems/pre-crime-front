@@ -18,6 +18,9 @@
         }
         .titleSelect {
           width: 120px;
+          &.titleSelect--large {
+            width: 175px;
+          }
         }
       }
       &:last-of-type {
