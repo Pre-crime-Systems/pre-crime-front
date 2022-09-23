@@ -61,7 +61,8 @@ const ReactSelect: React.FC<SelectProps> = ({
   isLoading = false,
   ...props
 }: SelectProps) => {
-  const { options, onChange, value, className, onInputChange } = props;
+  const { options, onChange, value, className, onInputChange, ...otherProps } =
+    props;
   const isErrorString = error && typeof error === 'string';
 
   return (
@@ -70,7 +71,7 @@ const ReactSelect: React.FC<SelectProps> = ({
     >
       {label && <label className="select__label">{label}</label>}
       <Select
-        {...props}
+        {...otherProps}
         isClearable={false}
         isDisabled={disabled && disabled}
         isLoading={isLoading && isLoading}
