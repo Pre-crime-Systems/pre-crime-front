@@ -40,10 +40,12 @@ export const getDirection = (features: any[], timeRange: any) => {
     const percentages = feature.properties.predictionPercentage;
     let sumPercentages = 0;
     let averagePercentage = 0;
+    let iterations = 0;
     for (let index = timeRange?.min; index <= timeRange?.max; index++) {
       sumPercentages = sumPercentages + percentages[index];
+      iterations++;
     }
-    averagePercentage = sumPercentages / (timeRange?.max - timeRange?.min);
+    averagePercentage = sumPercentages / iterations;
 
     if (averagePercentage >= 70) {
       const lat = feature.properties.y;
