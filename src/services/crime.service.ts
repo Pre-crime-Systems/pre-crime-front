@@ -71,3 +71,16 @@ export const getTypesCrimeInfoByPeriod = (
   };
   return request;
 };
+
+// CRIMES
+export const createCrime = (crime: any) => {
+  const request: ApiRequest = {
+    method: ApiMethod.Post,
+    url: `${BASE_URL}/api/crimes`,
+    body: {
+      address: crime?.address,
+      date: crime?.date,
+    },
+  };
+  return request;
+};

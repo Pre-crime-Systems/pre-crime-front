@@ -16,3 +16,11 @@ export const getZonesByDistrict = (districtId: number) => {
   };
   return request;
 };
+
+export const getPoliceStationByDistrict = (districtId: number) => {
+  const request: ApiRequest = {
+    method: ApiMethod.Get,
+    url: `${BASE_URL}/api/districts/${districtId}/police-stations`,
+  };
+  return request;
+};
