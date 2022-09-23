@@ -15,6 +15,11 @@ import {
 import { ContextCrime } from '../../context/ContextCrime';
 import { Types } from '../../context/crime.reducer';
 import './crimeModal.scss';
+import {
+  getModalities,
+  getSubtypes,
+  getTypes,
+} from '../../../../services/type.service';
 
 const CrimeModal: React.FC = () => {
   const { state, dispatch } = useContext(ContextCrime);
@@ -35,6 +40,18 @@ const CrimeModal: React.FC = () => {
   const [dateSelected, setDateSelected] = useState<any>(null);
   const [timeSelected, setTimeSelected] = useState<any>(null);
   const [crimeResponse, callEndpoint] = useApi();
+  const [typesCrime, setTypesCrime] = useState<any>([]);
+  const [typesCrimeLoading, setTypesCrimeLoading] = useState<any>(null);
+  const [typeCrimeSelected, setTypeCrimeSelected] = useState<any>(null);
+  const [typesCrimeResponse, callTypesCrime] = useApi();
+  const [subtypesCrime, setSubtypesCrime] = useState<any>([]);
+  const [subtypesCrimeLoading, setSubtypesCrimeLoading] = useState<any>(null);
+  const [subtypeCrimeSelected, setSubtypeCrimeSelected] = useState<any>(null);
+  const [subtypesCrimeResponse, callSubtypesCrime] = useApi();
+  const [modalities, setModalities] = useState<any>([]);
+  const [modalitiesLoading, setModalitiesLoading] = useState<any>(null);
+  const [modalitySelected, setModalitySelected] = useState<any>(null);
+  const [modalitiesResponse, callModalities] = useApi();
 
   const { modal } = state?.list;
 
@@ -121,6 +138,51 @@ const CrimeModal: React.FC = () => {
     }
   }, [policeStationsResponse]);
 
+  useEffect(() => {
+    if (typesCrimeLoading && typesCrimeResponse?.data) {
+      setTypesCrimeLoading(false);
+      setTypesCrime(
+        typesCrimeResponse?.data?.map((typeCrime: any) => {
+          return {
+            label: typeCrime?.name,
+            value: typeCrime?.id,
+          };
+        })
+      );
+    } else if (!typesCrimeLoading && typesCrimeResponse?.data === null) {
+      setTypesCrimeLoading(true);
+      callTypesCrime(getTypes());
+    }
+  }, [typesCrimeResponse]);
+
+  useEffect(() => {
+    if (subtypesCrimeLoading && subtypesCrimeResponse?.data) {
+      setSubtypesCrimeLoading(false);
+      setSubtypesCrime(
+        subtypesCrimeResponse?.data?.map((subtype: any) => {
+          return {
+            label: subtype?.name,
+            value: subtype?.id,
+          };
+        })
+      );
+    }
+  }, [subtypesCrimeResponse]);
+
+  useEffect(() => {
+    if (modalitiesLoading && modalitiesResponse?.data) {
+      setModalitiesLoading(false);
+      setModalities(
+        modalitiesResponse?.data?.map((modality: any) => {
+          return {
+            label: modality?.name,
+            value: modality?.id,
+          };
+        })
+      );
+    }
+  }, [modalitiesResponse]);
+
   return (
     <Modal
       active={modal?.active && modal?.mode === 'add'}
@@ -196,6 +258,48 @@ const CrimeModal: React.FC = () => {
             value={timeSelected}
             onChange={(event) => {
               setTimeSelected(event.target.value);
+            }}
+          />
+        </div>
+        <div className="crimeModal__groupFields">
+          <Select
+            className="crimeField"
+            label="Tipo de crimen"
+            options={typesCrime}
+            value={typeCrimeSelected}
+            onChange={(newValue) => {
+              setTypeCrimeSelected(newValue);
+              setSubtypeCrimeSelected(null);
+              setModalitySelected(null);
+              if (newValue) {
+                setSubtypesCrimeLoading(true);
+                callSubtypesCrime(getSubtypes(newValue?.value));
+              }
+            }}
+          />
+          <Select
+            className="crimeField"
+            label="Subtipo de crimen"
+            options={subtypesCrime}
+            value={subtypeCrimeSelected}
+            onChange={(newValue) => {
+              setSubtypeCrimeSelected(newValue);
+              setModalitySelected(null);
+              if (newValue) {
+                setModalitiesLoading(true);
+                callModalities(getModalities(newValue?.value));
+              }
+            }}
+          />
+        </div>
+        <div className="crimeModal__groupFields">
+          <Select
+            className="crimeField"
+            label="Modalidad de crimen"
+            options={modalities}
+            value={modalitySelected}
+            onChange={(newValue) => {
+              setModalitySelected(newValue);
             }}
           />
         </div>
