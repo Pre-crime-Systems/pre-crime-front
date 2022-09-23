@@ -5,6 +5,7 @@ import Input from '../../../../components/Input/Input';
 import Loading from '../../../../components/Loading/Loading';
 import Modal from '../../../../components/Modal/Modal';
 import Select from '../../../../components/Select/Select';
+import Textarea from '../../../../components/Textarea/Textarea';
 import { useApi } from '../../../../hooks/useApi';
 import { createCrime } from '../../../../services/crime.service';
 import {
@@ -14,12 +15,12 @@ import {
 } from '../../../../services/location.service';
 import { ContextCrime } from '../../context/ContextCrime';
 import { Types } from '../../context/crime.reducer';
-import './crimeModal.scss';
 import {
   getModalities,
   getSubtypes,
   getTypes,
 } from '../../../../services/type.service';
+import './crimeModal.scss';
 
 const CrimeModal: React.FC = () => {
   const { state, dispatch } = useContext(ContextCrime);
@@ -36,10 +37,6 @@ const CrimeModal: React.FC = () => {
   const [policeStationsLoading, setPoliceStationsLoading] = useState<any>(null);
   const [policeStationSelected, setPoliceStationSelected] = useState<any>(null);
   const [policeStationsResponse, callPoliceStations] = useApi();
-  const [addressSelected, setAddressSelected] = useState<any>(null);
-  const [dateSelected, setDateSelected] = useState<any>(null);
-  const [timeSelected, setTimeSelected] = useState<any>(null);
-  const [crimeResponse, callEndpoint] = useApi();
   const [typesCrime, setTypesCrime] = useState<any>([]);
   const [typesCrimeLoading, setTypesCrimeLoading] = useState<any>(null);
   const [typeCrimeSelected, setTypeCrimeSelected] = useState<any>(null);
@@ -52,6 +49,11 @@ const CrimeModal: React.FC = () => {
   const [modalitiesLoading, setModalitiesLoading] = useState<any>(null);
   const [modalitySelected, setModalitySelected] = useState<any>(null);
   const [modalitiesResponse, callModalities] = useApi();
+  const [addressSelected, setAddressSelected] = useState<any>(null);
+  const [dateSelected, setDateSelected] = useState<any>(null);
+  const [timeSelected, setTimeSelected] = useState<any>(null);
+  const [descriptionSelected, setDescriptionSelected] = useState<any>(null);
+  const [crimeResponse, callEndpoint] = useApi();
 
   const { modal } = state?.list;
 
@@ -261,7 +263,7 @@ const CrimeModal: React.FC = () => {
             }}
           />
         </div>
-        <div className="crimeModal__groupFields">
+        <div className="crimeModal__groupFields crimeModal__groupFields--three">
           <Select
             className="crimeField"
             label="Tipo de crimen"
@@ -291,8 +293,6 @@ const CrimeModal: React.FC = () => {
               }
             }}
           />
-        </div>
-        <div className="crimeModal__groupFields">
           <Select
             className="crimeField"
             label="Modalidad de crimen"
@@ -300,6 +300,16 @@ const CrimeModal: React.FC = () => {
             value={modalitySelected}
             onChange={(newValue) => {
               setModalitySelected(newValue);
+            }}
+          />
+        </div>
+        <div className="crimeModal__groupFields crimeModal__groupFields--one">
+          <Textarea
+            className="crimeField"
+            label="Descripción"
+            value={descriptionSelected}
+            onChange={(event) => {
+              setDescriptionSelected(event.target.value);
             }}
           />
         </div>
