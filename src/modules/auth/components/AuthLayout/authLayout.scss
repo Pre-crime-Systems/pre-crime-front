@@ -1,6 +1,8 @@
 @import '../../../../assets/scss/mixins';
 @import '../../../../assets/scss/variables';
 
+$topHeight: 60px;
+
 .authLayout {
   align-items: stretch;
   display: flex;
@@ -31,7 +33,15 @@
     flex-direction: column;
     &__aside {
       width: 100%;
-      padding: 2rem 0;
+      height: $topHeight;
+      .asideLogo {
+        &__name {
+          @include text(18, white, bold);
+        }
+      }
+    }
+    &__content {
+      min-height: calc(100vh - $topHeight);
     }
   }
 }
