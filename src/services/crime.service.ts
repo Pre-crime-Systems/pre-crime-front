@@ -80,6 +80,12 @@ export const createCrime = (crime: any) => {
     body: {
       address: crime?.address,
       date: crime?.date,
+      detail: crime?.detail,
+      modalityCrimeId: crime?.modalityCrimeId,
+      policeStationId: crime?.policeStationId,
+      subtypeCrimeId: crime?.subtypeCrimeId,
+      typeCrimeId: crime?.typeCrimeId,
+      zoneId: crime?.zoneId,
     },
   };
   return request;
