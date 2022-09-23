@@ -1,6 +1,8 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 import { RoutePaths } from '../../routes/routePaths';
+import * as localStorage from '../../utils/localStorage.util';
 import Icon from '../Icon/Icon';
 import './mainMenu.scss';
 
@@ -12,6 +14,13 @@ const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
   const { className } = props;
   const navigate = useNavigate();
   const activePath = window.location.pathname;
+  let isAdmin = true;
+
+  if (window?.location?.pathname.indexOf('/app/') > -1) {
+    const token = localStorage.getToken() || '';
+    const tokenDecoded: any = jwt_decode(token);
+    isAdmin = tokenDecoded?.isAdmin || false;
+  }
 
   return (
     <section className={className}>
@@ -77,19 +86,21 @@ const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
       <nav className="asideMenu">
         <p className="asideMenu__title">Cuenta</p>
         <ul className="asideMenu__list">
-          <li className="menuItem">
-            <a
-              className={`menuItem__content ${
-                activePath === RoutePaths.Users && 'menuItem__content--active'
-              }`}
-              onClick={() => {
-                navigate(RoutePaths.Users);
-              }}
-            >
-              <Icon className="itemIcon" type="users" />
-              <span className="itemText">Usuarios</span>
-            </a>
-          </li>
+          {isAdmin && (
+            <li className="menuItem">
+              <a
+                className={`menuItem__content ${
+                  activePath === RoutePaths.Users && 'menuItem__content--active'
+                }`}
+                onClick={() => {
+                  navigate(RoutePaths.Users);
+                }}
+              >
+                <Icon className="itemIcon" type="users" />
+                <span className="itemText">Usuarios</span>
+              </a>
+            </li>
+          )}
           <li className="menuItem">
             <a
               className="menuItem__content"

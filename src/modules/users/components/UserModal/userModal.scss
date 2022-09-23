@@ -1,0 +1,29 @@
+@import '../../../../assets/scss/variables';
+
+.userModal {
+  padding: 0 1rem 1rem;
+  &__groupFields {
+    display: grid;
+    grid-gap: 20px;
+    grid-template-columns: repeat(2, 1fr);
+    &.userModal__groupFields--three {
+      grid-template-columns: repeat(3, 1fr);
+    }
+    &.userModal__groupFields--one {
+      grid-template-columns: repeat(1, 1fr);
+    }
+    .userField {
+      margin: 0 0 1rem;
+    }
+  }
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    .itemButton {
+      margin: 0.5rem;
+      &:last-of-type {
+        margin: 0.5rem 0 0.5rem 0.5rem;
+      }
+    }
+  }
+}
