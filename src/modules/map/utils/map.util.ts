@@ -72,8 +72,8 @@ export const getZipCodeColor = (percentage: number) => {
   if (percentage >= 0 && percentage < 40) {
     return 'yellow';
   } else if (percentage >= 40 && percentage < 70) {
-    return '#ff8324';
+    return 'orange';
   } else if (percentage >= 70) {
-    return 'purple';
+    return 'red';
   }
 };

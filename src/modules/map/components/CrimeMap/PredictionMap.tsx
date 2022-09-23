@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import Card from '../../../../components/Card/Card';
 import Loading from '../../../../components/Loading/Loading';
 import { crimePredictionTimeRange } from '../../../../constants/crime.constant';
 import { useApi } from '../../../../hooks/useApi';
@@ -69,6 +70,23 @@ const PredictionMap: React.FC = () => {
           predictionMode={true}
           setFilters={setFilters}
         />
+        <Card className="crimeMap__legend">
+          <h3 className="legendTitle">Leyenda</h3>
+          <section className="legendData">
+            <div className="legendData__item">
+              <div className="legendColor legendColor--yellow" />
+              <p className="legendLabel"> Entre 0 y 40% de probabilidad</p>
+            </div>
+            <div className="legendData__item">
+              <div className="legendColor legendColor--orange" />
+              <p className="legendLabel"> Entre 40% y 70% de probabilidad</p>
+            </div>
+            <div className="legendData__item">
+              <div className="legendColor legendColor--red" />
+              <p className="legendLabel"> Más del 70% de probabilidad</p>
+            </div>
+          </section>
+        </Card>
       </div>
     );
   }

@@ -1,3 +1,6 @@
+@import '../../../../assets/scss/mixins';
+@import '../../../../assets/scss/variables';
+
 .crimeMap {
   height: 80vh;
   position: relative;
@@ -5,5 +8,39 @@
     position: absolute;
     right: 10px;
     top: 10px;
+  }
+  &__legend {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+    .legendTitle {
+      @include text(14, grey-90, bold);
+    }
+    .legendData {
+      margin: 0.5rem 0 0;
+      &__item {
+        margin: 0.5rem 0 0;
+        display: flex;
+        align-items: center;
+        .legendColor {
+          width: 15px;
+          height: 15px;
+          border-radius: 50%;
+          margin: 0 0.25rem 0 0;
+          &.legendColor--yellow {
+            background-color: #eff0a5;
+          }
+          &.legendColor--orange {
+            background-color: #efd5a5;
+          }
+          &.legendColor--red {
+            background-color: #efa3a5;
+          }
+        }
+        .legendLabel {
+          @include text(12, grey-90);
+        }
+      }
+    }
   }
 }
