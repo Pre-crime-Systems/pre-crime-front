@@ -17,7 +17,7 @@ const initialState: InitialStateType = {
 
 const ContextCrime = createContext<{
   state: InitialStateType;
-  dispatch: Dispatch<CrimeActions>;
+  dispatch: Dispatch<CrimeActions | CrimeActions>;
 }>({
   state: initialState,
   dispatch: () => null,
@@ -33,7 +33,6 @@ interface ContextCrimeProviderProps {
 const ContextCrimeProvider: React.FC<ContextCrimeProviderProps> = (
   props: ContextCrimeProviderProps
 ) => {
-  console.log('ContextCrimeProvider....');
   const { children } = props;
   const [state, dispatch] = useReducer(mainReducer, initialState);
 

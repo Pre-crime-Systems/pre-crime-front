@@ -1,8 +1,10 @@
 import { ActionMap } from '../../../models/actionMap.model';
 
+export type CrimeModalMode = 'add' | 'edit' | 'detail';
+
 interface IModal {
   active: boolean;
-  mode: 'add' | 'edit';
+  mode: CrimeModalMode;
   data: any;
 }
 
@@ -24,7 +26,6 @@ export type CrimeActions =
 export const crimeReducer = (state: CrimeTypes, action: CrimeActions) => {
   switch (action.type) {
     case Types.SetModal:
-      console.log('1', action.payload);
       return {
         ...state,
         modal: action.payload,

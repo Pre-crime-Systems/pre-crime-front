@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import dayjs from 'dayjs';
 import Button from '../../../../components/Button/Button';
 import Input from '../../../../components/Input/Input';
@@ -12,14 +12,12 @@ import {
   getPoliceStationByDistrict,
   getZonesByDistrict,
 } from '../../../../services/location.service';
+import { ContextCrime } from '../../context/ContextCrime';
+import { Types } from '../../context/crime.reducer';
 import './crimeModal.scss';
 
-interface CrimeModalProps {
-  onClose: () => void;
-}
-
-const CrimeModal: React.FC<CrimeModalProps> = (props: CrimeModalProps) => {
-  const { onClose } = props;
+const CrimeModal: React.FC = () => {
+  const { state, dispatch } = useContext(ContextCrime);
   const [loading, setLoading] = useState<boolean>(false);
   const [districts, setDistricts] = useState<any>(null);
   const [districtsLoading, setDistrictsLoading] = useState<any>(null);
@@ -33,10 +31,23 @@ const CrimeModal: React.FC<CrimeModalProps> = (props: CrimeModalProps) => {
   const [policeStationsLoading, setPoliceStationsLoading] = useState<any>(null);
   const [policeStationSelected, setPoliceStationSelected] = useState<any>(null);
   const [policeStationsResponse, callPoliceStations] = useApi();
-  const [addressSelected, setAddressSelected] = useState<any>(null);
+  const [addressSelected, setAddressSelected] = useState<any>('');
   const [dateSelected, setDateSelected] = useState<any>(null);
   const [timeSelected, setTimeSelected] = useState<any>(null);
   const [crimeResponse, callEndpoint] = useApi();
+
+  const { modal } = state?.list;
+
+  const onClose = () => {
+    dispatch({
+      type: Types.SetModal,
+      payload: {
+        active: false,
+        mode: 'add',
+        data: null,
+      },
+    });
+  };
 
   const onSave = () => {
     const crime = {
@@ -104,7 +115,11 @@ const CrimeModal: React.FC<CrimeModalProps> = (props: CrimeModalProps) => {
   }, [policeStationsResponse]);
 
   return (
-    <Modal active={true} title="Registrar un crímen" onClose={onClose}>
+    <Modal
+      active={modal?.active && modal?.mode === 'add'}
+      title="Registrar un crímen"
+      onClose={onClose}
+    >
       {loading && <Loading />}
       <section className="crimeModal">
         <div className="crimeModal__groupFields">
