@@ -1,0 +1,18 @@
+@import '../../../../assets/scss/mixins';
+@import '../../../../assets/scss/variables';
+
+.reportUploadModal {
+  padding: 0 1rem 1rem;
+  &__data {
+  }
+  &__buttons {
+    display: flex;
+    justify-content: flex-end;
+    .itemButton {
+      margin: 0.5rem;
+      &:last-of-type {
+        margin: 0.5rem 0 0.5rem 0.5rem;
+      }
+    }
+  }
+}
