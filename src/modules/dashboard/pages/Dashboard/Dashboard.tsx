@@ -85,7 +85,7 @@ const Dashboard: React.FC = () => {
 
   return (
     <MainLayout className="dashboardPage">
-      {loading && <Loading />}
+      {loading && <Loading title="Cargando datos" />}
       <section className="dashboardPage__cards">
         <Card className="chartCard">
           <div className="chartCard__title">

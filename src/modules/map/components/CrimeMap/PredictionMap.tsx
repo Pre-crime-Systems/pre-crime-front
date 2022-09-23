@@ -56,7 +56,7 @@ const PredictionMap: React.FC = () => {
   }, [reset]);
 
   if (loading) {
-    return <Loading />;
+    return <Loading title="Cargando predicción de crímenes" />;
   }
 
   if (data) {

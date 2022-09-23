@@ -11,7 +11,7 @@ const Loading: React.FC<LoadingProps> = (props: LoadingProps) => {
     <div className="loadingWrapper">
       <div className="loadingWrapper__content">
         <div className="spinner" />
-        {title && <p className="spinnerTitle">{title} ...</p>}
+        {title && <p className="spinnerTitle">{title}</p>}
       </div>
     </div>
   );

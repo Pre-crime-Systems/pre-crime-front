@@ -61,7 +61,7 @@ const HistoricalMap: React.FC = () => {
   }, [reset]);
 
   if (loading) {
-    return <Loading />;
+    return <Loading title="Cargando crímenes históricos" />;
   }
 
   if (data) {
