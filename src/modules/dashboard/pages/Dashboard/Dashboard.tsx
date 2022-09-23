@@ -31,7 +31,7 @@ const Dashboard: React.FC = () => {
   const [crimeQuantityResponse, callCrimeQuantityEndpoint] = useApi();
   const [typesCrimeData, setTypesCrimeData] = useState<any>(null);
   const [typesCrimeFilterSelected, setTypesCrimeFilterSelected] =
-    useState<DashboardTypeCrimeFilter>(typesCrimeFilterOptions[0]);
+    useState<DashboardTypeCrimeFilter>(typesCrimeFilterOptions[8]);
   const [typesCrimeResponse, callTypesCrimeEndpoint] = useApi();
 
   useEffect(() => {
