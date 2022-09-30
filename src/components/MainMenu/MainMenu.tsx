@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import { RoutePaths } from '../../routes/routePaths';
@@ -13,14 +13,20 @@ interface MainMenuProps {
 const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
   const { className } = props;
   const navigate = useNavigate();
+  const [isAdmin, setIsAdmin] = useState<boolean>(true);
   const activePath = window.location.pathname;
-  let isAdmin = true;
 
-  if (window?.location?.pathname.indexOf('/app/') > -1) {
-    const token = localStorage.getToken() || '';
-    const tokenDecoded: any = jwt_decode(token);
-    isAdmin = tokenDecoded?.isAdmin || false;
-  }
+  useEffect(() => {
+    if (window?.location?.pathname.indexOf('/app/') > -1) {
+      const token = localStorage.getToken() || '';
+      if (token.length === 0) {
+        navigate(RoutePaths.Login);
+      } else {
+        const tokenDecoded: any = jwt_decode(token);
+        setIsAdmin(tokenDecoded?.isAdmin || false);
+      }
+    }
+  }, []);
 
   return (
     <section className={className}>
@@ -67,7 +73,7 @@ const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
               <span className="itemText">Crímenes</span>
             </a>
           </li>
-          <li className="menuItem">
+          {/* <li className="menuItem">
             <a
               className={`menuItem__content ${
                 activePath === RoutePaths.Reports && 'menuItem__content--active'
@@ -79,7 +85,7 @@ const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
               <Icon className="itemIcon" type="reports" />
               <span className="itemText">Reportes</span>
             </a>
-          </li>
+          </li> */}
         </ul>
       </nav>
       <div className="menuBorder"></div>
