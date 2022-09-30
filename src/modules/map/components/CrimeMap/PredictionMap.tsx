@@ -2,33 +2,33 @@ import React, { useEffect, useState } from 'react';
 import Card from '../../../../components/Card/Card';
 import Loading from '../../../../components/Loading/Loading';
 import { crimePredictionTimeRange } from '../../../../constants/crime.constant';
-import { useApi } from '../../../../hooks/useApi';
 import { CrimePredictionFilters } from '../../../../models/crime.model';
-import { getPredictions } from '../../../../services/crime.service';
 import CrimeFilters from '../CrimeFilters/CrimeFilters';
 import GoogleMaps from '../GoogleMaps/GoogleMaps';
 import './crimeMap.scss';
 
-const PredictionMap: React.FC = () => {
-  const [data, setData] = useState<any>(null);
+interface PredictionMapProps {
+  loading: boolean;
+  data: any;
+}
+
+const PredictionMap: React.FC<PredictionMapProps> = (
+  props: PredictionMapProps
+) => {
+  const { data: dataProps, loading: loadingProps } = props;
+  const [data, setData] = useState<any>(dataProps);
   const [filteredData, setFilteredData] = useState<any>(null);
   const [filters, setFilters] = useState<CrimePredictionFilters>({
     timeRange: crimePredictionTimeRange,
   });
-  const [loading, setLoading] = useState<boolean>(false);
+  const [loading, setLoading] = useState<boolean>(loadingProps);
   const [reset, setReset] = useState<any>(null);
-  const [responseEndpoint, callEndpoint] = useApi();
 
   useEffect(() => {
-    if (loading && responseEndpoint?.data) {
-      setLoading(false);
-      setData(responseEndpoint?.data);
-      setFilteredData(responseEndpoint?.data);
-    } else if (!loading && responseEndpoint?.data === null) {
-      setLoading(true);
-      callEndpoint(getPredictions());
-    }
-  }, [responseEndpoint]);
+    setData(dataProps);
+    setFilteredData(dataProps);
+    setLoading(loadingProps);
+  }, [dataProps, loadingProps]);
 
   useEffect(() => {
     if (filters && data) {
@@ -37,7 +37,7 @@ const PredictionMap: React.FC = () => {
       setTimeout(() => {
         setFilteredData(data);
         setLoading(false);
-      }, 1000);
+      }, 400);
     }
   }, [filters]);
 
@@ -51,7 +51,7 @@ const PredictionMap: React.FC = () => {
       setTimeout(() => {
         setFilteredData(data);
         setLoading(false);
-      }, 1000);
+      }, 200);
     }
   }, [reset]);
 
