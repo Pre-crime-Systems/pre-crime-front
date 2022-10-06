@@ -73,7 +73,7 @@ const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
               <span className="itemText">Crímenes</span>
             </a>
           </li>
-          {/* <li className="menuItem">
+          <li className="menuItem">
             <a
               className={`menuItem__content ${
                 activePath === RoutePaths.Reports && 'menuItem__content--active'
@@ -85,7 +85,7 @@ const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
               <Icon className="itemIcon" type="reports" />
               <span className="itemText">Reportes</span>
             </a>
-          </li> */}
+          </li>
         </ul>
       </nav>
       <div className="menuBorder"></div>

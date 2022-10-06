@@ -90,3 +90,12 @@ export const createCrime = (crime: any) => {
   };
   return request;
 };
+
+export const getCrimesWithPagination = (pageNumber: number = 0) => {
+  const pageSize = 10;
+  const request: ApiRequest = {
+    method: ApiMethod.Get,
+    url: `${BASE_URL}/api/crimes/page/${pageNumber}/size/${pageSize}`,
+  };
+  return request;
+};
