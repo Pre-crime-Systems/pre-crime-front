@@ -22,6 +22,27 @@ export const MAP_OPTIONS = {
   fullscreenControl: false,
   streetViewControl: false,
   zoomControl: false,
+  styles: [
+    //https://developers.google.com/maps/documentation/javascript/style-reference#style-features
+    {
+      elementType: 'labels',
+      featureType: 'poi.business',
+      stylers: [
+        {
+          visibility: 'off',
+        },
+      ],
+    },
+    {
+      elementType: 'labels',
+      featureType: 'transit.station.bus',
+      stylers: [
+        {
+          visibility: 'off',
+        },
+      ],
+    },
+  ],
 };
 export const MAP_STYLE = {
   flexGrow: '1',
