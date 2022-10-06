@@ -6,7 +6,7 @@ import Loading from '../../../../components/Loading/Loading';
 import Pagination from '../../../../components/Pagination/Pagination';
 import Table from '../../../../components/Table/Table';
 import { useApi } from '../../../../hooks/useApi';
-import { getUsers } from '../../../../services/user.service';
+import { getUsersWithPagination } from '../../../../services/user.service';
 import { ContextUser } from '../../context/ContextUser';
 import { Types } from '../../context/user.reducer';
 import { ROLES } from '../../../../constants/user.constant';
@@ -14,8 +14,7 @@ import './usersTable.scss';
 
 const UsersTable: React.FC = () => {
   const { state, dispatch } = useContext(ContextUser);
-  const { data: users, loading } = state?.list?.table;
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const { data: usersResponse, loading } = state?.list?.table;
   const [responseEndpoint, callEndpoint] = useApi();
 
   const renderRole = (data: any) => {
@@ -65,7 +64,7 @@ const UsersTable: React.FC = () => {
   }, [responseEndpoint]);
 
   useEffect(() => {
-    if (!loading && users === null) {
+    if (!loading && usersResponse === null) {
       dispatch({
         type: Types.SetTable,
         payload: {
@@ -73,21 +72,30 @@ const UsersTable: React.FC = () => {
           loading: true,
         },
       });
-      callEndpoint(getUsers());
+      callEndpoint(getUsersWithPagination());
     }
-  }, [users]);
+  }, [usersResponse]);
 
   return (
     <Card className="usersTable">
       {loading && <Loading />}
-      {users && <Table columns={columns} data={users} />}
-      {users && (
+      {usersResponse && (
+        <Table columns={columns} data={usersResponse.content} />
+      )}
+      {usersResponse && (
         <Pagination
-          page={currentPage}
-          size={2}
-          total={10}
+          page={usersResponse?.number + 1}
+          size={usersResponse?.size}
+          total={usersResponse?.totalElements}
           onPageChange={(current: number) => {
-            setCurrentPage(current);
+            dispatch({
+              type: Types.SetTable,
+              payload: {
+                data: null,
+                loading: true,
+              },
+            });
+            callEndpoint(getUsersWithPagination(current - 1));
           }}
         />
       )}

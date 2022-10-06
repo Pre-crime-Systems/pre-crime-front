@@ -83,7 +83,7 @@ const ReportsTable: React.FC = () => {
       )}
       {reportsResponse && (
         <Pagination
-          page={reportsResponse?.number}
+          page={reportsResponse?.number + 1}
           size={reportsResponse?.size}
           total={reportsResponse?.totalElements}
           onPageChange={(current: number) => {
@@ -94,7 +94,7 @@ const ReportsTable: React.FC = () => {
                 loading: true,
               },
             });
-            callEndpoint(getReportsWithPagination(current));
+            callEndpoint(getReportsWithPagination(current - 1));
           }}
         />
       )}

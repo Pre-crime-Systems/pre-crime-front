@@ -91,7 +91,7 @@ export const createCrime = (crime: any) => {
   return request;
 };
 
-export const getCrimesWithPagination = (pageNumber: number = 1) => {
+export const getCrimesWithPagination = (pageNumber: number = 0) => {
   const pageSize = 10;
   const request: ApiRequest = {
     method: ApiMethod.Get,

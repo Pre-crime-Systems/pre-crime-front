@@ -26,10 +26,11 @@ export const createUser = ({
   return request;
 };
 
-export const getUsers = () => {
+export const getUsersWithPagination = (pageNumber: number = 0) => {
+  const pageSize = 10;
   const request: ApiRequest = {
     method: ApiMethod.Get,
-    url: `${BASE_URL}/api/users`,
+    url: `${BASE_URL}/api/users/page/${pageNumber}/size/${pageSize}`,
   };
   return request;
 };
