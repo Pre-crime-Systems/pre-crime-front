@@ -1,4 +1,4 @@
-import React, { useContext, useEffect, useState } from 'react';
+import React, { useContext, useEffect } from 'react';
 import dayjs from 'dayjs';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
@@ -6,15 +6,14 @@ import Loading from '../../../../components/Loading/Loading';
 import Pagination from '../../../../components/Pagination/Pagination';
 import Table from '../../../../components/Table/Table';
 import { useApi } from '../../../../hooks/useApi';
-import { getCrimes } from '../../../../services/crime.service';
+import { getCrimesWithPagination } from '../../../../services/crime.service';
 import { ContextCrime } from '../../context/ContextCrime';
 import { Types } from '../../context/crime.reducer';
 import './crimesTable.scss';
 
 const CrimesTable: React.FC = () => {
   const { state, dispatch } = useContext(ContextCrime);
-  const { data: crimes, loading } = state?.list?.table;
-  const [currentPage, setCurrentPage] = useState<number>(1);
+  const { data: crimesResponse, loading } = state?.list?.table;
   const [responseEndpoint, callEndpoint] = useApi();
 
   const renderDate = (data: any) => {
@@ -83,7 +82,7 @@ const CrimesTable: React.FC = () => {
   }, [responseEndpoint]);
 
   useEffect(() => {
-    if (!loading && crimes === null) {
+    if (!loading && crimesResponse === null) {
       dispatch({
         type: Types.SetTable,
         payload: {
@@ -91,21 +90,30 @@ const CrimesTable: React.FC = () => {
           loading: true,
         },
       });
-      callEndpoint(getCrimes());
+      callEndpoint(getCrimesWithPagination());
     }
-  }, [crimes]);
+  }, [crimesResponse]);
 
   return (
     <Card className="crimesTable">
       {loading && <Loading />}
-      {crimes && <Table columns={columns} data={crimes} />}
-      {crimes && (
+      {crimesResponse && (
+        <Table columns={columns} data={crimesResponse?.content} />
+      )}
+      {crimesResponse && (
         <Pagination
-          page={currentPage}
-          size={2}
-          total={10}
+          page={crimesResponse?.number}
+          size={crimesResponse?.size}
+          total={crimesResponse?.totalElements}
           onPageChange={(current: number) => {
-            setCurrentPage(current);
+            dispatch({
+              type: Types.SetTable,
+              payload: {
+                data: null,
+                loading: true,
+              },
+            });
+            callEndpoint(getCrimesWithPagination(current));
           }}
         />
       )}
