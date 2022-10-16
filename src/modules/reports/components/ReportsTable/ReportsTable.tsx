@@ -6,6 +6,7 @@ import Pagination from '../../../../components/Pagination/Pagination';
 import Table from '../../../../components/Table/Table';
 import { useApi } from '../../../../hooks/useApi';
 import { getReportsWithPagination } from '../../../../services/report.service';
+import { formatDate } from '../../../../utils/date.util';
 import { ContextReport } from '../../context/ContextReport';
 import { Types } from '../../context/report.reducer';
 import './reportsTable.scss';
@@ -17,32 +18,30 @@ const ReportsTable: React.FC = () => {
 
   const columns = [
     {
+      Header: 'Fecha de registro',
+      id: 'date',
+      Cell: (data: any) => {
+        const date = formatDate(data?.cell?.row?.original?.registerDate);
+        return <p>{date}</p>;
+      },
+      minWidth: 100,
+    },
+    {
       Header: 'Nombre',
       accessor: 'fileName',
       minWidth: 100,
     },
     {
-      Header: 'Fecha',
-      id: 'date',
-      Cell: () => <p>25/08/2022</p>,
-      minWidth: 100,
-    },
-    {
-      Header: '',
-      id: 'detailButton',
-      Cell: () => (
-        <Button buttonType="secondary" outline>
-          Ver detalle
-        </Button>
-      ),
-      maxWidth: 140,
-      minWidth: 140,
-    },
-    {
       Header: '',
       id: 'downloadButton',
-      Cell: () => (
-        <Button buttonType="secondary" outline>
+      Cell: (data: any) => (
+        <Button
+          buttonType="secondary"
+          outline
+          onClick={() => {
+            window.open(data?.cell?.row?.original?.fileUrl, '_blank');
+          }}
+        >
           Descargar
         </Button>
       ),
