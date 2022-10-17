@@ -1,6 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
+import Input from '../../../../components/Input/Input';
 import Loading from '../../../../components/Loading/Loading';
 import Pagination from '../../../../components/Pagination/Pagination';
 import Table from '../../../../components/Table/Table';
@@ -12,9 +13,11 @@ import { formatDate } from '../../../../utils/date.util';
 import './crimesTable.scss';
 
 const CrimesTable: React.FC = () => {
-  const { state, dispatch } = useContext(ContextCrime);
-  const { data: crimesResponse, loading } = state?.list?.table;
   const [responseEndpoint, callEndpoint] = useApi();
+  const { state, dispatch } = useContext(ContextCrime);
+  const [initDate, setInitDate] = useState<any>(null);
+  const [endDate, setEndDate] = useState<any>(null);
+  const { data: crimesResponse, loading } = state?.list?.table;
 
   const columns = [
     {
@@ -30,16 +33,6 @@ const CrimesTable: React.FC = () => {
       Header: 'Dirección',
       accessor: 'address',
       minWidth: 100,
-    },
-    {
-      Header: 'Latitud',
-      accessor: 'latitude',
-      minWidth: 100,
-    },
-    {
-      Header: 'Longitud',
-      accessor: 'longitude',
-      minWidth: 120,
     },
     {
       Header: '',
@@ -95,25 +88,69 @@ const CrimesTable: React.FC = () => {
   return (
     <Card className="crimesTable">
       {loading && <Loading />}
-      {crimesResponse && (
-        <Table columns={columns} data={crimesResponse?.content} />
+      <section className="crimesTable__filters">
+        <p className="filterTitle">Filtros</p>
+        <div className="filterOptions">
+          <Input
+            className="filterOptions__input"
+            label="Desde"
+            type="date"
+            value={initDate}
+            onChange={(event) => {
+              const value = event.target.value;
+              setInitDate(value);
+            }}
+          />
+          <Input
+            className="filterOptions__input"
+            label="Hasta"
+            type="date"
+            value={endDate}
+            onChange={(event) => {
+              const value = event.target.value;
+              setEndDate(value);
+            }}
+          />
+          <Button
+            className="filterOptions__button"
+            buttonType="secondary"
+            onClick={() => {
+              // dispatch({
+              //   type: Types.SetTable,
+              //   payload: {
+              //     data: null,
+              //     loading: true,
+              //   },
+              // });
+              // callEndpoint(getCrimesWithPagination(0, endDate, initDate));
+            }}
+          >
+            Filtrar
+          </Button>
+        </div>
+      </section>
+      {crimesResponse && crimesResponse?.content.length === 0 && (
+        <p className="crimesTable__noData">No hay registros</p>
       )}
-      {crimesResponse && (
-        <Pagination
-          page={crimesResponse?.number + 1}
-          size={crimesResponse?.size}
-          total={crimesResponse?.totalElements}
-          onPageChange={(current: number) => {
-            dispatch({
-              type: Types.SetTable,
-              payload: {
-                data: null,
-                loading: true,
-              },
-            });
-            callEndpoint(getCrimesWithPagination(current - 1));
-          }}
-        />
+      {crimesResponse && crimesResponse?.content.length > 0 && (
+        <>
+          <Table columns={columns} data={crimesResponse?.content} />
+          <Pagination
+            page={crimesResponse?.number + 1}
+            size={crimesResponse?.size}
+            total={crimesResponse?.totalElements}
+            onPageChange={(current: number) => {
+              dispatch({
+                type: Types.SetTable,
+                payload: {
+                  data: null,
+                  loading: true,
+                },
+              });
+              callEndpoint(getCrimesWithPagination(current - 1));
+            }}
+          />
+        </>
       )}
     </Card>
   );

@@ -44,6 +44,30 @@ const ReportsTable: React.FC = () => {
     },
     {
       Header: '',
+      id: 'detailButton',
+      Cell: (data: any) => (
+        <Button
+          buttonType="secondary"
+          outline
+          onClick={() => {
+            dispatch({
+              type: Types.SetModal,
+              payload: {
+                active: true,
+                mode: 'detail',
+                data: data?.cell?.row?.original,
+              },
+            });
+          }}
+        >
+          Ver detalle
+        </Button>
+      ),
+      maxWidth: 140,
+      minWidth: 140,
+    },
+    {
+      Header: '',
       id: 'downloadButton',
       Cell: (data: any) => (
         <Button
@@ -113,49 +137,47 @@ const ReportsTable: React.FC = () => {
   return (
     <Card className="reportsTable">
       {loading && <Loading />}
-      {true && (
-        <section className="reportsTable__filters">
-          <p className="filterTitle">Filtros</p>
-          <div className="filterOptions">
-            <Input
-              className="filterOptions__input"
-              label="Desde"
-              type="date"
-              value={initDate}
-              onChange={(event) => {
-                const value = event.target.value;
-                setInitDate(value);
-              }}
-            />
-            <Input
-              className="filterOptions__input"
-              label="Hasta"
-              type="date"
-              value={endDate}
-              onChange={(event) => {
-                const value = event.target.value;
-                setEndDate(value);
-              }}
-            />
-            <Button
-              className="filterOptions__button"
-              buttonType="secondary"
-              onClick={() => {
-                dispatch({
-                  type: Types.SetTable,
-                  payload: {
-                    data: null,
-                    loading: true,
-                  },
-                });
-                callEndpoint(getReportsWithPagination(0, endDate, initDate));
-              }}
-            >
-              Filtrar
-            </Button>
-          </div>
-        </section>
-      )}
+      <section className="reportsTable__filters">
+        <p className="filterTitle">Filtros</p>
+        <div className="filterOptions">
+          <Input
+            className="filterOptions__input"
+            label="Desde"
+            type="date"
+            value={initDate}
+            onChange={(event) => {
+              const value = event.target.value;
+              setInitDate(value);
+            }}
+          />
+          <Input
+            className="filterOptions__input"
+            label="Hasta"
+            type="date"
+            value={endDate}
+            onChange={(event) => {
+              const value = event.target.value;
+              setEndDate(value);
+            }}
+          />
+          <Button
+            className="filterOptions__button"
+            buttonType="secondary"
+            onClick={() => {
+              dispatch({
+                type: Types.SetTable,
+                payload: {
+                  data: null,
+                  loading: true,
+                },
+              });
+              callEndpoint(getReportsWithPagination(0, endDate, initDate));
+            }}
+          >
+            Filtrar
+          </Button>
+        </div>
+      </section>
       {reportsResponse && reportsResponse?.content.length === 0 && (
         <p className="reportsTable__noData">No hay registros</p>
       )}
