@@ -1,0 +1,27 @@
+@import '../../../../assets/scss/mixins';
+@import '../../../../assets/scss/variables';
+
+.reportsTable {
+  &__filters {
+    .filterTitle {
+      @include text(14, grey-90, medium);
+      margin: 0 0 0.5rem;
+    }
+    .filterOptions {
+      display: flex;
+      align-items: flex-end;
+      &__input {
+        max-width: 200px;
+        margin: 0 0.5rem 0.5rem 0;
+      }
+      &__button {
+        margin: 0 0 0.5rem;
+      }
+    }
+  }
+  &__noData {
+    @include text(14, grey-90);
+    text-align: center;
+    margin: 0.5rem 0 0;
+  }
+}

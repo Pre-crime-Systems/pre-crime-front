@@ -1,9 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
-import { useSelector } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
+import { useApi } from '../../hooks/useApi';
 import { AppStore } from '../../redux/Store';
 import { ILoadingBox } from '../../redux/models/LoadingBox.model';
 import { RoutePaths } from '../../routes/routePaths';
+import { setLoadingBox } from '../../redux/states/loadingBox.state';
 import Icon from '../Icon/Icon';
 import MainMenu from '../MainMenu/MainMenu';
 import './mainLayout.scss';
@@ -15,6 +17,8 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
   const { children, className } = props;
+  const [endpointResponse, callEndpoint] = useApi();
+  const reduxDispatch = useDispatch();
   const [showMenu, setShowMenu] = useState<boolean>(false);
   const loadingBoxState: ILoadingBox = useSelector(
     (store: AppStore) => store.loadingBox
@@ -35,6 +39,30 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
         return 'Usuarios';
     }
   };
+
+  useEffect(() => {
+    if (loadingBoxState?.call && loadingBoxState?.open) {
+      callEndpoint(loadingBoxState?.endpoint);
+      reduxDispatch(
+        setLoadingBox({
+          call: false,
+        })
+      );
+    }
+  }, [loadingBoxState]);
+
+  useEffect(() => {
+    if (loadingBoxState?.loading && endpointResponse?.data) {
+      reduxDispatch(
+        setLoadingBox({
+          loading: false,
+          response: {
+            success: true,
+          },
+        })
+      );
+    }
+  }, [loadingBoxState?.open, endpointResponse]);
 
   return (
     <section className={`mainLayout ${className && className}`}>
