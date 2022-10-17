@@ -44,6 +44,30 @@ const ReportsTable: React.FC = () => {
     },
     {
       Header: '',
+      id: 'detailButton',
+      Cell: (data: any) => (
+        <Button
+          buttonType="secondary"
+          outline
+          onClick={() => {
+            dispatch({
+              type: Types.SetModal,
+              payload: {
+                active: true,
+                mode: 'detail',
+                data: data?.cell?.row?.original,
+              },
+            });
+          }}
+        >
+          Ver detalle
+        </Button>
+      ),
+      maxWidth: 140,
+      minWidth: 140,
+    },
+    {
+      Header: '',
       id: 'downloadButton',
       Cell: (data: any) => (
         <Button
