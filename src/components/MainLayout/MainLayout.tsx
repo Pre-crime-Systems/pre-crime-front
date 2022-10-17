@@ -1,6 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import cx from 'classnames';
+import { useDispatch, useSelector } from 'react-redux';
+import { useApi } from '../../hooks/useApi';
+import { AppStore } from '../../redux/Store';
+import { ILoadingBox } from '../../redux/models/LoadingBox.model';
 import { RoutePaths } from '../../routes/routePaths';
+import { setLoadingBox } from '../../redux/states/loadingBox.state';
 import Icon from '../Icon/Icon';
 import MainMenu from '../MainMenu/MainMenu';
 import './mainLayout.scss';
@@ -12,7 +17,12 @@ interface MainLayoutProps {
 
 const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
   const { children, className } = props;
+  const [endpointResponse, callEndpoint] = useApi();
+  const reduxDispatch = useDispatch();
   const [showMenu, setShowMenu] = useState<boolean>(false);
+  const loadingBoxState: ILoadingBox = useSelector(
+    (store: AppStore) => store.loadingBox
+  );
   const activePath = window.location.pathname;
 
   const getNameByPath = (path: string) => {
@@ -29,6 +39,30 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
         return 'Usuarios';
     }
   };
+
+  useEffect(() => {
+    if (loadingBoxState?.call && loadingBoxState?.open) {
+      callEndpoint(loadingBoxState?.endpoint);
+      reduxDispatch(
+        setLoadingBox({
+          call: false,
+        })
+      );
+    }
+  }, [loadingBoxState]);
+
+  useEffect(() => {
+    if (loadingBoxState?.loading && endpointResponse?.data) {
+      reduxDispatch(
+        setLoadingBox({
+          loading: false,
+          response: {
+            success: true,
+          },
+        })
+      );
+    }
+  }, [loadingBoxState?.open, endpointResponse]);
 
   return (
     <section className={`mainLayout ${className && className}`}>
@@ -64,6 +98,30 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
         </header>
         <main className="rightContent">{children}</main>
       </section>
+      {loadingBoxState?.open && (
+        <section className="mainLayout__loadingReport">
+          {loadingBoxState?.loading &&
+            (loadingBoxState?.response === null ||
+              loadingBoxState?.response === undefined) && (
+              <div className="loadingBox">
+                <p className="loadingBox__text">{loadingBoxState?.label}</p>
+                <div className="loadingBox__line"></div>
+                <div className="loadingBox__line"></div>
+                <div className="loadingBox__line"></div>
+              </div>
+            )}
+          {loadingBoxState?.response && (
+            <div className="loadingBox">
+              {loadingBoxState?.response?.success && (
+                <p className="loadingBox__text">Subida exitosa</p>
+              )}
+              {loadingBoxState?.response?.error && (
+                <p className="loadingBox__text">Hubo un error</p>
+              )}
+            </div>
+          )}
+        </section>
+      )}
     </section>
   );
 };

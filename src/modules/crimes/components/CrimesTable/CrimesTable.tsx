@@ -1,5 +1,4 @@
 import React, { useContext, useEffect } from 'react';
-import dayjs from 'dayjs';
 import Button from '../../../../components/Button/Button';
 import Card from '../../../../components/Card/Card';
 import Loading from '../../../../components/Loading/Loading';
@@ -9,6 +8,7 @@ import { useApi } from '../../../../hooks/useApi';
 import { getCrimesWithPagination } from '../../../../services/crime.service';
 import { ContextCrime } from '../../context/ContextCrime';
 import { Types } from '../../context/crime.reducer';
+import { formatDate } from '../../../../utils/date.util';
 import './crimesTable.scss';
 
 const CrimesTable: React.FC = () => {
@@ -16,16 +16,14 @@ const CrimesTable: React.FC = () => {
   const { data: crimesResponse, loading } = state?.list?.table;
   const [responseEndpoint, callEndpoint] = useApi();
 
-  const renderDate = (data: any) => {
-    const date = data?.cell?.row?.original?.date;
-    return <p>{dayjs(date).format('DD/MM/YYYY')}</p>;
-  };
-
   const columns = [
     {
       Header: 'Fecha',
       id: 'date',
-      Cell: (data: any) => renderDate(data),
+      Cell: (data: any) => {
+        const date = formatDate(data?.cell?.row?.original?.date);
+        return <p>{date}</p>;
+      },
       minWidth: 50,
     },
     {
