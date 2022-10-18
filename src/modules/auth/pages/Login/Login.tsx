@@ -80,9 +80,9 @@ const Login: React.FC = () => {
           <form className="loginCard__content" onSubmit={onLogin}>
             <Input
               className="loginInput"
-              error={emailInvalid && 'Correo electrónico inválido'}
-              label="Correo electrónico"
-              placeholder="correo@dominio.com"
+              error={emailInvalid && 'Usuario inválido'}
+              label="Usuario"
+              placeholder="ABCD1234"
               type="text"
               value={email}
               onChange={(event) => {
