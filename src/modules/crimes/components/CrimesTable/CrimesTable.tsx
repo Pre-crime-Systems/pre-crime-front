@@ -6,6 +6,7 @@ import Loading from '../../../../components/Loading/Loading';
 import Pagination from '../../../../components/Pagination/Pagination';
 import Table from '../../../../components/Table/Table';
 import { useApi } from '../../../../hooks/useApi';
+import { generateReport } from '../../../../services/report.service';
 import { getCrimesWithPagination } from '../../../../services/crime.service';
 import { ContextCrime } from '../../context/ContextCrime';
 import { Types } from '../../context/crime.reducer';
@@ -14,6 +15,7 @@ import './crimesTable.scss';
 
 const CrimesTable: React.FC = () => {
   const [responseEndpoint, callEndpoint] = useApi();
+  const [responseGenerateEndpoint, callGenerateEndpoint] = useApi();
   const { state, dispatch } = useContext(ContextCrime);
   const [initDate, setInitDate] = useState<any>(null);
   const [endDate, setEndDate] = useState<any>(null);
@@ -59,6 +61,19 @@ const CrimesTable: React.FC = () => {
       minWidth: 140,
     },
   ];
+
+  useEffect(() => {
+    if (loading && responseGenerateEndpoint?.data) {
+      dispatch({
+        type: Types.SetTable,
+        payload: {
+          data: crimesResponse,
+          loading: false,
+        },
+      });
+      window.open(responseGenerateEndpoint?.data?.fileUrl, '_blank');
+    }
+  }, [responseGenerateEndpoint]);
 
   useEffect(() => {
     if (loading && responseEndpoint?.data) {
@@ -115,17 +130,33 @@ const CrimesTable: React.FC = () => {
             className="filterOptions__button"
             buttonType="secondary"
             onClick={() => {
-              // dispatch({
-              //   type: Types.SetTable,
-              //   payload: {
-              //     data: null,
-              //     loading: true,
-              //   },
-              // });
-              // callEndpoint(getCrimesWithPagination(0, endDate, initDate));
+              dispatch({
+                type: Types.SetTable,
+                payload: {
+                  data: null,
+                  loading: true,
+                },
+              });
+              callEndpoint(getCrimesWithPagination(0, endDate, initDate));
             }}
           >
             Filtrar
+          </Button>
+          <Button
+            className="filterOptions__button"
+            buttonType="secondary"
+            onClick={() => {
+              dispatch({
+                type: Types.SetTable,
+                payload: {
+                  data: crimesResponse,
+                  loading: true,
+                },
+              });
+              callGenerateEndpoint(generateReport(endDate, initDate));
+            }}
+          >
+            Generar reporte
           </Button>
         </div>
       </section>
@@ -147,7 +178,9 @@ const CrimesTable: React.FC = () => {
                   loading: true,
                 },
               });
-              callEndpoint(getCrimesWithPagination(current - 1));
+              callEndpoint(
+                getCrimesWithPagination(current - 1, endDate, initDate)
+              );
             }}
           />
         </>
