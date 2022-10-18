@@ -20,7 +20,7 @@ export const getReportsWithPagination = (
     method: ApiMethod.Post,
     url: `${BASE_URL}/api/reports/page/${pageNumber}/size/${pageSize}`,
     body: {
-      endDate: endDate ? dayjs(endDate).toISOString() : null,
+      endDate: endDate ? dayjs(endDate).add(1, 'day').toISOString() : null,
       initDate: initDate ? dayjs(initDate).toISOString() : null,
     },
   };
@@ -47,7 +47,7 @@ export const generateReport = (
     method: ApiMethod.Post,
     url: `${BASE_URL}/api/reports/generate`,
     body: {
-      endDate: endDate ? dayjs(endDate).toISOString() : null,
+      endDate: endDate ? dayjs(endDate).add(1, 'day').toISOString() : null,
       initDate: initDate ? dayjs(initDate).toISOString() : null,
     },
   };
