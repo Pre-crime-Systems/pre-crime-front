@@ -38,3 +38,18 @@ export const createReport = (report: any) => {
   };
   return request;
 };
+
+export const generateReport = (
+  endDate: string | null = null,
+  initDate: string | null = null
+) => {
+  const request: ApiRequest = {
+    method: ApiMethod.Post,
+    url: `${BASE_URL}/api/reports/generate`,
+    body: {
+      endDate: endDate ? dayjs(endDate).toISOString() : null,
+      initDate: initDate ? dayjs(initDate).toISOString() : null,
+    },
+  };
+  return request;
+};
