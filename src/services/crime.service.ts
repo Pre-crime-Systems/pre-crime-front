@@ -102,7 +102,7 @@ export const getCrimesWithPagination = (
     method: ApiMethod.Post,
     url: `${BASE_URL}/api/crimes/page/${pageNumber}/size/${pageSize}`,
     body: {
-      endDate: endDate ? dayjs(endDate).toISOString() : null,
+      endDate: endDate ? dayjs(endDate).add(1, 'day').toISOString() : null,
       initDate: initDate ? dayjs(initDate).toISOString() : null,
     },
   };
