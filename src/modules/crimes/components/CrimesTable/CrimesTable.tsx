@@ -115,14 +115,14 @@ const CrimesTable: React.FC = () => {
             className="filterOptions__button"
             buttonType="secondary"
             onClick={() => {
-              // dispatch({
-              //   type: Types.SetTable,
-              //   payload: {
-              //     data: null,
-              //     loading: true,
-              //   },
-              // });
-              // callEndpoint(getCrimesWithPagination(0, endDate, initDate));
+              dispatch({
+                type: Types.SetTable,
+                payload: {
+                  data: null,
+                  loading: true,
+                },
+              });
+              callEndpoint(getCrimesWithPagination(0, endDate, initDate));
             }}
           >
             Filtrar
@@ -147,7 +147,9 @@ const CrimesTable: React.FC = () => {
                   loading: true,
                 },
               });
-              callEndpoint(getCrimesWithPagination(current - 1));
+              callEndpoint(
+                getCrimesWithPagination(current - 1, endDate, initDate)
+              );
             }}
           />
         </>
