@@ -36,7 +36,6 @@ const ResetPassword: React.FC<any> = () => {
 
   useEffect(() => {
     if (loading && responseEndpoint?.data) {
-      const data = responseEndpoint?.data;
       setLoading(false);
       setSuccess(true);
     }

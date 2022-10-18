@@ -31,7 +31,7 @@ export const validateToken = (token: string) => {
   return request;
 };
 
-export const setNewPassword = (newPassword: string, token: string) => {
+export const resetUserPassword = (newPassword: string, token: string) => {
   const request: ApiRequest = {
     method: ApiMethod.Post,
     url: `${BASE_URL}/api/reset-password`,
