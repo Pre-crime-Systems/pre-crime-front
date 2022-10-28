@@ -12,15 +12,18 @@
         margin-right: 0.25rem;
         padding: 0.5rem 1rem;
         .tabTitle {
-          @include text(12, grey-90);
+          @include text(12, grey-90, medium);
         }
         &.tabList__item--active {
           background-color: map-get($colors, white);
+          box-shadow: 1px 0px 3px rgba(0, 0, 0, 0.08);
         }
       }
     }
     .tabContent {
       background-color: map-get($colors, white);
+      box-shadow: 0px 1px 3px rgba(0, 0, 0, 0.08);
+      border-radius: 0 0 12px 12px;
       padding: 0.5rem;
       height: 82vh;
     }
