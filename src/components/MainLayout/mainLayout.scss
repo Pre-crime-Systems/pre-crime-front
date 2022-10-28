@@ -6,11 +6,11 @@ $topHeight: 60px;
 
 .mainLayout {
   align-items: stretch;
-  background-color: #edeeef;
   display: flex;
   height: 100vh;
   &__aside {
     background-color: map-get($colors, white);
+    border-right: 1px solid map-get($colors, grey-10);
     min-width: $asideWidth;
     .asideLogo {
       align-items: center;
