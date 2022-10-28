@@ -12,7 +12,7 @@
     padding: 0;
     .menuItem {
       &__content {
-        @include text(14, grey-50, medium);
+        @include text(14, grey-90, medium);
         border-radius: 0.5rem;
         cursor: pointer;
         padding: 1rem;
@@ -21,15 +21,18 @@
         &:hover {
           background-color: map-get($colors, grey-10);
         }
-        &--active {
-          background-color: map-get($colors, primary);
-          color: map-get($colors, white);
-          &:hover {
-            background-color: darken(map-get($colors, primary), 5%);
-          }
-        }
         .itemIcon {
+          color: map-get($colors, grey-50);
           margin: 0 0.5rem 0 0;
+        }
+        &--active {
+          background-color: map-get($colors, primary-10);
+          &:hover {
+            background-color: map-get($colors, primary-10);
+          }
+          .itemIcon {
+            color: map-get($colors, primary);
+          }
         }
         @media (max-width: map-get($breakpoints, lg)) {
           text-align: center;

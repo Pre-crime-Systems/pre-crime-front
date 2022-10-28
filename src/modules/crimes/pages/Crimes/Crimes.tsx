@@ -25,16 +25,14 @@ const Crimes: React.FC = () => {
 
   return (
     <MainLayout className="crimesPage">
-      <>
-        <CrimeModal />
-        <CrimeDetailModal />
-      </>
-      <Card className="crimesPage__header">
+      <CrimeModal />
+      <CrimeDetailModal />
+      <section className="crimesPage__header">
         <h1>Lista de crímenes</h1>
-        <Button buttonType="secondary" onClick={onOpen}>
+        <Button buttonType="primary" onClick={onOpen}>
           Registrar crímen
         </Button>
-      </Card>
+      </section>
       <CrimesTable />
     </MainLayout>
   );

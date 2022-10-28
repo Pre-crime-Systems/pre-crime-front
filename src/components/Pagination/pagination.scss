@@ -12,7 +12,7 @@ $buttonSize: 24px;
     display: flex;
     justify-content: center;
     .pageButton {
-      @include text(12, grey-30, medium);
+      @include text(12, grey-70, medium);
       background: map-get($colors, white);
       border-radius: 0.25rem;
       border: none;
@@ -22,20 +22,21 @@ $buttonSize: 24px;
       outline: none;
       width: $buttonSize;
       &:hover {
-        background: map-get($colors, white);
-        color: map-get($colors, grey-50);
+        background-color: map-get($colors, grey-10);
       }
       &:disabled {
-        color: map-get($colors, grey-30);
         background: map-get($colors, grey-10);
         pointer-events: none;
+        .pageButton__icon {
+          color: map-get($colors, grey-30);
+        }
       }
       .pageButton__icon {
-        color: map-get($colors, grey-30);
+        color: map-get($colors, grey-70);
       }
       &.pageButton--active {
-        background: map-get($colors, primary);
-        color: map-get($colors, white);
+        background-color: map-get($colors, primary-10);
+        color: map-get($colors, grey-90);
       }
       &.pageButton--block {
         pointer-events: none;

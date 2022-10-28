@@ -12,8 +12,17 @@ $topHeight: 60px;
     background-color: map-get($colors, primary);
     display: flex;
     justify-content: center;
+    position: relative;
     width: 55%;
+    .asideVideo {
+      height: 100%;
+      object-fit: cover;
+      position: absolute;
+      width: 100%;
+    }
     .asideLogo {
+      position: absolute;
+      z-index: 1;
       &__name {
         @include text(28, white, bold);
       }

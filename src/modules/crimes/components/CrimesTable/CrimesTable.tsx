@@ -32,6 +32,21 @@ const CrimesTable: React.FC = () => {
       minWidth: 50,
     },
     {
+      Header: 'Tipo',
+      accessor: 'typeCrime',
+      minWidth: 100,
+    },
+    {
+      Header: 'Subtipo',
+      accessor: 'subtypeCrime',
+      minWidth: 100,
+    },
+    {
+      Header: 'Zona',
+      accessor: 'zone',
+      minWidth: 100,
+    },
+    {
       Header: 'Dirección',
       accessor: 'address',
       minWidth: 100,
@@ -42,7 +57,6 @@ const CrimesTable: React.FC = () => {
       Cell: (data: any) => (
         <Button
           buttonType="secondary"
-          outline
           onClick={() => {
             dispatch({
               type: Types.SetModal,
@@ -128,7 +142,8 @@ const CrimesTable: React.FC = () => {
           />
           <Button
             className="filterOptions__button"
-            buttonType="secondary"
+            buttonType="primary"
+            outline
             onClick={() => {
               dispatch({
                 type: Types.SetTable,
@@ -144,7 +159,8 @@ const CrimesTable: React.FC = () => {
           </Button>
           <Button
             className="filterOptions__button"
-            buttonType="secondary"
+            buttonType="primary"
+            outline
             onClick={() => {
               dispatch({
                 type: Types.SetTable,
