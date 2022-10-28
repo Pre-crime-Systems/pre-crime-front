@@ -48,7 +48,6 @@ const ReportsTable: React.FC = () => {
       Cell: (data: any) => (
         <Button
           buttonType="secondary"
-          outline
           onClick={() => {
             dispatch({
               type: Types.SetModal,
@@ -72,7 +71,6 @@ const ReportsTable: React.FC = () => {
       Cell: (data: any) => (
         <Button
           buttonType="secondary"
-          outline
           onClick={() => {
             window.open(data?.cell?.row?.original?.fileUrl, '_blank');
           }}
@@ -162,7 +160,8 @@ const ReportsTable: React.FC = () => {
           />
           <Button
             className="filterOptions__button"
-            buttonType="secondary"
+            buttonType="primary"
+            outline
             onClick={() => {
               dispatch({
                 type: Types.SetTable,

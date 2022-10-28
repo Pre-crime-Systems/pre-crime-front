@@ -27,12 +27,12 @@ const Reports: React.FC = () => {
     <MainLayout className="reportsPage">
       <ReportUploadModal />
       <ReportDetailModal />
-      <Card className="reportsPage__header">
-        <h1>Reportes</h1>
-        <Button buttonType="secondary" onClick={onOpen}>
+      <section className="reportsPage__header">
+        <h1>Lista de reportes</h1>
+        <Button buttonType="primary" onClick={onOpen}>
           Subir reporte
         </Button>
-      </Card>
+      </section>
       <ReportsTable />
     </MainLayout>
   );

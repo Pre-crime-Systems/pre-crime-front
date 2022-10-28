@@ -44,7 +44,7 @@ const Users: React.FC = () => {
       <UserModal />
       <Card className="usersPage__header">
         <h1>Usuarios</h1>
-        <Button buttonType="secondary" onClick={onOpen}>
+        <Button buttonType="primary" onClick={onOpen}>
           Registrar usuario
         </Button>
       </Card>

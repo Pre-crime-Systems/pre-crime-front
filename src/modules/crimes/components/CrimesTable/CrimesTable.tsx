@@ -42,7 +42,6 @@ const CrimesTable: React.FC = () => {
       Cell: (data: any) => (
         <Button
           buttonType="secondary"
-          outline
           onClick={() => {
             dispatch({
               type: Types.SetModal,
@@ -128,7 +127,8 @@ const CrimesTable: React.FC = () => {
           />
           <Button
             className="filterOptions__button"
-            buttonType="secondary"
+            buttonType="primary"
+            outline
             onClick={() => {
               dispatch({
                 type: Types.SetTable,
@@ -144,7 +144,8 @@ const CrimesTable: React.FC = () => {
           </Button>
           <Button
             className="filterOptions__button"
-            buttonType="secondary"
+            buttonType="primary"
+            outline
             onClick={() => {
               dispatch({
                 type: Types.SetTable,
