@@ -316,9 +316,8 @@ const CrimeModal: React.FC = () => {
         </div>
         <div className="crimeModal__buttons">
           <Button
-            buttonType="primary"
+            buttonType="secondary"
             className="itemButton"
-            outline
             onClick={onClose}
           >
             Cancelar

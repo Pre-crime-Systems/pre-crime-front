@@ -32,6 +32,21 @@ const CrimesTable: React.FC = () => {
       minWidth: 50,
     },
     {
+      Header: 'Tipo',
+      accessor: 'typeCrime',
+      minWidth: 100,
+    },
+    {
+      Header: 'Subtipo',
+      accessor: 'subtypeCrime',
+      minWidth: 100,
+    },
+    {
+      Header: 'Zona',
+      accessor: 'zone',
+      minWidth: 100,
+    },
+    {
       Header: 'Dirección',
       accessor: 'address',
       minWidth: 100,

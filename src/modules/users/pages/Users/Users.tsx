@@ -42,12 +42,12 @@ const Users: React.FC = () => {
   return (
     <MainLayout className="usersPage">
       <UserModal />
-      <Card className="usersPage__header">
-        <h1>Usuarios</h1>
+      <section className="usersPage__header">
+        <h1>Lista de usuarios</h1>
         <Button buttonType="primary" onClick={onOpen}>
           Registrar usuario
         </Button>
-      </Card>
+      </section>
       <UsersTable />
     </MainLayout>
   );

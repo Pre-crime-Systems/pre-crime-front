@@ -84,9 +84,8 @@ const ReportUploadModal: React.FC = () => {
         </div>
         <div className="reportUploadModal__buttons">
           <Button
-            buttonType="primary"
+            buttonType="secondary"
             className="itemButton"
-            outline
             onClick={onClose}
           >
             Cancelar
