@@ -33,23 +33,11 @@
     }
   }
   &.button--secondary {
-    background-color: map-get($colors, secondary);
+    @include text(14, grey-90, medium);
+    background-color: map-get($colors, white);
+    border: 1px solid map-get($colors, grey-30);
     &:hover {
-      background: darken(map-get($colors, secondary), 5%);
-    }
-    &:active {
-      background: darken(map-get($colors, secondary), 10%);
-    }
-    &.button--outline {
-      background-color: transparent;
-      border: 1px solid map-get($colors, secondary);
-      color: map-get($colors, secondary);
-      &:hover {
-        background: rgba(map-get($colors, secondary), 0.2);
-      }
-      &:active {
-        background: rgba(map-get($colors, secondary), 0.4);
-      }
+      background: map-get($colors, grey-30);
     }
   }
 }
