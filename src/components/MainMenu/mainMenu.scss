@@ -1,6 +1,10 @@
 @import '../../assets/scss/mixins';
 @import '../../assets/scss/variables';
 
+.menuUsername {
+  @include text(14, primary, medium);
+  padding: 1rem 1.5rem;
+}
 .asideMenu {
   padding: 1rem 1.5rem;
   &__title {

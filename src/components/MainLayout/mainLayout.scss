@@ -16,7 +16,7 @@ $topHeight: 60px;
       align-items: center;
       display: flex;
       height: $topHeight;
-      padding: 0 2rem;
+      padding: 0 1.5rem;
       &__name {
         @include text(18, primary, bold);
       }
