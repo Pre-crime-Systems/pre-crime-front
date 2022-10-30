@@ -14,6 +14,7 @@ const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
   const { className } = props;
   const navigate = useNavigate();
   const [isAdmin, setIsAdmin] = useState<boolean>(true);
+  const [username, setUsername] = useState<string>('');
   const activePath = window.location.pathname;
 
   useEffect(() => {
@@ -24,12 +25,15 @@ const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
       } else {
         const tokenDecoded: any = jwt_decode(token);
         setIsAdmin(tokenDecoded?.isAdmin || false);
+        setUsername(tokenDecoded?.sub);
       }
     }
   }, []);
 
   return (
     <section className={className}>
+      <p className="menuUsername">Hola {username}!</p>
+      <div className="menuBorder"></div>
       <nav className="asideMenu">
         <p className="asideMenu__title">Menú</p>
         <ul className="asideMenu__list">
