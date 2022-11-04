@@ -34,7 +34,7 @@ const MainLayout: React.FC<MainLayoutProps> = (props: MainLayoutProps) => {
       case RoutePaths.Reports:
         return 'Reportes';
       case RoutePaths.Crimes:
-        return 'Crímenes';
+        return 'Delitos';
       case RoutePaths.Users:
         return 'Usuarios';
     }

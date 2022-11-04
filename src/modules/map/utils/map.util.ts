@@ -7,7 +7,7 @@ export interface IDirection {
 export const buildInfo = (eventProperties: any) => {
   return `<div class="crimeInfo">
 		<h4 class="crimeInfo__title">${eventProperties?.district}</h4>
-		<p class="crimeInfo__description">Probabilidad del crimen en el código postal ${
+		<p class="crimeInfo__description">Probabilidad del delito en el código postal ${
       eventProperties?.zipCode
     }</p>
 		<p class="crimeInfo__item">Porcentaje: ${eventProperties?.percentage.toFixed(

@@ -74,7 +74,7 @@ const MainMenu: React.FC<MainMenuProps> = (props: MainMenuProps) => {
               }}
             >
               <Icon className="itemIcon" type="finger-print" />
-              <span className="itemText">Crímenes</span>
+              <span className="itemText">Delitos</span>
             </a>
           </li>
           <li className="menuItem">

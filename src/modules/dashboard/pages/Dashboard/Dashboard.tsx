@@ -89,7 +89,7 @@ const Dashboard: React.FC = () => {
       <section className="dashboardPage__cards">
         <Card className="chartCard">
           <div className="chartCard__title">
-            <h2 className="titleText">Crimen por tipo de delito</h2>
+            <h2 className="titleText">Registros por tipo de delito</h2>
             <Select
               className="titleSelect titleSelect--large"
               placeholder="Mes"
@@ -106,7 +106,7 @@ const Dashboard: React.FC = () => {
         </Card>
         <Card className="chartCard">
           <div className="chartCard__title">
-            <h2 className="titleText">Cantidad de crímenes</h2>
+            <h2 className="titleText">Cantidad de delitos</h2>
             <Select
               className="titleSelect"
               placeholder="Tiempo"

@@ -24,7 +24,7 @@ const CrimeDetailModal: React.FC = () => {
   return (
     <Modal
       active={modal?.active && modal?.mode === 'detail'}
-      title="Detalle de un crímen"
+      title="Detalle de un delito"
       onClose={onClose}
     >
       <section className="crimeDetailModal">
