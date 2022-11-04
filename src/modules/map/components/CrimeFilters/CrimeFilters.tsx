@@ -143,7 +143,7 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
       <section className="filterItems">
         <Select
           className="filterItems__field"
-          label="Tipo de crimen"
+          label="Tipo de delito"
           options={[crimeSelectDefaultOption, ...typesCrime]}
           value={typeCrimeSelected}
           onChange={(newValue) => {
@@ -154,7 +154,7 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
         />
         <Select
           className="filterItems__field"
-          label="Subtipo de crimen"
+          label="Subtipo de delito"
           options={[crimeSelectDefaultOption, ...subtypesCrime]}
           value={subtypeCrimeSelected}
           onChange={(newValue) => {
@@ -164,7 +164,7 @@ const CrimeFilters: React.FC<CrimeFiltersProps> = (
         />
         <Select
           className="filterItems__field"
-          label="Modalidad de crimen"
+          label="Modalidad de delito"
           options={[crimeSelectDefaultOption, ...modalities]}
           value={modalitySelected}
           onChange={(newValue) => {

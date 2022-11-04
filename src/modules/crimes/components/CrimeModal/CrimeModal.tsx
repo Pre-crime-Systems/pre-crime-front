@@ -189,7 +189,7 @@ const CrimeModal: React.FC = () => {
   return (
     <Modal
       active={modal?.active && modal?.mode === 'add'}
-      title="Registrar un crímen"
+      title="Registrar un delito"
       onClose={onClose}
     >
       {loading && <Loading />}
@@ -267,7 +267,7 @@ const CrimeModal: React.FC = () => {
         <div className="crimeModal__groupFields crimeModal__groupFields--three">
           <Select
             className="crimeField"
-            label="Tipo de crimen"
+            label="Tipo de delito"
             options={typesCrime}
             value={typeCrimeSelected}
             onChange={(newValue) => {
@@ -282,7 +282,7 @@ const CrimeModal: React.FC = () => {
           />
           <Select
             className="crimeField"
-            label="Subtipo de crimen"
+            label="Subtipo de delito"
             options={subtypesCrime}
             value={subtypeCrimeSelected}
             onChange={(newValue) => {
@@ -296,7 +296,7 @@ const CrimeModal: React.FC = () => {
           />
           <Select
             className="crimeField"
-            label="Modalidad de crimen"
+            label="Modalidad de delito"
             options={modalities}
             value={modalitySelected}
             onChange={(newValue) => {

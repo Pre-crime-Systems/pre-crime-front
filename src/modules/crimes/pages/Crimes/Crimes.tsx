@@ -28,9 +28,9 @@ const Crimes: React.FC = () => {
       <CrimeModal />
       <CrimeDetailModal />
       <section className="crimesPage__header">
-        <h1>Lista de crímenes</h1>
+        <h1>Lista de delitos</h1>
         <Button buttonType="primary" onClick={onOpen}>
-          Registrar crímen
+          Registrar delito
         </Button>
       </section>
       <CrimesTable />

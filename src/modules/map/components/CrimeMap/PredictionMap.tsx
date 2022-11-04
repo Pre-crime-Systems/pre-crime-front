@@ -56,7 +56,7 @@ const PredictionMap: React.FC<PredictionMapProps> = (
   }, [reset]);
 
   if (loading) {
-    return <Loading title="Cargando predicción de crímenes" />;
+    return <Loading title="Cargando predicción de delitos" />;
   }
 
   if (data) {
